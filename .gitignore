@@ -167,7 +167,9 @@ EvalResult/
 PlotResult/
 ScoresResult/
 YHatResult/
+TimeResult/
 Method/*/eval
 Method/*/score*
 Method/*/BestModel
 pl_*
+Results/

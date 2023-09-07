@@ -1,3 +1,4 @@
+import json
 import os
 
 import numpy as np
@@ -18,6 +19,10 @@ class RunTransInDataset(RunBase):
                 for k, v in specific_params.items():
                     model_params[k] = v
             
+            timerdata_path = build_dir(self.time_path, dataset_name)
+            self.train_valid_timer.reset_total()
+            self.test_timer.reset_total()
+            
             scoredata_path = build_dir(self.score_path, dataset_name)
             if self.method_cfg["Analysis"]["plot_y_hat"]:
                 y_hatdata_path = build_dir(self.y_hat_path, dataset_name)
@@ -35,13 +40,17 @@ class RunTransInDataset(RunBase):
             tsTrain, tsTest = dict_split(value, transfer_params["proportion"], transfer_params["random_seed"])
         
             ## training and validation phase
+            self.train_valid_timer.tic()
             method.train_valid_phase_all_in_one(tsTrains=tsTrain)
+            self.train_valid_timer.toc()
             
             for curve_name, curve in tsTest.items():
                 score_path = os.path.join(scoredata_path, curve_name) + ".npy"
                 
                 ## test phase
+                self.test_timer.tic()
                 method.test_phase(curve)
+                self.test_timer.toc()
                 
                 score = method.anomaly_score()
                 
@@ -52,6 +61,15 @@ class RunTransInDataset(RunBase):
                     y_hat = method.get_y_hat()
                     y_hat_path = os.path.join(y_hatdata_path, curve_name) + ".npy"
                     np.save(y_hat_path, y_hat)
+                    
+            # save running time info
+            time_path = os.path.join(timerdata_path, self.task_mode) + ".json"
+            time_dict = {
+                "train_and_valid": self.train_valid_timer.get_total_time(),
+                "test": self.test_timer.get_total_time()
+            }
+            with open(time_path, 'w') as f:
+                json.dump(time_dict, f, indent=4)
                 
                 
     

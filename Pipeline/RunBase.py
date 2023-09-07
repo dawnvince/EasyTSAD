@@ -7,6 +7,7 @@ from Analysis.Plot import plot_uts_score_only, plot_uts_score_and_yhat
 from DataFactory import LoadData
 from utils.util import build_dir, get_method_class, dict_split
 from Analysis import Performance
+from Analysis import PerformanceTimer
 
 class RunBase(object):
     def __init__(self, method, method_path, gconfig_path, evaluations, task_mode) -> None:
@@ -19,6 +20,9 @@ class RunBase(object):
         self.method_cfg = toml.load(method_cfg_path)
         
         # build related directory for method
+        if self.global_cfg["Analysis"]["base_dir"] != ".":
+            build_dir(".", self.global_cfg["Analysis"]["base_dir"])
+        
         plot_dir = build_dir(
             self.global_cfg["Analysis"]["base_dir"], 
             self.global_cfg["Analysis"]["plot_dir"]
@@ -34,6 +38,16 @@ class RunBase(object):
             self.global_cfg["Analysis"]["evaluation_dir"]
         )
         self.eval_path = build_dir(eval_dir, method)
+        
+        ## initialize training timer and test timer.
+        self.train_valid_timer = PerformanceTimer()
+        self.test_timer = PerformanceTimer()
+        
+        time_dir = build_dir(
+            self.global_cfg["Analysis"]["base_dir"], 
+            self.global_cfg["Analysis"]["running_time_dir"]
+        )
+        self.time_path = build_dir(time_dir, method)
         
         score_dir = build_dir(
             self.global_cfg["Analysis"]["base_dir"], 
