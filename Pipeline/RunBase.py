@@ -24,7 +24,7 @@ class RunBase(object):
             self.global_cfg["Analysis"]["plot_dir"]
         )
         
-        self.use_plot = self.method_cfg["Analysis"]["plot_score"] and self.method_cfg["Analysis"]["plot_y_hat"]
+        self.use_plot = self.method_cfg["Analysis"]["plot_score"] or self.method_cfg["Analysis"]["plot_y_hat"]
         if self.use_plot == True:
             plot_path = build_dir(plot_dir, method)
             self.plot_path = build_dir(plot_path, task_mode)
