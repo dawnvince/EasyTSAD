@@ -1,0 +1,13 @@
+[Data_Params]
+types = "UTS"
+datasets = ["AIOPS", "NAB", "WSD", "Yahoo"]
+train_proportion = 1
+valid_proportion = 0
+preprocess = "min_max"
+
+[Analysis]
+ plot_score = true
+ plot_y_hat = false
+
+[Model_Params]
+q = 1e-4

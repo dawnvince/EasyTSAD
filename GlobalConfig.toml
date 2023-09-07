@@ -1,0 +1,21 @@
+[dataset_dir]
+ path = "datasets"
+
+[UTS]
+ names = ["AIOPS", "NAB", "WSD", "Yahoo"]
+
+[Analysis]
+ base_dir = "."
+ plot_dir = "PlotResult"
+ evaluation_dir = "EvalResult"
+ score_dir = "ScoresResult"
+ y_hat_dir = "YHatResult"
+
+[Transfer]
+ [Transfer.Default]
+  proportion = 0.5
+  random_seed = 1
+
+ [Transfer.AIOPS]
+  proportion = 0.5
+  random_seed = 1
