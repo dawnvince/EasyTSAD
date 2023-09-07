@@ -1,7 +1,7 @@
 [Data_Params]
 types = "UTS"
-# datasets = ["AIOPS", "NAB", "WSD", "Yahoo"]
-datasets = ["NAB"]
+datasets = ["AIOPS", "NAB", "WSD", "Yahoo"]
+# datasets = ["NAB"]
 train_proportion = 1
 valid_proportion = 0.2
 preprocess = "z-score"
@@ -15,7 +15,7 @@ preprocess = "z-score"
  window_size = 120
  batch_size = 256
  grad_clip = 10.0
- num_epochs = 100
+ num_epochs = 250
  mc_samples = 1024
  
  hidden_dim = 100
