@@ -36,12 +36,12 @@ from Exptools import EarlyStoppingTorch
 from utils.util import build_dir
 
 from Method.MethodInterface import BaseMethod
-from Method.SCRNN.TSDataset import OneByOneTrainDataset, AllInOneTrainDataset
-from Method.SCRNN.Model import *
+from Method.SRCNN.TSDataset import OneByOneTrainDataset, AllInOneTrainDataset
+from Method.SRCNN.Model import *
 
 from torch.autograd import Variable
 
-class SCRNN(BaseMethod):
+class SRCNN(BaseMethod):
     def __init__(self, params:dict) -> None:
         super().__init__()
         self.__anomaly_score = None

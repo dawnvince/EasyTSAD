@@ -104,13 +104,13 @@ class TSData:
           Desired range of transformed data.\n
         '''
         
-        scaler = MinMaxScaler(feature_range=feature_range).fit(self.train)
-        self.train = scaler.transform(self.train)
+        scaler = MinMaxScaler(feature_range=feature_range).fit(self.train.reshape(-1, 1))
+        self.train = scaler.transform(self.train.reshape(-1, 1)).flatten()
         
-        self.valid = scaler.transform(self.valid)
+        self.valid = scaler.transform(self.valid.reshape(-1, 1)).flatten()
         self.valid = np.clip(self.valid, a_min=feature_range[0]-1, a_max=feature_range[1]+1)
             
-        self.test = scaler.transform(self.test)
+        self.test = scaler.transform(self.test.reshape(-1, 1)).flatten()
         self.test = np.clip(self.test, a_min=feature_range[0]-1, a_max=feature_range[1]+1)
 
     def z_score_norm(self):

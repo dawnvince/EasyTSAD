@@ -4,7 +4,7 @@ types = "UTS"
 datasets = ["NAB", "WSD", "Yahoo"]
 train_proportion = 1
 valid_proportion = 0
-preprocess = "min_max"
+preprocess = "min-max"
 
 [Analysis]
  plot_score = true
