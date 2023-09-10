@@ -17,12 +17,11 @@ class AuprcPA(EvalInterface):
             return Auprc(value=1)
         
         scores = rec_scores(scores=scores, labels=labels)
-        fpr, tpr, _ = sklearn.metrics.roc_curve(y_true=labels, y_score=scores, 
-                                                drop_intermediate=False)
-        auroc = sklearn.metrics.auc(fpr, tpr)
+        auprc = sklearn.metrics.average_precision_score(y_true=labels, 
+                                                        y_score=scores, average=None)
         
-        if math.isnan(auroc):
-            auroc = 0
+        if math.isnan(auprc):
+            auprc = 0
         
         ## plot
         if self.figname:
@@ -33,4 +32,4 @@ class AuprcPA(EvalInterface):
             display.plot()
             plt.savefig(str(self.figname) + "_auprc.pdf")
             
-        return Auprc(value=auroc)
+        return Auprc(value=auprc)

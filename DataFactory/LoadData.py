@@ -12,13 +12,16 @@ from DataFactory import TSData
 def specific_metrics():
     pass
 
-def all_metrics(data_dir, types, dataset, train_proportion:float=1, valid_proportion:float=0, preprocess="min_max"):
+def all_metrics(data_dir, types, dataset, train_proportion:float=1, valid_proportion:float=0, preprocess="min-max", diff_p=0):
     base_path = os.path.join(data_dir, types, dataset)
     
     tsDatas = {}
     for curve in os.listdir(base_path):
         ## Generate TSData instance from the numpy files
         tsData = TSData.buildfrom(types=types, dataset=dataset, data_name=curve, data_dir=data_dir, train_proportion=train_proportion, valid_proportion=valid_proportion)
+        
+        if diff_p > 0 and isinstance(diff_p, int):
+            tsData.differential(diff_p)
         
         if preprocess == "min-max":
             tsData.min_max_norm()
@@ -38,11 +41,11 @@ def all_metrics(data_dir, types, dataset, train_proportion:float=1, valid_propor
 def all_dataset(data_dir, types, datasets,
                 train_proportion:float=1, 
                 valid_proportion:float=0, 
-                preprocess="min_max"):
+                preprocess="min_max", diff_p=0):
     
     print("=== [Load Data] DataSets:", ','.join(datasets), "===")
     tsDatas = {}
     for dataset in datasets:
-        tsDatas[dataset] = all_metrics(data_dir, types, dataset, train_proportion, valid_proportion, preprocess)
+        tsDatas[dataset] = all_metrics(data_dir, types, dataset, train_proportion, valid_proportion, preprocess, diff_p)
     
     return tsDatas

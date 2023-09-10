@@ -79,6 +79,3 @@ class RunTransInDataset(RunBase):
         self.do_exp(tsDatas)
         self.do_analysis(tsDatas)
         
-    def offline_analysis(self):
-        tsDatas = self.load_data()
-        self.do_analysis(tsDatas)

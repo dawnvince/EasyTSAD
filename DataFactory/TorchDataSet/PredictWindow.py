@@ -21,7 +21,7 @@ class UTSOneByOneDataset(torch.utils.data.Dataset):
             
             for i in range(self.sample_num):
                 X[i, :] = torch.from_numpy(tsData.train[i : i + self.window_size])
-                Y[i, :] = torch.from_numpy(tsData.train[i + self.window_size + self.horizon - 1])
+                Y[i, :] = torch.from_numpy(np.array(tsData.train[i + self.window_size + self.horizon - 1]))
                 
         elif phase == "valid":
             self.len, = tsData.valid.shape
@@ -31,7 +31,7 @@ class UTSOneByOneDataset(torch.utils.data.Dataset):
             
             for i in range(self.sample_num):
                 X[i, :] = torch.from_numpy(tsData.valid[i : i + self.window_size])
-                Y[i, :] = torch.from_numpy(tsData.valid[i + self.window_size + self.horizon - 1])
+                Y[i, :] = torch.from_numpy(np.array(tsData.valid[i + self.window_size + self.horizon - 1]))
                 
         elif phase == "test":
             self.len, = tsData.test.shape
@@ -41,12 +41,12 @@ class UTSOneByOneDataset(torch.utils.data.Dataset):
             
             for i in range(self.sample_num):
                 X[i, :] = torch.from_numpy(tsData.test[i : i + self.window_size])
-                Y[i, :] = torch.from_numpy(tsData.test[i + self.window_size + self.horizon - 1])
+                Y[i, :] = torch.from_numpy(np.array((tsData.test[i + self.window_size + self.horizon - 1])))
                 
         else:
             raise ValueError('Arg "phase" in OneByOneDataset() must be one of "train", "valid", "test"')
             
-        self.samples, self.targets = X, X
+        self.samples, self.targets = X, Y
     
     def __len__(self):
         return self.sample_num
@@ -79,7 +79,7 @@ class UTSAllInOneDataset(torch.utils.data.Dataset):
                 ll = max(ll - self.window_size - self.horizon + 1, 0)
                 for j in range(ll):
                     X[cnt, :] = torch.from_numpy(i.train[j: j + self.window_size])
-                    Y[cnt, :] = torch.from_numpy(i.train[i + self.window_size + self.horizon - 1])
+                    Y[cnt, :] = torch.from_numpy(np.array(i.train[j + self.window_size + self.horizon - 1]))
                     cnt += 1
         
         elif phase == "valid":
@@ -96,7 +96,7 @@ class UTSAllInOneDataset(torch.utils.data.Dataset):
                 ll = max(ll - self.window_size - self.horizon + 1, 0)
                 for j in range(ll):
                     X[cnt, :] = torch.from_numpy(i.valid[j: j + self.window_size])
-                    Y[cnt, :] = torch.from_numpy(i.valid[i + self.window_size + self.horizon - 1])
+                    Y[cnt, :] = torch.from_numpy(np.array(i.valid[j + self.window_size + self.horizon - 1]))
                     cnt += 1
         
         else:
@@ -104,7 +104,7 @@ class UTSAllInOneDataset(torch.utils.data.Dataset):
         
         assert cnt == self.sample_num
         
-        self.samples, self.targets = X, X
+        self.samples, self.targets = X, Y
     
     
     def __len__(self):

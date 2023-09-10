@@ -124,3 +124,14 @@ class TSData:
         self.valid = scaler.transform(self.valid.reshape(-1, 1)).flatten()
             
         self.test = scaler.transform(self.test.reshape(-1, 1)).flatten()
+        
+    def differential(self, p):
+        for i in range(p):
+            self.train = np.pad(self.train, ((0,1)), 'edge') - np.pad(self.train, ((1,0)), 'edge')
+            self.train = self.train[:-1]
+            
+            self.valid = np.pad(self.valid, ((0,1)), 'edge') - np.pad(self.valid, ((1,0)), 'edge')
+            self.valid = self.valid[:-1]
+            
+            self.test = np.pad(self.test, ((0,1)), 'edge') - np.pad(self.test, ((1,0)), 'edge')
+            self.test = self.test[:-1]

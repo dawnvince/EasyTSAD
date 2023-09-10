@@ -65,15 +65,19 @@ class RunBase(object):
             self.y_hat_path = build_dir(y_hat_path, task_mode)
         
         
-    def load_data(self):
+    def load_data(self, use_diff=True):
         data_params = self.method_cfg["Data_Params"]
+        diff_p = 0
+        if use_diff and 'diff_p' in data_params:
+            diff_p = data_params["diff_p"]
         tsDatas = LoadData.all_dataset(
             self.global_cfg["dataset_dir"]["path"],
             data_params["types"], 
             data_params["datasets"], 
             data_params["train_proportion"], 
             data_params["valid_proportion"], 
-            data_params["preprocess"]
+            data_params["preprocess"],
+            diff_p
         )
         return tsDatas
     
@@ -158,6 +162,6 @@ class RunBase(object):
         pass
     
     def offline_analysis(self):
-        tsDatas = self.load_data()
+        tsDatas = self.load_data(use_diff=False)
         self.do_analysis(tsDatas)
         
