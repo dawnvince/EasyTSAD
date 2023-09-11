@@ -67,8 +67,9 @@ class RunAllinOne(RunBase):
                 
     
     def easy_run(self):
-        tsDatas = self.load_data()
+        tsDatas_exp = self.load_data()
+        self.do_exp(tsDatas_exp)
         
-        self.do_exp(tsDatas)
-        self.do_analysis(tsDatas)
+        tsDatas_ana = self.load_data(use_diff=False)
+        self.do_analysis(tsDatas_ana)
         

@@ -13,7 +13,8 @@ evaluations = [
     Evaluations.KthBestF1underPA(20),
     Evaluations.KthBestF1underPA(30),
     Evaluations.AurocPA(),
-    Evaluations.AuprcPA()
+    Evaluations.AuprcPA(),
+    Evaluations.EventDetect()
 ]
 
 

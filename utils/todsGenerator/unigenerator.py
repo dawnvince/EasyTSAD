@@ -173,13 +173,13 @@ class UnivariateDataGenerator:
 if __name__ == '__main__':
     np.random.seed(100)
 
-    BEHAVIOR_CONFIG = {'freq': 0.04, 'coef': 1.5, "offset": 0.0, 'noise_amp': 0.05}
+    BEHAVIOR_CONFIG = {'freq': 0.01, 'coef': 1.5, "offset": 0.0, 'noise_amp': 0.02}
     BASE = [1.4529900e-01, 1.2820500e-01, 9.4017000e-02, 7.6923000e-02, 1.1111100e-01, 1.4529900e-01, 1.7948700e-01,
          2.1367500e-01, 2.1367500e-01]
 
     univariate_data = UnivariateDataGenerator(stream_length=10000, behavior=sine, behavior_config=BEHAVIOR_CONFIG)
     
-    ADDTITIONAL_CONFIG = {'path': "datasets/UTS/TODS", 'split_ratio': 0.5, 'ano_ratio': 0.01}
+    ADDTITIONAL_CONFIG = {'path': "datasets/UTS/TODS", 'split_ratio': 0.5, 'ano_ratio': 0.02}
     parser = argparse.ArgumentParser(description='Args for Injection')
     parser.add_argument('--type', type=str, help='Injection type')
     args = parser.parse_args()
@@ -188,14 +188,14 @@ if __name__ == '__main__':
     l = len(curve_name)
     if '2' in curve_name:
         univariate_data.collective_global_outliers(ratio=ADDTITIONAL_CONFIG["ano_ratio"]/l, radius=5, option='square', coef=1.5, noise_amp=0.03,
-                                                level=20, freq=0.04,
+                                                level=20, freq=0.01,
                                                 base=BASE, offset=0.0) #2
     if '3' in curve_name:
         univariate_data.collective_seasonal_outliers(ratio=ADDTITIONAL_CONFIG["ano_ratio"]/l, factor=3, radius=5) #3
     if '4' in curve_name:
         univariate_data.collective_trend_outliers(ratio=ADDTITIONAL_CONFIG["ano_ratio"]/l, factor=0.5, radius=5) #4
     if '0' in curve_name:
-        univariate_data.point_global_outliers(ratio=ADDTITIONAL_CONFIG["ano_ratio"]/l, factor=3.5, radius=5) #0
+        univariate_data.point_global_outliers(ratio=ADDTITIONAL_CONFIG["ano_ratio"]/l, factor=1.5, radius=5) #0
     if '1' in curve_name:
         univariate_data.point_contextual_outliers(ratio=ADDTITIONAL_CONFIG["ano_ratio"]/l, factor=2.5, radius=5) #1
         

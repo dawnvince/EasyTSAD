@@ -356,13 +356,79 @@ def Yahoo():
             json.dump(info, f, indent=4)     
             
         print("--Processing End Yahoo %s--"%(dataname[:-3]))
+        
+def UCR():
+    ori_path = "../UCR_Anomaly_FullData"
+    export_dir = os.path.join(export_path_uts, "UCR")
+    if not os.path.isdir(export_dir):
+        os.mkdir(export_dir)
+    
+    for name in os.listdir(ori_path):
+        
+        curve = os.path.join(ori_path, name)
+        name_split = name[:-4].split(sep="_")
+        
+        test_start = int(name_split[-3])
+        ano_start = int(name_split[-2])
+        ano_end = int(name_split[-1])
+        curve_name = name_split[-4]
+        
+        metric_dir = os.path.join(export_dir, curve_name)
+        if not os.path.isdir(metric_dir):
+            os.mkdir(metric_dir)
+        
+        data = np.genfromtxt(curve)
+        label = np.zeros(data.shape)
+        label[ano_start:ano_end] = 1
+        
+        train = data[:test_start]
+        test = data[test_start:]
+        
+        train_label = label[:test_start]
+        test_label = label[test_start:]
+        
+        test_ano_ratio = (ano_end - ano_start) / len(test)
+        total_ano_ratio = (ano_end - ano_start) / len(data)
+        
+        info = {
+            'intervals' : 1,
+            'training set anomaly ratio' : 0,
+            'testset anomaly ratio' : round(test_ano_ratio, 5),
+            'total anomaly ratio' : round(total_ano_ratio, 5),
+        }
+        
+        train_exportpath = os.path.join(metric_dir, "train.npy")
+        test_exportpath = os.path.join(metric_dir, "test.npy")
+        
+        train_labelpath = os.path.join(metric_dir, "train_label.npy")
+        test_labelpath = os.path.join(metric_dir, "test_label.npy")
+        
+        train_tspath = os.path.join(metric_dir, "train_timestamp.npy")
+        test_tspath = os.path.join(metric_dir, "test_timestamp.npy")
+        
+        info_path = os.path.join(metric_dir, "info.json")
+        
+        np.save(train_exportpath, train)
+        np.save(test_exportpath, test)
+        np.save(train_labelpath, train_label)
+        np.save(test_labelpath, test_label)
+        
+        with open(info_path, 'w') as f:
+            json.dump(info, f, indent=4)
+            
+    print("--Processing End UCR--")
+        
+        
 
 if __name__ == '__main__':
     # AIOPS()
     # NAB()
     # WSD()
     # Yahoo()
-    check_valid("AIOPS")
-    check_valid("NAB")
-    check_valid("WSD")
-    check_valid("Yahoo")
+    # check_valid("AIOPS")
+    # check_valid("NAB")
+    # check_valid("WSD")
+    # check_valid("Yahoo")
+    
+    UCR()
+    check_valid("UCR")

@@ -1,7 +1,7 @@
 [Data_Params]
 types = "UTS"
-datasets = ["AIOPS", "NAB", "WSD", "Yahoo"]
-# datasets = ["NAB"]
+# datasets = ["AIOPS", "NAB", "WSD", "Yahoo"]
+datasets = ["UCR", "TODS"]
 train_proportion = 1
 valid_proportion = 0.2
 preprocess = "z-score"

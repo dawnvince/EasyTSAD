@@ -17,7 +17,7 @@ def plot_uts_score_only(curve, score, label, save_path):
     top_y = score[score.argsort()[int(clip_rate * len(score)) - 1]] * 3
     bottom_y = score.min() - 0.1 * (top_y - score.min())
     
-    plt.figure(figsize=(48, 4))
+    plt.figure(figsize=(96, 8))
     fig1 = plt.subplot(2, 1, 1)
     plt.plot(x, curve, label="raw curve", linewidth=0.1, color="red")
     
@@ -69,7 +69,7 @@ def plot_uts_score_and_yhat(curve, y_hat, score, label, save_path):
     top_y = score[score.argsort()[int(clip_rate * len(score)) - 1]] * 3
     bottom_y = score.min() - 0.1 * (top_y - score.min())
     
-    plt.figure(figsize=(48, 4))
+    plt.figure(figsize=(96, 8))
     fig1 = plt.subplot(2, 1, 1)
     plt.plot(x, curve, label="raw curve", linewidth=0.1, color="red")
     plt.plot(x, y_hat, label="y_hat", linewidth=0.1, color="green")

@@ -85,7 +85,6 @@ class RunBase(object):
         pass
     
     def do_analysis(self, tsDatas):
-        
         for dataset_name, value in tsDatas.items():
             print(">>> [{}] Analyzing dataset {} <<<".format(self.method, dataset_name))
             evaldata_path = build_dir(self.eval_path, dataset_name)            
