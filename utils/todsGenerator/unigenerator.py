@@ -149,7 +149,7 @@ class UnivariateDataGenerator:
         for i in position:
             start, end = max(0, i - radius), min(self.STREAM_LENGTH, i + radius)
             slope = np.random.choice([-1, 1]) * factor * np.arange(end - start)
-            self.data[start:end] = self.data_origin[start:end] + slope
+            self.data[start:end] = self.data[start:end] + slope
             self.data[end:] = self.data[end:] + slope[-1]
             self.label[start:end] = 1
 
@@ -166,12 +166,36 @@ class UnivariateDataGenerator:
         seasonal_config['freq'] = factor * self.behavior_config['freq']
         for i in position:
             start, end = max(0, i - radius), min(self.STREAM_LENGTH, i + radius)
-            self.data[start:end] = self.behavior(**seasonal_config)[start:end]
-            self.label[start:end] = 1
+            period_add = factor - 1
+            if period_add >= 0:
+                new_data = np.tile(self.data[start:end], factor)
+                self.data[start:end] = np.array([new_data[i] for i in range(0, len(new_data), factor)])
+                self.label[start:end] = 1
+            else:
+                mul = int(1/factor)
+                split = int((end - start) * factor)
+                new_data = np.zeros((end - start))
+                for i in range(split):
+                    new_data[i * mul] =  self.data[start + i]
+                
+                for i in range((end - start)):
+                    if i % mul == 0:
+                        continue
+                    offset = i % mul
+                    if i + mul - offset >= end - start:
+                        new_data[i] = new_data[i - offset]
+                    else: 
+                        new_data[i] = new_data[i - offset] + (new_data[i + mul - offset] - new_data[i - offset]) * offset / mul
+                
+                self.data[start:end] = new_data
+                self.label[start:end] = 1
+                
+            
+        assert len(self.data) == len(self.label)
 
 
 if __name__ == '__main__':
-    np.random.seed(100)
+    np.random.seed(1)
 
     BEHAVIOR_CONFIG = {'freq': 0.01, 'coef': 1.5, "offset": 0.0, 'noise_amp': 0.02}
     BASE = [1.4529900e-01, 1.2820500e-01, 9.4017000e-02, 7.6923000e-02, 1.1111100e-01, 1.4529900e-01, 1.7948700e-01,
@@ -179,7 +203,7 @@ if __name__ == '__main__':
 
     univariate_data = UnivariateDataGenerator(stream_length=10000, behavior=sine, behavior_config=BEHAVIOR_CONFIG)
     
-    ADDTITIONAL_CONFIG = {'path': "datasets/UTS/TODS", 'split_ratio': 0.5, 'ano_ratio': 0.02}
+    ADDTITIONAL_CONFIG = {'path': "datasets/UTS/TODS", 'split_ratio': 0.5, 'ano_ratio': 0.05}
     parser = argparse.ArgumentParser(description='Args for Injection')
     parser.add_argument('--type', type=str, help='Injection type')
     args = parser.parse_args()
@@ -191,9 +215,13 @@ if __name__ == '__main__':
                                                 level=20, freq=0.01,
                                                 base=BASE, offset=0.0) #2
     if '3' in curve_name:
-        univariate_data.collective_seasonal_outliers(ratio=ADDTITIONAL_CONFIG["ano_ratio"]/l, factor=3, radius=5) #3
+        # increase frequency
+        univariate_data.collective_seasonal_outliers(ratio=ADDTITIONAL_CONFIG["ano_ratio"]/l, factor=2, radius=int(0.5/BEHAVIOR_CONFIG["freq"])) #3
+        # decrease freqency
+        factor = 0.5
+        univariate_data.collective_seasonal_outliers(ratio=ADDTITIONAL_CONFIG["ano_ratio"]/l, factor=factor, radius=int(1/(factor * BEHAVIOR_CONFIG["freq"]))) #3
     if '4' in curve_name:
-        univariate_data.collective_trend_outliers(ratio=ADDTITIONAL_CONFIG["ano_ratio"]/l, factor=0.5, radius=5) #4
+        univariate_data.collective_trend_outliers(ratio=ADDTITIONAL_CONFIG["ano_ratio"]/l, factor=0.2, radius=5) #4
     if '0' in curve_name:
         univariate_data.point_global_outliers(ratio=ADDTITIONAL_CONFIG["ano_ratio"]/l, factor=1.5, radius=5) #0
     if '1' in curve_name:

@@ -233,11 +233,17 @@ class SPOT:
         numpy.array
             possible roots of the function
         """
-        if method == 'regular':
-            step = (bounds[1]-bounds[0])/(npoints+1)
-            X0 = np.arange(bounds[0]+step,bounds[1],step)
-        elif method == 'random':
-            X0 = np.random.uniform(bounds[0],bounds[1],npoints)
+        try:
+            if method == 'regular':
+                step = (bounds[1]-bounds[0])/(npoints+1)
+                if step == 0:
+                    X0 = np.array(bounds[1])
+                else: X0 = np.arange(bounds[0]+step,bounds[1],step)
+            elif method == 'random':
+                X0 = np.random.uniform(bounds[0],bounds[1],npoints)
+        except Exception as e:
+            print(bounds)
+            raise e
         
         def objFun(X,f,jac):
             g = 0

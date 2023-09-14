@@ -1,7 +1,7 @@
 [Data_Params]
 types = "UTS"
-# datasets = ["AIOPS", "NAB", "WSD", "Yahoo"]
-datasets = ["UCR", "TODS"]
+# datasets = ["AIOPS", "NAB", "WSD", "Yahoo", "UCR"]
+datasets = ["TODS"]
 train_proportion = 1
 valid_proportion = 0.2
 preprocess = "z-score"
@@ -30,3 +30,6 @@ preprocess = "z-score"
  lradj = "type1"
  features = "M"
  patience = 3
+
+[Model_Params.TODS]
+ seq_len = 200

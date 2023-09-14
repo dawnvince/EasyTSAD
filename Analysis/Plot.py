@@ -108,3 +108,5 @@ def plot_uts_score_and_yhat(curve, y_hat, score, label, save_path):
     # plt.title("Raw Data",loc = "left", fontdict=font2)
     # plt.title("Anomaly Score",loc = "right", fontdict=font2)
     plt.savefig("{}.pdf".format(save_path), format="pdf")
+    
+    

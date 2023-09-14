@@ -1,10 +1,11 @@
 [Data_Params]
 types = "UTS"
-# datasets = ["AIOPS", "NAB", "WSD", "Yahoo"]
-datasets = ["UCR", "TODS"]
+# datasets = ["AIOPS", "NAB", "WSD", "Yahoo", "UCR"]
+datasets = ["TODS"]
 train_proportion = 1
 valid_proportion = 0
 preprocess = "min-max"
+diff_p = 1
 
 [Analysis]
  plot_score = true
