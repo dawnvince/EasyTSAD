@@ -8,3 +8,7 @@ class EvalInterface(object):
     @abstractmethod
     def calc(self, scores, labels, all_label_normal) -> Type[MetricInterface]:
         raise NotImplementedError()
+    
+    @abstractmethod
+    def get_name(self):
+        return self.name

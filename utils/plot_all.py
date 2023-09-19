@@ -14,6 +14,8 @@ clip_rate = 0.998
 def plot_specific_curve(curve, scores, label, save_path):
     score_len_min = 1e10
     for score in scores:
+        if not score:
+            continue
         if score_len_min > len(score):
             score_len_min = len(score)
     
@@ -33,6 +35,8 @@ def plot_specific_curve(curve, scores, label, save_path):
     
     for i in range(method_num):
         score = scores[i]
+        if not score:
+            continue
         label = label[len(label) - score_len_min:]
         score = score[len(score) - score_len_min:]
     
@@ -77,7 +81,10 @@ def aggre_scores(score_path, dataset, curve_name, mode):
     scores = []
     for method in method_l:
         score_path_t = os.path.join(score_path, method, mode, dataset, curve_name) + ".npy"
-        scores.append(np.load(score_path_t))
+        if os.path.exists(score_path_t):
+            scores.append(np.load(score_path_t))
+        else:
+            scores.append(None)
         
     return scores
 

@@ -7,8 +7,8 @@ from Pipeline import RunBase
 from utils.util import build_dir, get_method_class
 
 class RunAllinOne(RunBase):
-    def __init__(self, method, method_path, gconfig_path, evaluations, task_mode="all_in_one") -> None:
-        super().__init__(method, method_path, gconfig_path, evaluations, task_mode)
+    def __init__(self, method, method_path, glo_cfg, evaluations, task_mode="all_in_one") -> None:
+        super().__init__(method, method_path, glo_cfg, evaluations, task_mode)
         
     def do_exp(self, tsDatas):
         for dataset_name, value in tsDatas.items():

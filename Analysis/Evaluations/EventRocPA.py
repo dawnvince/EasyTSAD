@@ -1,24 +1,26 @@
 from typing import Type
 from Analysis.Evaluations import EvalInterface, MetricInterface
 from Analysis.Evaluations.MetricBase import Auroc
-from Analysis.Evaluations.utils import rec_scores
+from Analysis.Evaluations.utils import rec_scores_event
 import sklearn.metrics
 import math
 from matplotlib import pyplot as plt
 
-class AurocPA(EvalInterface):
-    def __init__(self, figname=None) -> None:
+class EventRocPA(EvalInterface):
+    def __init__(self, mode="log", base=3, figname=None) -> None:
         super().__init__()
         self.figname = figname
-        self.name = "auroc"
+        self.name = "event-based auroc under pa with mode %s"%(mode)
+        self.mode = mode
+        self.base = base
         
     def calc(self, scores, labels, all_label_normal) -> type[MetricInterface]:
         ## All labels are normal
         if all_label_normal:
-            return Auroc(value=1)
+            return Auroc(value=1, name=self.name)
         
-        new_scores = rec_scores(scores=scores, labels=labels)
-        fpr, tpr, _ = sklearn.metrics.roc_curve(y_true=labels, y_score=new_scores, 
+        scores, labels = rec_scores_event(scores=scores, labels=labels, mode=self.mode, base=self.base)
+        fpr, tpr, _ = sklearn.metrics.roc_curve(y_true=labels, y_score=scores, 
                                                 drop_intermediate=False)
         auroc = sklearn.metrics.auc(fpr, tpr)
         

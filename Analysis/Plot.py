@@ -1,11 +1,14 @@
 import numpy as np
 from matplotlib import pyplot as plt
+import math
 
 font1 = {'size':10}
 font2 = {'size':12}
 label_thres = 0.5  
 dpi = 2000
 clip_rate = 0.998
+eps = 1e-10
+inf = 1e20
     
 def plot_uts_score_only(curve, score, label, save_path):
     assert len(label) >= len(score), "Score length is longer than label length."
@@ -54,6 +57,7 @@ def plot_uts_score_only(curve, score, label, save_path):
     # plt.title("Raw Data",loc = "left", fontdict=font2)
     # plt.title("Anomaly Score",loc = "right", fontdict=font2)
     plt.savefig("{}.pdf".format(save_path), format="pdf")
+    plt.close()
     
     
 def plot_uts_score_and_yhat(curve, y_hat, score, label, save_path):
@@ -108,5 +112,169 @@ def plot_uts_score_and_yhat(curve, y_hat, score, label, save_path):
     # plt.title("Raw Data",loc = "left", fontdict=font2)
     # plt.title("Anomaly Score",loc = "right", fontdict=font2)
     plt.savefig("{}.pdf".format(save_path), format="pdf")
+    plt.close()
+    
+def plot_uts_summary(curve, scores, label, save_path, methods):
+    score_len_min = 1e10
+    for score in scores:
+        if score is None:
+            continue
+        if score_len_min > len(score):
+            score_len_min = len(score)
+    
+    method_num = len(methods)
+    plt.figure(figsize=(24, 2 * (method_num + 1)))
+    curve = curve[len(curve) - score_len_min:]
+    curve_len = len(curve)
+    x = [i for i in range(curve_len)]
+    
+    figs = []
+    fig_curve = plt.subplot((method_num + 1), 1, 1)
+    plt.plot(x, curve, label="raw curve", linewidth=0.1, color="red")
+    plt.xticks([])
+    plt.legend(loc="upper left",prop=font1, handlelength=1, borderpad=0.1, handletextpad=0.3, ncol=2, columnspacing=0.5, borderaxespad=0.1)
+    
+    figs.append(fig_curve)
+    
+    for i in range(method_num):
+        score = scores[i]
+        if score is None:
+            continue
+        label = label[len(label) - score_len_min:]
+        score = score[len(score) - score_len_min:]
+    
+        top_y = score[score.argsort()[int(clip_rate * len(score)) - 1]] * 3
+        bottom_y = score.min() - 0.1 * (top_y - score.min())
+        
+        fig_m = plt.subplot((method_num + 1), 1, i+2)
+        plt.plot(x, score, label=methods[i], linewidth=0.1, color="steelblue")
+        plt.ylim(bottom_y, top_y)
+        plt.legend(loc="upper left",prop=font1, handlelength=1, borderpad=0.1, handletextpad=0.3, ncol=2, columnspacing=0.5, borderaxespad=0.1)
+        
+        figs.append(fig_m)
+    
+    
+    # count anomaly segment
+    ano_seg = []
+    ano_flag = 0
+    start, end = 0,0
+    for i in x:
+        if label[i] >= label_thres and ano_flag == 0:
+            start = i
+            ano_flag = 1
+        elif label[i] < label_thres and ano_flag == 1:
+            end = i
+            ano_flag = 0
+            ano_seg.append((start, end))
+            
+        if i == curve_len - 1 and label[i] > label_thres:
+            end = i
+            ano_seg.append((start, end))
+    
+    for seg in ano_seg:
+        for fig in figs:
+            fig.axvspan(seg[0], seg[1], alpha=1, color='pink')
+    
+    # plt.title("Raw Data",loc = "left", fontdict=font2)
+    # plt.title("Anomaly Score",loc = "right", fontdict=font2)
+    plt.savefig("{}.pdf".format(save_path), format="pdf")
+    plt.close()
+    
+def plot_cdf_summary(scores, labels, save_path, methods):
+    method_num = len(methods)
+    cols = 4
+    
+    ano_seg = []
+    ano_flag = 0
+    start, end = 0,0
+    x = [i for i in range(len(labels))]
+    for i in x:
+        if labels[i] >= label_thres and ano_flag == 0:
+            start = i
+            ano_flag = 1
+        elif labels[i] < label_thres and ano_flag == 1:
+            end = i
+            ano_flag = 0
+            ano_seg.append((start, end))
+            
+        if i == len(labels) - 1 and labels[i] > label_thres:
+            end = i + 1
+            ano_seg.append((start, end))
+    
+    plt.figure(figsize=(24, 4 * math.ceil(method_num/cols)))
+    figs = []
+    for j in range(method_num):
+        score = scores[j]
+        if score is None:
+            continue
+        
+        bias = len(labels) - len(score)
+        label = labels[bias:]
+        score_len = len(score)
+        
+        try:
+            if len(ano_seg) == 0:
+                score_ano = [inf]
+            else:
+                score_ano = []
+                for it in ano_seg:
+                    if it[1]-bias <= 0:
+                        continue
+                    score_ano.append(max(score[max(it[0]-bias, 0): it[1]-bias]))
+                
+        except Exception as e:
+            print("score is ", score)
+            print("ano seg is ", ano_seg)
+            print("bias is ", bias)
+            raise e
+        
+        if len(score_ano) == 0:
+            score_ano = [inf]
+        score_ano_avg = sum(score_ano) / len(score_ano)
+        score_ano_min = min(score_ano)
+            
+        
+        # top_score = max(score[score.argsort()[int(clip_rate * len(score)) - 1]] * 2, score_ano_avg)
+        scale_coff = 0.8
+        bottom_score = score.min()
+        top_score = (score_ano_avg - bottom_score) * (1/scale_coff) + bottom_score
+        
+        score_norm = []
+        for i in range(len(label)):
+            if label[i] < label_thres:
+                score_norm.append(score[i])
+        
+        step = 1000
+        x = np.linspace(bottom_score, top_score, num=step)
+        
+        score_interv = (top_score - bottom_score + eps) / step
+        y = [0] * step
+        
+        score_norm = np.array(score_norm)
+        score_norm = (score_norm - bottom_score + eps) / score_interv 
+        score_norm = np.floor(score_norm)
+        for i in score_norm:
+            if i < step:
+                y[int(i)] += 1
+            
+        y = np.cumsum(np.array(y)) / len(score_norm)
+        
+        fig_m = plt.subplot((math.ceil(method_num/cols)), cols, j + 1)
+        
+        y[0] = 0
+        plt.plot(x, y, label=methods[j], linewidth=0.1, color="steelblue")
+        plt.axvline(score_ano_avg, color="red")
+        plt.axvline(score_ano_min, color="pink")
+        plt.ylim(0.7, 1.1)
+        plt.legend(loc="upper left",prop=font1, handlelength=1, borderpad=0.1, handletextpad=0.3, ncol=2, columnspacing=0.5, borderaxespad=0.1)
+        
+        figs.append(fig_m)
+        
+    plt.savefig("{}.pdf".format(save_path), format="pdf")
+    plt.close()
+    
+    
+    
+    
     
     

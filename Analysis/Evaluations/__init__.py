@@ -6,3 +6,7 @@ from Analysis.Evaluations.BestF1underPA import BestF1underPA
 from Analysis.Evaluations.KthBestF1underPA import KthBestF1underPA
 from Analysis.Evaluations.PotF1 import PotF1
 from Analysis.Evaluations.EventDetect import EventDetect
+from Analysis.Evaluations.EventF1PA import EventF1PA
+from Analysis.Evaluations.EventKthF1PA import EventKthF1PA
+from Analysis.Evaluations.EventPrcPA import EventPrcPA
+from Analysis.Evaluations.EventRocPA import EventRocPA

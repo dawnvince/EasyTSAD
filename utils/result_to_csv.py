@@ -55,7 +55,7 @@ def write_to_csv(mode):
         duplicated_list.extend(['UCR', 'UCR'])
         w.writerow(duplicated_list)
         
-        info_line = ["Method", "PA", "PA10", "PA20", "PA30", "ROC", "PRC"] * len(dataset_l) + ["Method", "Detectd"]
+        info_line = ["Method", "PA", "PA10", "PA20", "PA30", "ROC", "PRC"] * len(dataset_l) + ["Method", "Detected"]
         w.writerow(info_line)
         
         for m in method_l:

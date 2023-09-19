@@ -11,6 +11,7 @@
  score_dir = "ScoresResult"
  y_hat_dir = "YHatResult"
  running_time_dir = "TimeResult"
+ statistic_dir = "StatisticResult"
 
 [Transfer]
  [Transfer.Default]

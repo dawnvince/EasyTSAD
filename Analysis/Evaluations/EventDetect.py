@@ -29,6 +29,7 @@ class Precision(MetricInterface):
 class EventDetect(EvalInterface):
     def __init__(self) -> None:
         super().__init__()
+        self.name = "Event Detected"
         
     def calc(self, scores, labels, all_label_normal) -> type[MetricInterface]:
         idx = np.argmax(scores)
@@ -36,7 +37,7 @@ class EventDetect(EvalInterface):
         if labels[idx] == 1:
             detected = 1
         return Precision(
-            "Event Detected",
+            self.name,
             detected=float(detected)
         )
     

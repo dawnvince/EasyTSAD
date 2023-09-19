@@ -1,0 +1,42 @@
+# The dataset included in statistic board 
+Datasets = [
+    "AIOPS", 
+    "NAB", 
+    "TODS", 
+    "WSD", 
+    "Yahoo", 
+    "UCR"
+]
+
+# The Methods included in statistic board 
+Methods = [
+    "AE", 
+    "AnomalyTransformer", 
+    "AR", 
+    "Donut", 
+    "EncDecAD", 
+    "FCVAE", 
+    "LSTMADalpha", 
+    "LSTMADbeta", 
+    "SRCNN", 
+    "TFAD", 
+    "TimesNet"
+]
+
+
+# The metrics you want to do statistics on in dataset level.
+# By default the metrics are based on Statistic_index.Default. 
+# You can specify the metric for certain datasets like UCR. Refer to **_avg.json in EvalResult directory to build your own Statistic_index. ["A", "B", ...] means do statistics on metric["A"]["B"]...
+[Statistic_index]
+ Default = [
+    ["best f1 under pa", "f1"],
+    ["best f1 under 10-delay pa", "f1"],
+    ["best f1 under 20-delay pa", "f1"],
+    ["best f1 under 30-delay pa", "f1"],
+    ["auroc"],
+    ["auprc"]
+ ]
+ UCR = [
+    ["Event Detected", "detected"]
+ ]
+

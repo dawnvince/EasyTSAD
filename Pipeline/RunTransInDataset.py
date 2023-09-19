@@ -7,8 +7,8 @@ from Pipeline import RunBase
 from utils.util import build_dir, dict_split, get_method_class
 
 class RunTransInDataset(RunBase):
-    def __init__(self, method, method_path, gconfig_path, evaluations, task_mode="transfer_within_dataset") -> None:
-        super().__init__(method, method_path, gconfig_path, evaluations, task_mode)
+    def __init__(self, method, method_path, glo_cfg, evaluations, task_mode="transfer_within_dataset") -> None:
+        super().__init__(method, method_path, glo_cfg, evaluations, task_mode)
         self.transfer_config = self.global_cfg["Transfer"]
         
     def do_exp(self, tsDatas):

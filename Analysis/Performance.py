@@ -41,7 +41,7 @@ class Performance:
     def do_eval(self, callbacks):
         res = []
         for item in callbacks:
-            item_result = item.calc(self.scores, self.labels, self.all_label_normal)
+            item_result = item.calc(self.scores.copy(), self.labels.copy(), self.all_label_normal.copy())
             if not isinstance(item_result, MetricInterface):
                 raise TypeError(
                     "Return value of func 'calc' must be inherented from MetricInterface."

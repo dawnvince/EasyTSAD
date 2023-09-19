@@ -10,11 +10,11 @@ from Analysis import Performance
 from Analysis import PerformanceTimer
 
 class RunBase(object):
-    def __init__(self, method, method_path, gconfig_path, evaluations, task_mode) -> None:
+    def __init__(self, method, method_path, global_cfg, evaluations, task_mode) -> None:
         self.method = method
         self.evaluations = evaluations
         self.task_mode = task_mode
-        self.global_cfg = toml.load(gconfig_path)
+        self.global_cfg = global_cfg
     
         method_cfg_path = os.path.join(method_path, method, "config.toml")
         self.method_cfg = toml.load(method_cfg_path)

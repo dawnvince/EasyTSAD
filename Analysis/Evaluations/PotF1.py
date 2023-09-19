@@ -11,6 +11,7 @@ class PotF1(EvalInterface):
         super().__init__()
         self.q = q
         self.level = level
+        self.name = "pot f1"
         
     def calc(self, scores, labels, all_label_normal, train_score=None) -> type[MetricInterface]:
         if not isinstance(train_score, np.ndarray):
@@ -29,7 +30,7 @@ class PotF1(EvalInterface):
         
         pot_f1, precision, recall = f1_score(scores, labels)
         return F1class(
-            name="pot f1", 
+            name=self.name, 
             p=float(precision), 
             r=float(recall), 
             f1=float(pot_f1), 

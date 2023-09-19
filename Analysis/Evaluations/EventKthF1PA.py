@@ -1,13 +1,37 @@
 from typing import Type
 from Analysis.Evaluations import EvalInterface, MetricInterface
 from Analysis.Evaluations.MetricBase import F1class
+import math
 
-class KthBestF1underPA(EvalInterface):
-    def __init__(self, k:int) -> None:
+class EventKthF1PA(EvalInterface):
+    def __init__(self, k:int, mode="log", base=3) -> None:
+        '''
+        Using Event-based point-adjustment method to evaluate the models
+        
+        Params:
+         mode - str, default "log", define the scale of which the anomaly segment is processed, one of:
+          squeeze: view an anomaly event lasting t timestamps as one timepoint;\n
+          log: view an anomaly event lasting t timestamps as log(t) timepoint;\n
+          sqrt: view an anomaly event lasting t timestamps as sqrt(t) timepoint;\n
+          raw: view an anomaly event lasting t timestamps as t timepoint;\n
+          NOTE: if using log, you can specity the param "base" to return the logarithm of x to the given base, calculated as log(x)/log(base).
+         base - int, default 3.
+        
+        '''
         super().__init__()
         self.eps = 1e-15
         self.k = k
-        self.name = "best f1 under %d-delay pa"%self.k
+        self.name = "event-based f1 under %d-delay pa with mode %s"%(self.k, mode)
+        if mode == "squeeze":
+            self.func = lambda x: 1
+        elif mode == "log":
+            self.func = lambda x: math.floor(math.log(x+base, base))
+        elif mode == "sqrt":
+            self.func = lambda x: math.floor(math.sqrt(x))
+        elif mode == "raw":
+            self.func = lambda x: x
+        else:
+            raise ValueError("please select correct mode.")
         
     def calc(self, scores, labels, all_label_normal) -> type[MetricInterface]:
         ## All labels are normal
@@ -22,8 +46,25 @@ class KthBestF1underPA(EvalInterface):
             
         search_set = []
         tot_anomaly = 0
+        ano_flag = 0
+        ll = len(labels)
         for i in range(labels.shape[0]):
-            tot_anomaly += (labels[i] > 0.5)
+            if labels[i] > 0.5 and ano_flag == 0:
+                ano_flag = 1
+                start = i
+            
+            # alleviation
+            elif labels[i] <= 0.5 and ano_flag == 1:
+                ano_flag = 0
+                end = i
+                tot_anomaly += self.func(end - start)
+                
+            # marked anomaly at the end of the list
+            elif ano_flag == 1 and i == ll - 1:
+                ano_flag = 0
+                end = i + 1
+                tot_anomaly += self.func(end - start)
+                
         flag = 0
         cur_anomaly_len = 0
         cur_max_anomaly_score = 0
@@ -43,12 +84,12 @@ class KthBestF1underPA(EvalInterface):
                 # reconstruct the score using the highest score
                 if flag == 1:
                     flag = 0
-                    search_set.append((cur_max_anomaly_score, cur_anomaly_len, True))
+                    search_set.append((cur_max_anomaly_score, self.func(cur_anomaly_len), True))
                     search_set.append((scores[i], 1, False))
                 else:
                     search_set.append((scores[i], 1, False))
         if flag == 1:
-            search_set.append((cur_max_anomaly_score, cur_anomaly_len, True))
+            search_set.append((cur_max_anomaly_score, self.func(cur_anomaly_len), True))
             
         search_set.sort(key=lambda x: x[0], reverse=True)
         best_f1 = 0

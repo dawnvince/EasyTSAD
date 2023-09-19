@@ -1,3 +1,4 @@
+import copy
 import os
 import json
 import numpy as np
@@ -6,8 +7,8 @@ from Pipeline import RunBase
 from utils.util import build_dir, get_method_class
 
 class RunOnebyOne(RunBase):
-    def __init__(self, method, method_path, gconfig_path, evaluations, task_mode="one_by_one") -> None:
-        super().__init__(method, method_path, gconfig_path, evaluations, task_mode)
+    def __init__(self, method, method_path, glo_cfg, evaluations, task_mode="one_by_one") -> None:
+        super().__init__(method, method_path, glo_cfg, evaluations, task_mode)
         
     def do_exp(self, tsDatas):
         for dataset_name, value in tsDatas.items():
