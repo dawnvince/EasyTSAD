@@ -274,7 +274,109 @@ def plot_cdf_summary(scores, labels, save_path, methods):
     plt.close()
     
     
+def plot_distribution_summary(scores, thresholds, labels, save_path, methods):
+    method_num = len(methods)
+    cols = 4
     
+    ano_seg = []
+    ano_flag = 0
+    start, end = 0,0
+    x = [i for i in range(len(labels))]
+    for i in x:
+        if labels[i] >= label_thres and ano_flag == 0:
+            start = i
+            ano_flag = 1
+        elif labels[i] < label_thres and ano_flag == 1:
+            end = i
+            ano_flag = 0
+            ano_seg.append((start, end))
+            
+        if i == len(labels) - 1 and labels[i] > label_thres:
+            end = i + 1
+            ano_seg.append((start, end))
     
-    
-    
+    plt.figure(figsize=(24, 4 * math.ceil(method_num/cols)))
+    figs = []
+    for j in range(method_num):
+        score = scores[j]
+        threshold = thresholds[j]
+        if score is None:
+            continue
+        
+        bias = len(labels) - len(score)
+        label = labels[bias:]
+        score_len = len(score)
+        
+        try:
+            if len(ano_seg) == 0:
+                score_ano = [inf]
+            else:
+                score_ano = []
+                for it in ano_seg:
+                    if it[1]-bias <= 0:
+                        continue
+                    score_ano.append(max(score[max(it[0]-bias, 0): it[1]-bias]))
+                
+        except Exception as e:
+            print("score is ", score)
+            print("ano seg is ", ano_seg)
+            print("bias is ", bias)
+            raise e
+        
+        if len(score_ano) == 0:
+            score_ano = [inf]
+        score_ano_avg = sum(score_ano) / len(score_ano)
+        score_ano_min = min(score_ano)        
+        
+        # top_score = max(score[score.argsort()[int(clip_rate * len(score)) - 1]] * 2, score_ano_avg)
+        scale_coff = 0.66
+        bottom_score = score.min()
+        top_score = (thresholds - bottom_score) * (1/scale_coff) + bottom_score
+        
+        score_norm = []
+        for i in range(len(label)):
+            if label[i] < label_thres:
+                score_norm.append(score[i])
+        
+        step = 1000
+        x = np.linspace(bottom_score, top_score, num=step)
+        
+        score_interv = (top_score - bottom_score + eps) / step
+        
+        y = [0] * step
+        score_norm = np.array(score_norm)
+        score_norm = (score_norm - bottom_score + eps) / score_interv 
+        score_norm = np.floor(score_norm)
+        for i in score_norm:
+            if i < step:
+                y[int(i)] += 1  
+        y = np.array(y) / len(score_norm)
+        
+        z = [0] * step
+        score_ano = np.array(score_ano)
+        score_ano = (score_ano - bottom_score + eps) / score_interv 
+        score_ano = np.floor(score_ano)
+        score_ano = np.clip(score_ano, a_max=step-1)
+        for i in score_ano:
+            if i < step:
+                z[int(i)] += 1
+
+        z = np.array(z) / len(score_ano)
+        
+        fig_y = plt.subplot((math.ceil(method_num/cols)), cols, j + 1)
+        fig_y.set_title(methods[j], y=-0.15)
+        
+        plt.plot(x, y, label="normality", linewidth=0.1, color="steelblue")
+        plt.axvline(threshold, color="gold")
+        # plt.axvline(score_ano_min, color="pink")
+        # plt.ylim(0.7, 1.1)
+        plt.legend(loc="upper left",prop=font1, handlelength=1, borderpad=0.1, handletextpad=0.3, ncol=2, columnspacing=0.5, borderaxespad=0.1)
+        
+        fig_z = plt.twinx(fig_y)
+        plt.plot(x, z, label="anomaly", linewidth=0.1, color="red")
+        plt.legend(loc="upper right",prop=font1, handlelength=1, borderpad=0.1, handletextpad=0.3, ncol=2, columnspacing=0.5, borderaxespad=0.1)
+        
+        figs.append(fig_y)
+        
+    plt.savefig("{}.pdf".format(save_path), format="pdf")
+    plt.close()
