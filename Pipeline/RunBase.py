@@ -115,9 +115,9 @@ class RunBase(object):
                 
                 if self.method_cfg["Analysis"]["plot_score"]:
                     plot_uts_score_only(
-                        value[curve_name].test, 
-                        score, 
-                        value[curve_name].test_label, 
+                        value[curve_name].test.copy(), 
+                        score.copy(), 
+                        value[curve_name].test_label.copy(), 
                         os.path.join(plot_score_data_path, curve_name)
                     )
                     
@@ -125,16 +125,17 @@ class RunBase(object):
                     y_hat_path = os.path.join(y_hat_dir, score_file)
                     y_hat = np.load(y_hat_path)
                     plot_uts_score_and_yhat(
-                        value[curve_name].test,
+                        value[curve_name].test.copy(),
                         y_hat, 
-                        score, 
-                        value[curve_name].test_label, 
+                        score.copy(), 
+                        value[curve_name].test_label.copy(), 
                         os.path.join(plot_y_hat_data_path, curve_name)
                     )
                 
                 # calculate performance using multiple evaluation methods
                 eva = Performance(scores=score, labels=value[curve_name].test_label)
                 res, res_dict = eva.do_eval(self.evaluations)
+                
                 eval_dict[curve_name] = res_dict
 
                 with open(eval_dict_path, 'w') as f:

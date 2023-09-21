@@ -7,6 +7,9 @@ Datasets = [
     "Yahoo", 
     "UCR"
 ]
+# Datasets = [
+#     "NAB", 
+# ]
 
 # The Methods included in statistic board 
 Methods = [
@@ -23,7 +26,8 @@ Methods = [
     "TimesNet"
 ]
 
-
+[Thresholds]
+ Source = ["event-based f1 under pa with mode log", "threshold"]
 # The metrics you want to do statistics on in dataset level.
 # By default the metrics are based on Statistic_index.Default. 
 # You can specify the metric for certain datasets like UCR. Refer to **_avg.json in EvalResult directory to build your own Statistic_index. ["A", "B", ...] means do statistics on metric["A"]["B"]...
@@ -32,9 +36,27 @@ Methods = [
     ["best f1 under pa", "f1"],
     ["best f1 under 10-delay pa", "f1"],
     ["best f1 under 20-delay pa", "f1"],
-    ["best f1 under 30-delay pa", "f1"],
+    ["best f1 under 50-delay pa", "f1"],
+    ["best f1 under 150-delay pa", "f1"],
+    
+    ["event-based f1 under pa with mode log", "f1"],
+    ["event-based f1 under 10-delay pa with mode log", "f1"],
+    ["event-based f1 under 20-delay pa with mode log", "f1"],
+    ["event-based f1 under 50-delay pa with mode log", "f1"],
+    ["event-based f1 under 150-delay pa with mode log", "f1"],
+
+    ["event-based f1 under pa with mode squeeze", "f1"],
+    ["event-based f1 under 10-delay pa with mode squeeze", "f1"],
+    ["event-based f1 under 20-delay pa with mode squeeze", "f1"],
+    ["event-based f1 under 50-delay pa with mode squeeze", "f1"],
+    ["event-based f1 under 150-delay pa with mode squeeze", "f1"],
+
     ["auroc"],
-    ["auprc"]
+    ["auprc"],
+    ["event-based auroc under pa with mode log"],
+    ["event-based auprc under pa with mode log"],
+    ["event-based auroc under pa with mode squeeze"],
+    ["event-based auprc under pa with mode squeeze"],
  ]
  UCR = [
     ["Event Detected", "detected"]

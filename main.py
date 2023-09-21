@@ -7,7 +7,7 @@ import warnings
 import toml
 import Pipeline
 from Analysis import Evaluations
-from Statistics import geneCSV, genePlots, geneCDFs
+from Statistics import geneCSV, genePlots, geneCDFs, geneDistributionsEachCurve, geneDistributionSummary
 
 warnings.filterwarnings('ignore')
 
@@ -54,7 +54,7 @@ if __name__ == "__main__":
     parser.add_argument('--method', type=str, help='The name of the method', default=None)
     parser.add_argument('--method_path', default="Method", type=str, help='The absolute path of file Method')
     parser.add_argument('--task_mode', default="one_by_one", type=str, help='Task mode', choices=["one_by_one", "all_in_one", "transfer_within_dataset"])
-    parser.add_argument('--behavior', default="run", type=str, help='do exp or not', choices=["run", "analysis_only", "csv_summary", "plot_summary", "cdf_summary"])
+    parser.add_argument('--behavior', default="run", type=str, help='do exp or not', choices=["run", "analysis_only", "csv_summary", "plot_summary", "cdf_summary", "dis_summary", "dis_each_curve"])
     
     
     args = parser.parse_args()
@@ -70,6 +70,12 @@ if __name__ == "__main__":
         
     elif args.behavior == "cdf_summary":
         geneCDFs(glo_cfg, args.task_mode)
+        
+    elif args.behavior == "dis_each_curve":
+        geneDistributionsEachCurve(glo_cfg, args.task_mode)
+    
+    elif args.behavior == "dis_summary":
+        geneDistributionSummary(glo_cfg, args.task_mode)
     
     elif args.behavior == "run" or args.behavior == "analysis_only":
         method_name = args.method

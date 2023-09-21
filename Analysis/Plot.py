@@ -274,7 +274,7 @@ def plot_cdf_summary(scores, labels, save_path, methods):
     plt.close()
     
     
-def plot_distribution_summary(scores, thresholds, labels, save_path, methods):
+def plot_distribution_each_curve(scores, thresholds, labels, save_path, methods):
     method_num = len(methods)
     cols = 4
     
@@ -299,13 +299,12 @@ def plot_distribution_summary(scores, thresholds, labels, save_path, methods):
     figs = []
     for j in range(method_num):
         score = scores[j]
-        threshold = thresholds[j]
+        threshold = thresholds[j] + np.min(score)
         if score is None:
             continue
         
         bias = len(labels) - len(score)
         label = labels[bias:]
-        score_len = len(score)
         
         try:
             if len(ano_seg) == 0:
@@ -315,7 +314,7 @@ def plot_distribution_summary(scores, thresholds, labels, save_path, methods):
                 for it in ano_seg:
                     if it[1]-bias <= 0:
                         continue
-                    score_ano.append(max(score[max(it[0]-bias, 0): it[1]-bias]))
+                    score_ano.append(np.max(score[max(it[0]-bias, 0): it[1]-bias]))
                 
         except Exception as e:
             print("score is ", score)
@@ -324,14 +323,11 @@ def plot_distribution_summary(scores, thresholds, labels, save_path, methods):
             raise e
         
         if len(score_ano) == 0:
-            score_ano = [inf]
-        score_ano_avg = sum(score_ano) / len(score_ano)
-        score_ano_min = min(score_ano)        
-        
-        # top_score = max(score[score.argsort()[int(clip_rate * len(score)) - 1]] * 2, score_ano_avg)
-        scale_coff = 0.66
+            score_ano = [inf]       
+            
+        scale_coff = 0.666666666
         bottom_score = score.min()
-        top_score = (thresholds - bottom_score) * (1/scale_coff) + bottom_score
+        top_score = (threshold - bottom_score) * (1/scale_coff) + bottom_score
         
         score_norm = []
         for i in range(len(label)):
@@ -339,43 +335,190 @@ def plot_distribution_summary(scores, thresholds, labels, save_path, methods):
                 score_norm.append(score[i])
         
         step = 1000
-        x = np.linspace(bottom_score, top_score, num=step)
+        # x = np.linspace(bottom_score, top_score, num=step)
         
         score_interv = (top_score - bottom_score + eps) / step
         
         y = [0] * step
         score_norm = np.array(score_norm)
-        score_norm = (score_norm - bottom_score + eps) / score_interv 
+        score_norm = (score_norm - bottom_score) / score_interv 
         score_norm = np.floor(score_norm)
         for i in score_norm:
             if i < step:
                 y[int(i)] += 1  
-        y = np.array(y) / len(score_norm)
+        y = np.cumsum(y)
+        y = y / len(score_norm)
+        y[0] = 0
         
         z = [0] * step
         score_ano = np.array(score_ano)
-        score_ano = (score_ano - bottom_score + eps) / score_interv 
+        score_ano = (score_ano - bottom_score) / score_interv 
         score_ano = np.floor(score_ano)
-        score_ano = np.clip(score_ano, a_max=step-1)
+        score_ano = np.clip(score_ano, a_min=0, a_max=step+10)
         for i in score_ano:
             if i < step:
                 z[int(i)] += 1
 
-        z = np.array(z) / len(score_ano)
+        z = np.cumsum(z)
+        z = z / len(score_ano)
+        z[0] = 0
+        
+        x = [i for i in range(step)]
         
         fig_y = plt.subplot((math.ceil(method_num/cols)), cols, j + 1)
         fig_y.set_title(methods[j], y=-0.15)
         
         plt.plot(x, y, label="normality", linewidth=0.1, color="steelblue")
-        plt.axvline(threshold, color="gold")
-        # plt.axvline(score_ano_min, color="pink")
+        plt.axvline(scale_coff * step - 1, color="pink")
+        # plt.axvline(threshold, color="pink")
         # plt.ylim(0.7, 1.1)
-        plt.legend(loc="upper left",prop=font1, handlelength=1, borderpad=0.1, handletextpad=0.3, ncol=2, columnspacing=0.5, borderaxespad=0.1)
+        # plt.legend(loc="upper left",prop=font1, handlelength=1, borderpad=0.1, handletextpad=0.3, ncol=2, columnspacing=0.5, borderaxespad=0.1)
         
-        fig_z = plt.twinx(fig_y)
+        # fig_z = plt.twinx(fig_y)
         plt.plot(x, z, label="anomaly", linewidth=0.1, color="red")
-        plt.legend(loc="upper right",prop=font1, handlelength=1, borderpad=0.1, handletextpad=0.3, ncol=2, columnspacing=0.5, borderaxespad=0.1)
+        plt.legend(loc="lower right",prop=font1)
+        # plt.legend(loc="upper right",prop=font1, handlelength=1, borderpad=0.1, handletextpad=0.3, ncol=2, columnspacing=0.5, borderaxespad=0.1)
         
+        figs.append(fig_y)
+        
+    plt.savefig("{}.pdf".format(save_path), format="pdf")
+    plt.close()
+    
+def plot_distribution_datasets(scores_dict, thresholds_dict, labels_dict, save_path, methods):
+    method_num = len(methods)
+    cols = 4
+    plt.figure(figsize=(24, 4 * math.ceil(method_num/cols)))
+    figs = []
+    
+    step = 1000
+    ano_step = step
+    
+    ano_seg_dict = {}
+    
+    for curve_name, label_raw in labels_dict.items():
+        ll = len(label_raw)
+        ano_flag = 0
+        start, end = 0,0
+        ano_seg = []
+        
+        for i in range(ll):
+            if label_raw[i] >= label_thres and ano_flag == 0:
+                start = i
+                ano_flag = 1
+            elif label_raw[i] < label_thres and ano_flag == 1:
+                end = i
+                ano_flag = 0
+                ano_seg.append((start, end))
+                
+            if i == ll - 1 and label_raw[i] > label_thres:
+                end = i + 1
+                ano_seg.append((start, end)) 
+                
+        ano_seg_dict[curve_name] = ano_seg
+    
+    cnt = 0
+    
+    for method in methods:
+        y = [0] * step
+        z = [0] * ano_step
+        cnt += 1
+        norm_score_all = 0
+        ano_score_all = 0
+        for curve_name, label_raw in labels_dict.items():
+            score = scores_dict[method][curve_name]
+            threshold = thresholds_dict[method][curve_name]
+            if threshold == 0:
+                continue
+            else:
+                threshold += np.min(score)
+            
+            if score is None:
+                continue
+            bias = len(label_raw) - len(score)
+            label = label_raw[bias:]
+            
+            try:
+                if len(ano_seg_dict[curve_name]) == 0:
+                    score_ano = [inf]
+                    continue
+                else:
+                    score_ano = []
+                    for it in ano_seg_dict[curve_name]:
+                        if it[1]-bias <= 0:
+                            continue
+                        score_ano.append(np.max(score[max(it[0]-bias, 0): it[1]-bias]))
+                    
+            except Exception as e:
+                print("score is ", score)
+                print("ano seg is ", ano_seg_dict[curve_name])
+                print("bias is ", bias)
+                raise e 
+            
+            scale_coff = 0.66
+            bottom_score = np.min(score)
+            top_score = (threshold - bottom_score) * (1/scale_coff) + bottom_score
+            try:
+                assert top_score > bottom_score
+            except Exception as e:
+                print(threshold, bottom_score)
+                print(curve_name, method)
+                raise e
+            
+            score_norm = []
+            for i in range(len(label)):
+                if label[i] < label_thres:
+                    score_norm.append(score[i])
+                    
+            # x = np.linspace(bottom_score, top_score, num=step)
+            #  score_interv = (top_score - bottom_score) / step
+            score_norm = np.array(score_norm).flatten()
+            score_norm = (score_norm - bottom_score) * step / (top_score - bottom_score) 
+            score_norm = np.floor(score_norm)
+            norm_score_all += len(score_norm)
+            for i in score_norm:
+                if i < 0:
+                    assert("invalid I")
+                if i < step:
+                    y[int(i)] += 1  
+                    
+            if len(score_ano) == 0:
+                continue
+            #  ano_score_interv = (top_score - bottom_score) / ano_step
+            score_ano = np.array(score_ano).flatten()
+            score_ano = (score_ano - bottom_score) * ano_step / (top_score - bottom_score) 
+            # score_ano = np.floor(score_ano)
+            score_ano = np.clip(score_ano, a_min=0, a_max=ano_step + 10)
+            score_ano = np.round(score_ano, 2)
+            ano_score_all += len(score_ano)
+            for i in score_ano:
+                if i < 0:
+                    assert("invalid I")
+                if i < ano_step:
+                    i = int(i)
+                    z[i] = z[i] + 1
+                    
+        xy = [i for i in range(step)]
+        y = np.array(y) 
+        y = np.cumsum(y) / norm_score_all
+        y[0] = 0
+        
+        # xz = [i for i in range(ano_step)]
+        z = np.array(z) 
+        z = np.cumsum(z) / ano_score_all
+        z[0] = 0
+        
+        fig_y = plt.subplot((math.ceil(method_num/cols)), cols, cnt)
+        fig_y.set_title(method, y=-0.2)
+        
+        plt.plot(xy, y, label="normality", linewidth=0.1, color="steelblue")
+        plt.axvline(scale_coff * step, color="pink")
+        # plt.ylim(-0.1, 1.05)
+        
+        # fig_z = plt.twinx(fig_y)
+        plt.plot(xy, z, label="anomaly", linewidth=0.1, color="red")
+        plt.legend(loc="lower right",prop=font1)
+        # plt.legend(loc="upper right",prop=font1, handlelength=1, borderpad=0.1, handletextpad=0.3, ncol=2, columnspacing=0.5, borderaxespad=0.1)
+        # plt.ylim(-0.1, 1.05)
         figs.append(fig_y)
         
     plt.savefig("{}.pdf".format(save_path), format="pdf")

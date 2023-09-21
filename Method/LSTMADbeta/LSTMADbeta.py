@@ -130,10 +130,11 @@ class LSTMADbeta(BaseMethod):
             self.early_stopping(valid_loss, self.model)
             if self.early_stopping.early_stop or epoch == self.epochs - 1:
                 # fitting Gaussian Distribution
-                scores = torch.cat(scores, dim=0)
-                self.mu = torch.mean(scores, dim=0)
-                self.sigma = torch.var(scores, dim=0)
-                print(self.mu.size(), self.sigma.size())
+                if len(scores) > 0:
+                    scores = torch.cat(scores, dim=0)
+                    self.mu = torch.mean(scores)
+                    self.sigma = torch.var(scores)
+                    print(self.mu.size(), self.sigma.size())
                 if self.early_stopping.early_stop:
                     print(">>>Early stopping<<<")
                 break

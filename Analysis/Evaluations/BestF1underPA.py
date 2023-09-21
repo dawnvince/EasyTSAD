@@ -1,6 +1,7 @@
 from typing import Type
 from Analysis.Evaluations import EvalInterface, MetricInterface
 from Analysis.Evaluations.MetricBase import F1class
+import numpy as np
 
 class BestF1underPA(EvalInterface):
     def __init__(self) -> None:
@@ -19,7 +20,6 @@ class BestF1underPA(EvalInterface):
             recall - corresponding recall value;\n
             threshold - the value of threshold when getting best f1.
         '''
-        
         ## All labels are normal
         if all_label_normal:
             return F1class(
