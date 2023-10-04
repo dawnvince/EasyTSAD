@@ -1,25 +1,28 @@
 from typing import Type
 from Analysis.Evaluations import EvalInterface, MetricInterface
 from Analysis.Evaluations.MetricBase import Auprc
-from Analysis.Evaluations.utils import rec_scores, rec_scores_event
+from Analysis.Evaluations.utils import rec_scores, rec_scores_event, rec_scores_kth_event
 import sklearn.metrics
 import math
 from matplotlib import pyplot as plt
 
-class EventPrcPA(EvalInterface):
-    def __init__(self, mode="log", base=3, figname=None) -> None:
+class EventKthPrcPA(EvalInterface):
+    def __init__(self, k, mode="log", base=3, figname=None) -> None:
         super().__init__()
         self.figname = figname
-        self.name = "event-based auprc under pa with mode %s"%(mode)
+        self.name = "%d-th auprc under event-based pa with mode %s"%(k, mode)
         self.mode = mode
         self.base = base
+        self.k = k
         
     def calc(self, scores, labels, all_label_normal, margins) -> type[MetricInterface]:
         ## All labels are normal
         if all_label_normal:
             return Auprc(value=1, name=self.name)
         
-        scores, labels = rec_scores_event(scores=scores, labels=labels, mode=self.mode, base=self.base)
+        k = self.k + margins[0]
+        
+        scores, labels = rec_scores_kth_event(scores=scores, labels=labels, k=k, mode=self.mode, base=self.base)
         auprc = sklearn.metrics.average_precision_score(y_true=labels, 
                                                         y_score=scores, average=None)
         

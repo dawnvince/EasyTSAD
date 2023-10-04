@@ -9,7 +9,7 @@ class BestF1underPA(EvalInterface):
         self.eps = 1e-15
         self.name = "best f1 under pa"
         
-    def calc(self, scores, labels, all_label_normal) -> type[MetricInterface]:
+    def calc(self, scores, labels, all_label_normal, margins) -> type[MetricInterface]:
         '''
         Calculating best-f1 under point-adjustment approach.
         

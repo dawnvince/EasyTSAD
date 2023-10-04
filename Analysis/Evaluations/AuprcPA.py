@@ -12,7 +12,7 @@ class AuprcPA(EvalInterface):
         self.figname = figname
         self.name = "auprc"
         
-    def calc(self, scores, labels, all_label_normal) -> type[MetricInterface]:
+    def calc(self, scores, labels, all_label_normal, margins) -> type[MetricInterface]:
         ## All labels are normal
         if all_label_normal:
             return Auprc(value=1)

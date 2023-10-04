@@ -160,6 +160,7 @@ cython_debug/
 #.idea/
 
 test/
+tmp/
 datasets/
 rawdata/
 basedata/
@@ -173,3 +174,4 @@ Method/*/score*
 Method/*/BestModel
 pl_*
 Results/
+ploteval.py

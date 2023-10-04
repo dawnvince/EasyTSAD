@@ -6,7 +6,7 @@ class EvalInterface(object):
     __metaclass__ = ABCMeta
     
     @abstractmethod
-    def calc(self, scores, labels, all_label_normal) -> Type[MetricInterface]:
+    def calc(self, scores, labels, all_label_normal, margins) -> Type[MetricInterface]:
         raise NotImplementedError()
     
     @abstractmethod

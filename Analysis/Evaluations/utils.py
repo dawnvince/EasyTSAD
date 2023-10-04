@@ -1,6 +1,7 @@
 import math
 import numpy as np
 
+All_normal_threshold = -1e10
 
 def rec_scores(scores, labels):
     '''
@@ -126,20 +127,29 @@ def rec_scores_event(scores, labels, mode, base):
     assert new_labels.ndim == 1
     return new_scores, new_labels
 
-def rec_scores_kth_event(scores, labels, k:int):
+def rec_scores_kth_event(scores, labels, k:int, mode, base):
     '''
     Reconstruct scores using k-th point adjustment.
     
     Returns:
         scores - the reconstructed scores
     '''
-    rec_score = scores
     ano_flag = 0
     start, end = 0, 0
-    max_score = 0
     ll = len(scores)
     new_labels = []
     new_scores = []
+    
+    if mode == "squeeze":
+        func = lambda x: 1
+    elif mode == "log":
+        func = lambda x: math.floor(math.log(x+base, base))
+    elif mode == "sqrt":
+        func = lambda x: math.floor(math.sqrt(x))
+    elif mode == "raw":
+        func = lambda x: x
+    else:
+        raise ValueError("please select correct mode.")
     
     for i in range(ll):
         # encounter an anomaly
@@ -151,25 +161,26 @@ def rec_scores_kth_event(scores, labels, k:int):
         elif labels[i] <= 0.5 and ano_flag == 1:
             ano_flag = 0
             end = i
-            new_scores.append(max_score)
-            new_labels.append(1)
-            max_score = 0
+            cur_anomaly_len = func(end - start)
+            new_scores += [np.max(scores[start:min(end, start+k)])] * cur_anomaly_len
+            new_labels += [1] * cur_anomaly_len
             
-        if labels[i] > 0.5 and i - start <= k:
-            max_score = max(max_score, scores[i])
-        
         # marked anomaly at the end of the list
-        if ano_flag == 1 and i == ll - 1:
+        elif ano_flag == 1 and i == ll - 1:
             ano_flag = 0
             end = i + 1
-            new_scores.append(max_score)
-            new_labels.append(1)
-            max_score = 0
+            cur_anomaly_len = func(end - start)
+            new_scores += [np.max(scores[start:min(end, start+k)])] * cur_anomaly_len
+            new_labels += [1] * cur_anomaly_len
         
         if labels[i] <= 0.5:
             new_labels.append(0)
             new_scores.append(scores[i])
-            
+        
+    new_scores = np.array(new_scores)
+    new_labels = np.array(new_labels)
+    assert new_labels.ndim == 1
+    assert new_labels.ndim == 1
     return new_scores, new_labels
 
 def f1_score(predict, actual):

@@ -10,3 +10,4 @@ from Analysis.Evaluations.EventF1PA import EventF1PA
 from Analysis.Evaluations.EventKthF1PA import EventKthF1PA
 from Analysis.Evaluations.EventPrcPA import EventPrcPA
 from Analysis.Evaluations.EventRocPA import EventRocPA
+from Analysis.Evaluations.EventKthPrcPA import EventKthPrcPA

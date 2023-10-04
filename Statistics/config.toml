@@ -13,18 +13,27 @@ Datasets = [
 
 # The Methods included in statistic board 
 Methods = [
-    "AE", 
-    "AnomalyTransformer", 
-    "AR", 
-    "Donut", 
-    "EncDecAD", 
-    "FCVAE", 
+    # prediction based
+    "AR",
     "LSTMADalpha", 
     "LSTMADbeta", 
+
+    # reconstruction based
+    "AE", 
+    "EncDecAD", 
     "SRCNN", 
+    "AnomalyTransformer", 
+    "TimesNet",
+
+    # vae based
+    "Donut", 
+    "FCVAE", 
+
+    # others
     "TFAD", 
-    "TimesNet"
 ]
+
+
 
 [Thresholds]
  Source = ["event-based f1 under pa with mode log", "threshold"]
@@ -34,31 +43,43 @@ Methods = [
 [Statistic_index]
  Default = [
     ["best f1 under pa", "f1"],
-    ["best f1 under 10-delay pa", "f1"],
-    ["best f1 under 20-delay pa", "f1"],
-    ["best f1 under 50-delay pa", "f1"],
-    ["best f1 under 150-delay pa", "f1"],
+    # ["best f1 under 10-delay pa", "f1"],
+    # ["best f1 under 20-delay pa", "f1"],
+    # ["best f1 under 50-delay pa", "f1"],
+    # ["best f1 under 150-delay pa", "f1"],
     
     ["event-based f1 under pa with mode log", "f1"],
+    ["event-based f1 under 3-delay pa with mode log", "f1"],
     ["event-based f1 under 10-delay pa with mode log", "f1"],
     ["event-based f1 under 20-delay pa with mode log", "f1"],
     ["event-based f1 under 50-delay pa with mode log", "f1"],
     ["event-based f1 under 150-delay pa with mode log", "f1"],
 
     ["event-based f1 under pa with mode squeeze", "f1"],
+    ["event-based f1 under 3-delay pa with mode squeeze", "f1"],
     ["event-based f1 under 10-delay pa with mode squeeze", "f1"],
     ["event-based f1 under 20-delay pa with mode squeeze", "f1"],
     ["event-based f1 under 50-delay pa with mode squeeze", "f1"],
     ["event-based f1 under 150-delay pa with mode squeeze", "f1"],
 
-    ["auroc"],
+    # ["auroc"],
     ["auprc"],
-    ["event-based auroc under pa with mode log"],
+    # ["event-based auroc under pa with mode log"],
     ["event-based auprc under pa with mode log"],
-    ["event-based auroc under pa with mode squeeze"],
+    ["3-th auprc under event-based pa with mode log"],
+    ["10-th auprc under event-based pa with mode log"],
+    ["20-th auprc under event-based pa with mode log"],
+    ["50-th auprc under event-based pa with mode log"],
+    ["150-th auprc under event-based pa with mode log"],
+    # ["event-based auroc under pa with mode squeeze"],
     ["event-based auprc under pa with mode squeeze"],
+    ["3-th auprc under event-based pa with mode squeeze"],
+    ["10-th auprc under event-based pa with mode squeeze"],
+    ["20-th auprc under event-based pa with mode squeeze"],
+    ["50-th auprc under event-based pa with mode squeeze"],
+    ["150-th auprc under event-based pa with mode squeeze"],
  ]
- UCR = [
-    ["Event Detected", "detected"]
- ]
+#  UCR = [
+#     ["Event Detected", "detected"]
+#  ]
 

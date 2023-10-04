@@ -1,7 +1,7 @@
 [Data_Params]
 types = "UTS"
-# datasets = ["AIOPS", "NAB", "WSD", "Yahoo", "UCR", "TODS"]
-datasets = ["Yahoo"]
+datasets = ["AIOPS", "NAB", "WSD", "Yahoo", "UCR", "TODS"]
+# datasets = ["Yahoo"]
 train_proportion = 1
 valid_proportion = 0.2
 preprocess = "min-max"

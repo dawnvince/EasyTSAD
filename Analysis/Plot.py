@@ -384,7 +384,9 @@ def plot_distribution_each_curve(scores, thresholds, labels, save_path, methods)
     plt.savefig("{}.pdf".format(save_path), format="pdf")
     plt.close()
     
-def plot_distribution_datasets(scores_dict, thresholds_dict, labels_dict, save_path, methods):
+def plot_distribution_datasets(scores_dict, thresholds_dict, labels_dict, save_path, methods, score_criterion="ano_quantile"):
+    quantile = 0.998
+    ano_quantile = 0.2
     method_num = len(methods)
     cols = 4
     plt.figure(figsize=(24, 4 * math.ceil(method_num/cols)))
@@ -396,6 +398,8 @@ def plot_distribution_datasets(scores_dict, thresholds_dict, labels_dict, save_p
     ano_seg_dict = {}
     
     for curve_name, label_raw in labels_dict.items():
+        if label_raw is None:
+            continue
         ll = len(label_raw)
         ano_flag = 0
         start, end = 0,0
@@ -425,6 +429,8 @@ def plot_distribution_datasets(scores_dict, thresholds_dict, labels_dict, save_p
         norm_score_all = 0
         ano_score_all = 0
         for curve_name, label_raw in labels_dict.items():
+            if label_raw is None:
+                continue
             score = scores_dict[method][curve_name]
             threshold = thresholds_dict[method][curve_name]
             if threshold == 0:
@@ -454,20 +460,28 @@ def plot_distribution_datasets(scores_dict, thresholds_dict, labels_dict, save_p
                 print("bias is ", bias)
                 raise e 
             
+            if len(score_ano) == 0:
+                continue
             scale_coff = 0.66
             bottom_score = np.min(score)
-            top_score = (threshold - bottom_score) * (1/scale_coff) + bottom_score
-            try:
-                assert top_score > bottom_score
-            except Exception as e:
-                print(threshold, bottom_score)
-                print(curve_name, method)
-                raise e
             
             score_norm = []
             for i in range(len(label)):
                 if label[i] < label_thres:
                     score_norm.append(score[i])
+            
+            if score_criterion == "quantile":
+                top_score = score_norm[np.argsort(np.array(score_norm))[int(len(score_norm)*quantile)]] + eps
+            elif score_criterion == "ano_quantile":
+                top_score = score_ano[np.argsort(np.array(score_ano))[int(len(score_ano)*ano_quantile)]] + eps
+            else:
+                top_score = (threshold - bottom_score) * (1/scale_coff) + bottom_score
+            try:
+                assert top_score > bottom_score
+            except Exception as e:
+                print(top_score, bottom_score)
+                print(curve_name, method)
+                raise e
                     
             # x = np.linspace(bottom_score, top_score, num=step)
             #  score_interv = (top_score - bottom_score) / step
@@ -481,8 +495,6 @@ def plot_distribution_datasets(scores_dict, thresholds_dict, labels_dict, save_p
                 if i < step:
                     y[int(i)] += 1  
                     
-            if len(score_ano) == 0:
-                continue
             #  ano_score_interv = (top_score - bottom_score) / ano_step
             score_ano = np.array(score_ano).flatten()
             score_ano = (score_ano - bottom_score) * ano_step / (top_score - bottom_score) 
@@ -499,11 +511,11 @@ def plot_distribution_datasets(scores_dict, thresholds_dict, labels_dict, save_p
                     
         xy = [i for i in range(step)]
         y = np.array(y) 
-        y = np.cumsum(y) / norm_score_all
+        y = np.cumsum(y) / norm_score_all 
         y[0] = 0
         
         # xz = [i for i in range(ano_step)]
-        z = np.array(z) 
+        z = np.array(z)
         z = np.cumsum(z) / ano_score_all
         z[0] = 0
         
@@ -511,7 +523,7 @@ def plot_distribution_datasets(scores_dict, thresholds_dict, labels_dict, save_p
         fig_y.set_title(method, y=-0.2)
         
         plt.plot(xy, y, label="normality", linewidth=0.1, color="steelblue")
-        plt.axvline(scale_coff * step, color="pink")
+        # plt.axvline(scale_coff * step, color="pink")
         # plt.ylim(-0.1, 1.05)
         
         # fig_z = plt.twinx(fig_y)

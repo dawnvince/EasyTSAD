@@ -1,8 +1,8 @@
 [dataset_dir]
  path = "datasets"
 
-[UTS]
- names = ["AIOPS", "NAB", "WSD", "Yahoo"]
+# [UTS]
+#  names = ["AIOPS", "NAB", "WSD", "Yahoo"]
 
 [Analysis]
  base_dir = "Results"
@@ -12,6 +12,17 @@
  y_hat_dir = "YHatResult"
  running_time_dir = "TimeResult"
  statistic_dir = "StatisticResult"
+
+ # define the error margin of the label
+ # format [margin-before-anomaly, margin-after-anomaly]
+ [Analysis.margin]
+  default = [0, 5]
+  AIOPS = [0, 5]
+  NAB = [0, 0]
+  TODS = [0, 5]
+  UCR = [0, 5]
+  WSD = [0, 3]
+  Yahoo = [0, 5]
 
 [Transfer]
  [Transfer.Default]

@@ -14,7 +14,7 @@ class EventRocPA(EvalInterface):
         self.mode = mode
         self.base = base
         
-    def calc(self, scores, labels, all_label_normal) -> type[MetricInterface]:
+    def calc(self, scores, labels, all_label_normal, margins) -> type[MetricInterface]:
         ## All labels are normal
         if all_label_normal:
             return Auroc(value=1, name=self.name)

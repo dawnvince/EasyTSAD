@@ -163,6 +163,8 @@ def geneDistributionSummary(glo_cfg, task_mode):
         for curve_name in curve_names:
             label_path = os.path.join(data_dir, curve_name, "test_label.npy")
             labels_dict[curve_name] = np.load(label_path)
+            if np.all(labels_dict[curve_name] < 0.5):
+                labels_dict[curve_name] = None
         
         for method in methods:
             scores_dict[method] = {}
@@ -182,7 +184,7 @@ def geneDistributionSummary(glo_cfg, task_mode):
                 else:
                     scores_dict[method][curve_name] = None
                 
-                if json_t:
+                if json_t and (labels_dict[curve_name] is not None):
                     thresholds_dict[method][curve_name] = get_value_in_dict(json_t[curve_name], thres_source)
         
         

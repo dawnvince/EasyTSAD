@@ -3,6 +3,7 @@ import toml
 import json
 import os
 from utils.util import build_dir
+import pandas as pd
 
 def get_info(base_path, method, dataset, mode, index_cfg):
     info_path = os.path.join(base_path, method, dataset, mode) + "_avg.json"
@@ -73,4 +74,37 @@ def geneCSV(glo_cfg, task_mode):
                 res += get_info(base_path, method, dataset, task_mode, sta_cfg["Statistic_index"])
         
             w.writerow(res)
+            
+    # prune
+    col_names = [i for i in range(1, 163)]
+    df = pd.read_csv(file_name, names=col_names, header=None)
+    new_names = [
+        "Method", "point-wise F1", "reduced-length F1", "event-wise F1", "10-delay reduced-length F1", "point-wise AUPRC", "reduced-length AUPRC", "event-wise AUPRC", "10-delay reduced-length AUPRC", 
+        
+        "point-wise F1", "reduced-length F1", "event-wise F1", "150-delay reduced-length F1", "point-wise AUPRC", "reduced-length AUPRC", "event-wise AUPRC", "150-delay reduced-length AUPRC",
+        
+        "point-wise F1", "reduced-length F1", "event-wise F1", "3-delay reduced-length F1", "point-wise AUPRC", "reduced-length AUPRC", "event-wise AUPRC", "3-delay reduced-length AUPRC",
+        
+        "point-wise F1", "reduced-length F1", "event-wise F1", "20-delay reduced-length F1","point-wise AUPRC", "reduced-length AUPRC", "event-wise AUPRC", "20-delay reduced-length AUPRC",
+        
+        "point-wise F1", "reduced-length F1", "event-wise F1", "3-delay reduced-length F1","point-wise AUPRC", "reduced-length AUPRC", "event-wise AUPRC", "3-delay reduced-length AUPRC",
+        
+        "point-wise F1", "reduced-length F1", "event-wise F1", "50-delay reduced-length F1","point-wise AUPRC", "reduced-length AUPRC", "event-wise AUPRC", "50-delay reduced-length AUPRC",
+                 ]
+    select_cols = [1,
+                   2,3,9,5,15,16,22,18,
+                   29,30,36,35,42,43,49,48,
+                   56, 57, 63, 58, 69, 70, 76, 71,
+                   83, 84, 90, 87, 96, 97, 103, 100,
+                   110, 111, 117, 112, 123, 124, 130, 125,
+                   137, 138, 144, 142, 150, 151, 157, 155
+                   ]
+    
+    new_file_name = file_name[:-4] + "_new.csv"
+    new_df = df[select_cols]
+    new_df.loc[1] = new_names
+    new_df.to_csv(new_file_name, header=False, index=False)
+    
+    
+    
         

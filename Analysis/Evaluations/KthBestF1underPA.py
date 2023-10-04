@@ -9,7 +9,7 @@ class KthBestF1underPA(EvalInterface):
         self.k = k
         self.name = "best f1 under %d-delay pa"%self.k
         
-    def calc(self, scores, labels, all_label_normal) -> type[MetricInterface]:
+    def calc(self, scores, labels, all_label_normal, margins) -> type[MetricInterface]:
         ## All labels are normal
         if all_label_normal:
             return F1class(
@@ -19,6 +19,8 @@ class KthBestF1underPA(EvalInterface):
                 f1=1, 
                 thres=0
         )
+            
+        k = self.k + margins[0]
             
         search_set = []
         tot_anomaly = 0
@@ -33,7 +35,7 @@ class KthBestF1underPA(EvalInterface):
                 # flag record if entering an anomaly segment
                 if flag == 1:
                     cur_anomaly_len += 1
-                    if cur_anomaly_len <= self.k:
+                    if cur_anomaly_len <= k:
                         cur_max_anomaly_score = scores[i] if scores[i] > cur_max_anomaly_score else cur_max_anomaly_score  # noqa: E501
                 else:
                     flag = 1

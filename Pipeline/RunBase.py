@@ -63,6 +63,8 @@ class RunBase(object):
             )
             y_hat_path = build_dir(y_hat_dir, method)
             self.y_hat_path = build_dir(y_hat_path, task_mode)
+            
+        self.margin_cfg = global_cfg["Analysis"]["margin"]
         
         
     def load_data(self, use_diff=True):
@@ -93,6 +95,13 @@ class RunBase(object):
             avg_json_path = os.path.join(evaldata_path, "{}_avg.json".format(self.task_mode))
             avg_res = None
             avg_len = -1
+            
+            if dataset_name in self.margin_cfg:
+                margins = (self.margin_cfg[dataset_name][0], self.margin_cfg[dataset_name][1])
+                print("    Using margins ", margins)
+            else:
+                margins = (self.margin_cfg["default"][0], self.margin_cfg["default"][1])
+                print("    Using default margins ", margins)
             
             if self.use_plot:
                 if self.method_cfg["Analysis"]["plot_score"]:
@@ -133,7 +142,9 @@ class RunBase(object):
                     )
                 
                 # calculate performance using multiple evaluation methods
-                eva = Performance(scores=score, labels=value[curve_name].test_label)
+                eva = Performance(scores=score, labels=value[curve_name].test_label, margins=margins)
+                if eva.all_label_normal:
+                    continue
                 res, res_dict = eva.do_eval(self.evaluations)
                 
                 eval_dict[curve_name] = res_dict

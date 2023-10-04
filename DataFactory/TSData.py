@@ -108,10 +108,10 @@ class TSData:
         self.train = scaler.transform(self.train.reshape(-1, 1)).flatten()
         
         self.valid = scaler.transform(self.valid.reshape(-1, 1)).flatten()
-        self.valid = np.clip(self.valid, a_min=feature_range[0]-1, a_max=feature_range[1]+1)
+        self.valid = np.clip(self.valid, a_min=feature_range[0]-2, a_max=feature_range[1]+2)
             
         self.test = scaler.transform(self.test.reshape(-1, 1)).flatten()
-        self.test = np.clip(self.test, a_min=feature_range[0]-1, a_max=feature_range[1]+1)
+        self.test = np.clip(self.test, a_min=feature_range[0]-2, a_max=feature_range[1]+2)
 
     def z_score_norm(self):
         '''

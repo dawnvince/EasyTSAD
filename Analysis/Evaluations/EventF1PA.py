@@ -33,7 +33,7 @@ class EventF1PA(EvalInterface):
         else:
             raise ValueError("please select correct mode.")
         
-    def calc(self, scores, labels, all_label_normal) -> type[MetricInterface]:
+    def calc(self, scores, labels, all_label_normal, margins) -> type[MetricInterface]:
         '''
         Calculating best-f1 under point-adjustment approach.
         

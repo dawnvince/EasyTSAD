@@ -362,7 +362,7 @@ def UCR():
     export_dir = os.path.join(export_path_uts, "UCR")
     if not os.path.isdir(export_dir):
         os.mkdir(export_dir)
-    
+
     for name in os.listdir(ori_path):
         
         curve = os.path.join(ori_path, name)

@@ -4,7 +4,7 @@ datasets = ["AIOPS", "NAB", "WSD", "Yahoo", "UCR", "TODS"]
 # datasets = ["TODS"]
 train_proportion = 1
 valid_proportion = 0.2
-preprocess = "raw"
+preprocess = "min-max"
 diff_p = 1
 
 [Analysis]
