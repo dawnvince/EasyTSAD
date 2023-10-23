@@ -166,7 +166,7 @@ def rec_scores_kth_event(scores, labels, k:int, mode, base):
             new_labels += [1] * cur_anomaly_len
             
         # marked anomaly at the end of the list
-        elif ano_flag == 1 and i == ll - 1:
+        if ano_flag == 1 and i == ll - 1:
             ano_flag = 0
             end = i + 1
             cur_anomaly_len = func(end - start)

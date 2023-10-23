@@ -9,6 +9,8 @@ dpi = 2000
 clip_rate = 0.998
 eps = 1e-10
 inf = 1e20
+
+linewidth = 5
     
 def plot_uts_score_only(curve, score, label, save_path):
     assert len(label) >= len(score), "Score length is longer than label length."
@@ -22,14 +24,14 @@ def plot_uts_score_only(curve, score, label, save_path):
     
     plt.figure(figsize=(96, 8))
     fig1 = plt.subplot(2, 1, 1)
-    plt.plot(x, curve, label="raw curve", linewidth=0.1, color="red")
+    plt.plot(x, curve, label="raw curve", linewidth=linewidth, color="red")
     
     plt.xticks([])
     
     plt.legend(loc="upper left",prop=font1, handlelength=1, borderpad=0.1, handletextpad=0.3, ncol=2, columnspacing=0.5, borderaxespad=0.1)
     
     fig2 = plt.subplot(2, 1, 2)
-    plt.plot(x, score, label="anomaly score", linewidth=0.1, color="steelblue")
+    plt.plot(x, score, label="anomaly score", linewidth=linewidth, color="steelblue")
     plt.ylim(bottom_y, top_y)
     plt.legend(loc="upper left",prop=font1, handlelength=1, borderpad=0.1, handletextpad=0.3, ncol=2, columnspacing=0.5, borderaxespad=0.1)
     
@@ -75,15 +77,15 @@ def plot_uts_score_and_yhat(curve, y_hat, score, label, save_path):
     
     plt.figure(figsize=(96, 8))
     fig1 = plt.subplot(2, 1, 1)
-    plt.plot(x, curve, label="raw curve", linewidth=0.1, color="red")
-    plt.plot(x, y_hat, label="y_hat", linewidth=0.1, color="green")
+    plt.plot(x, curve, label="raw curve", linewidth=linewidth, color="red")
+    plt.plot(x, y_hat, label="y_hat", linewidth=linewidth, color="green")
     
     plt.xticks([])
     
     plt.legend(loc="upper left",prop=font1, handlelength=1, borderpad=0.1, handletextpad=0.3, ncol=2, columnspacing=0.5, borderaxespad=0.1)
     
     fig2 = plt.subplot(2, 1, 2)
-    plt.plot(x, score, label="anomaly score", linewidth=0.1, color="steelblue")
+    plt.plot(x, score, label="anomaly score", linewidth=linewidth, color="steelblue")
     plt.ylim(bottom_y, top_y)
     plt.legend(loc="upper left",prop=font1, handlelength=1, borderpad=0.1, handletextpad=0.3, ncol=2, columnspacing=0.5, borderaxespad=0.1)
     
@@ -130,7 +132,7 @@ def plot_uts_summary(curve, scores, label, save_path, methods):
     
     figs = []
     fig_curve = plt.subplot((method_num + 1), 1, 1)
-    plt.plot(x, curve, label="raw curve", linewidth=0.1, color="red")
+    plt.plot(x, curve, label="raw curve", linewidth=linewidth, color="red")
     plt.xticks([])
     plt.legend(loc="upper left",prop=font1, handlelength=1, borderpad=0.1, handletextpad=0.3, ncol=2, columnspacing=0.5, borderaxespad=0.1)
     
@@ -147,7 +149,7 @@ def plot_uts_summary(curve, scores, label, save_path, methods):
         bottom_y = score.min() - 0.1 * (top_y - score.min())
         
         fig_m = plt.subplot((method_num + 1), 1, i+2)
-        plt.plot(x, score, label=methods[i], linewidth=0.1, color="steelblue")
+        plt.plot(x, score, label=methods[i], linewidth=linewidth, color="steelblue")
         plt.ylim(bottom_y, top_y)
         plt.legend(loc="upper left",prop=font1, handlelength=1, borderpad=0.1, handletextpad=0.3, ncol=2, columnspacing=0.5, borderaxespad=0.1)
         
@@ -262,7 +264,7 @@ def plot_cdf_summary(scores, labels, save_path, methods):
         fig_m = plt.subplot((math.ceil(method_num/cols)), cols, j + 1)
         
         y[0] = 0
-        plt.plot(x, y, label=methods[j], linewidth=0.1, color="steelblue")
+        plt.plot(x, y, label=methods[j], linewidth=linewidth, color="steelblue")
         plt.axvline(score_ano_avg, color="red")
         plt.axvline(score_ano_min, color="pink")
         plt.ylim(0.7, 1.1)
@@ -368,14 +370,14 @@ def plot_distribution_each_curve(scores, thresholds, labels, save_path, methods)
         fig_y = plt.subplot((math.ceil(method_num/cols)), cols, j + 1)
         fig_y.set_title(methods[j], y=-0.15)
         
-        plt.plot(x, y, label="normality", linewidth=0.1, color="steelblue")
+        plt.plot(x, y, label="normality", linewidth=linewidth, color="steelblue")
         plt.axvline(scale_coff * step - 1, color="pink")
         # plt.axvline(threshold, color="pink")
         # plt.ylim(0.7, 1.1)
         # plt.legend(loc="upper left",prop=font1, handlelength=1, borderpad=0.1, handletextpad=0.3, ncol=2, columnspacing=0.5, borderaxespad=0.1)
         
         # fig_z = plt.twinx(fig_y)
-        plt.plot(x, z, label="anomaly", linewidth=0.1, color="red")
+        plt.plot(x, z, label="anomaly", linewidth=linewidth, color="red")
         plt.legend(loc="lower right",prop=font1)
         # plt.legend(loc="upper right",prop=font1, handlelength=1, borderpad=0.1, handletextpad=0.3, ncol=2, columnspacing=0.5, borderaxespad=0.1)
         
@@ -522,12 +524,12 @@ def plot_distribution_datasets(scores_dict, thresholds_dict, labels_dict, save_p
         fig_y = plt.subplot((math.ceil(method_num/cols)), cols, cnt)
         fig_y.set_title(method, y=-0.2)
         
-        plt.plot(xy, y, label="normality", linewidth=0.1, color="steelblue")
+        plt.plot(xy, y, label="normality", linewidth=linewidth, color="steelblue")
         # plt.axvline(scale_coff * step, color="pink")
         # plt.ylim(-0.1, 1.05)
         
         # fig_z = plt.twinx(fig_y)
-        plt.plot(xy, z, label="anomaly", linewidth=0.1, color="red")
+        plt.plot(xy, z, label="anomaly", linewidth=linewidth, color="red")
         plt.legend(loc="lower right",prop=font1)
         # plt.legend(loc="upper right",prop=font1, handlelength=1, borderpad=0.1, handletextpad=0.3, ncol=2, columnspacing=0.5, borderaxespad=0.1)
         # plt.ylim(-0.1, 1.05)

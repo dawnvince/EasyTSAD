@@ -62,7 +62,7 @@ class EventKthF1PA(EvalInterface):
                 tot_anomaly += self.func(end - start)
                 
             # marked anomaly at the end of the list
-            elif ano_flag == 1 and i == ll - 1:
+            if ano_flag == 1 and i == ll - 1:
                 ano_flag = 0
                 end = i + 1
                 tot_anomaly += self.func(end - start)

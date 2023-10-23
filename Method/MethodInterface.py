@@ -20,7 +20,7 @@ class BaseMethod(object):
      Optional:
       if you want to active "plot_y_hat" option in config.toml, OVERRIDE the function "get_y_hat" to save y_hat values; 
      NOTE: 
-      the function "train_valid_phase_all_in_one" receive a Dict of TSData INSTEAD OF TSData in function "train_valid_phase" as its args.
+      the function "train_valid_phase_all_in_one" receive a Dict of TSData INSTEAD OF one TSData instanece in function "train_valid_phase" as its args.
     
     4. Fullfill "config.toml" to set the parameters needed in your class. 
     '''
