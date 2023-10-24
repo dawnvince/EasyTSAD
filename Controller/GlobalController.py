@@ -166,10 +166,10 @@ class GlobalController:
             if self.ec["use_margin"] == True:
                 if dataset_name in self.ec["margin"]:
                     margins = (self.ec["margin"][dataset_name][0], self.ec["margin"][dataset_name][1])
-                    self.logger.info("    [{}] Using margins {}".format(dataset_name, margins))
+                    self.logger.info("        [{}] Using margins {}".format(dataset_name, margins))
                 else:
                     margins = (self.ec["margin"]["default"][0], self.ec["margin"]["default"][1])
-                    self.logger.info("    [{}] Using default margins {}".format(dataset_name, margins))
+                    self.logger.info("        [{}] Using default margins {}".format(dataset_name, margins))
                
             score_files = self.pm.get_score_curves(method, training_schema, dataset_name)
             eval_dict_path = self.pm.get_eval_json_all(method, training_schema, dataset_name)
