@@ -1,24 +1,42 @@
-import numpy as np
-import os
-import toml
-import sys
-
 from DataFactory import TSData
+from Controller import PathManager
+import logging
 
-# config_path = "./GlobalConfig.toml"
-# config = toml.load(config_path)
-# data_dir = config["dataset_dir"]["path"]
+logger = logging.getLogger("logger")    
 
-def specific_metrics():
-    pass
+def load_all_curve_in_dataset(types, dataset, train_proportion:float=1, valid_proportion:float=0, preprocess="z-score", diff_p=0):
+    """
+    Retrieves and preprocesses all time series in the specific dataset.
 
-def all_metrics(data_dir, types, dataset, train_proportion:float=1, valid_proportion:float=0, preprocess="min-max", diff_p=0):
-    base_path = os.path.join(data_dir, types, dataset)
+    Args:
+        types (str): 
+            UTS or MTS
+        dataset (str): 
+            Name of the dataset.
+        train_proportion (float, optional): 
+            Proportion of data to use for training. Defaults to 1 (uses all data).
+        valid_proportion (float, optional): 
+            Proportion of data to use for validation. Defaults to 0 (no validation data).
+        preprocess (str, optional): 
+            Preprocessing method to apply to the data. Options: "min-max", "z-score", "raw", None.
+            Defaults to "z-score".
+        diff_p (int, optional): 
+            Order of differencing to apply to the data. Defaults to 0 (no differencing).
+
+    Returns:
+        dict: Dictionary containing TSData instances for each metric, with metric names as keys.
+
+    Raises:
+        ValueError: If an unknown preprocessing method is specified.
+
+    """
+    pm = PathManager.get_instance()
+    curves = pm.get_dataset_curves(types, dataset)
     
     tsDatas = {}
-    for curve in os.listdir(base_path):
+    for curve in curves:
         ## Generate TSData instance from the numpy files
-        tsData = TSData.buildfrom(types=types, dataset=dataset, data_name=curve, data_dir=data_dir, train_proportion=train_proportion, valid_proportion=valid_proportion)
+        tsData = TSData.buildfrom(types=types, dataset=dataset, data_name=curve, train_proportion=train_proportion, valid_proportion=valid_proportion)
         
         if diff_p > 0 and isinstance(diff_p, int):
             tsData.differential(diff_p)
@@ -37,15 +55,89 @@ def all_metrics(data_dir, types, dataset, train_proportion:float=1, valid_propor
         tsDatas[curve] = tsData
     
     return tsDatas
-        
-def all_dataset(data_dir, types, datasets,
+
+
+def load_all_datasets(types, datasets,
                 train_proportion:float=1, 
                 valid_proportion:float=0, 
                 preprocess="min_max", diff_p=0):
-    
-    print("=== [Load Data] DataSets:", ','.join(datasets), "===")
+    """
+    Loads and preprocesses time series data from multiple datasets.
+
+    Args:
+        types (str): 
+            UTS or MTS
+        datasets (list): 
+            List of dataset names to load.
+        train_proportion (float, optional): 
+            Proportion of data to use for training. Defaults to 1 (uses all data).
+        valid_proportion (float, optional): 
+            Proportion of data to use for validation. Defaults to 0 (no validation data).
+        preprocess (str, optional): 
+            Preprocessing method to apply to the data. Options: "min-max", "z-score", "raw", None.
+            Defaults to "z-score".
+        diff_p (int, optional): 
+            Order of differencing to apply to the data. Defaults to 0 (no differencing).
+
+    Returns:
+        dict: Dictionary containing TSData instances for each dataset, with dataset names as keys.
+
+    """
+    logger.info("=== [Load Data (All)] DataSets: %s ==="%(','.join(datasets)))
     tsDatas = {}
     for dataset in datasets:
-        tsDatas[dataset] = all_metrics(data_dir, types, dataset, train_proportion, valid_proportion, preprocess, diff_p)
+        tsDatas[dataset] = load_all_curve_in_dataset(types, dataset, train_proportion, valid_proportion, preprocess, diff_p)
+    
+    return tsDatas
+
+def load_specific_curves(types, dataset, curve_names, train_proportion:float=1, valid_proportion:float=0, preprocess="z-score", diff_p=0):
+    """
+    Retrieves and preprocesses specific time series data from a dataset.
+
+    Args:
+        types (str): 
+            UTS or MTS
+        dataset (str): 
+            Name of the dataset.
+        curve_names (list[str]):
+            Name of the curves.
+        train_proportion (float, optional): 
+            Proportion of data to use for training. Defaults to 1 (uses all data).
+        valid_proportion (float, optional): 
+            Proportion of data to use for validation. Defaults to 0 (no validation data).
+        preprocess (str, optional): 
+            Preprocessing method to apply to the data. Options: "min-max", "z-score", "raw", None.
+            Defaults to "z-score".
+        diff_p (int, optional): 
+            Order of differencing to apply to the data. Defaults to 0 (no differencing).
+
+    Returns:
+        dict: Dictionary containing TSData instances for each dataset, with dataset names as keys.
+
+    Raises:
+        ValueError: If an unknown preprocessing method is specified.
+
+    """
+    logger.info("=== [Load Data (Specify)] DataSets: %s ==="%(dataset))
+    tsDatas = {dataset: {}}
+    for curve in curve_names:
+        ## Generate TSData instance from the numpy files
+        tsData = TSData.buildfrom(types=types, dataset=dataset, data_name=curve, train_proportion=train_proportion, valid_proportion=valid_proportion)
+        
+        if diff_p > 0 and isinstance(diff_p, int):
+            tsData.differential(diff_p)
+        
+        if preprocess == "min-max":
+            tsData.min_max_norm()
+        elif preprocess == "z-score":
+            tsData.z_score_norm()
+        elif preprocess == "raw":
+            pass
+        elif preprocess is None:
+            pass
+        else:
+            raise ValueError("Unknown preprocess, must be one of min-max, z-score, raw")
+        
+        tsDatas[dataset][curve] = tsData
     
     return tsDatas
