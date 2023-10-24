@@ -31,16 +31,16 @@ class PathManager:
             logger.error("Multiple PathManager instances. Violate Singleton Pattern.")
         return cls._instance
     
-    @classmethod
-    def get_instance(cls):
-        return cls._instance
+    @staticmethod
+    def get_instance():
+        return PathManager._instance
     
-    @classmethod
-    def del_instance(cls):
-        cls._instance = None
+    @staticmethod
+    def del_instance():
+        PathManager._instance = None
     
     def __init__(self, glo_cfg) -> None:                
-        glo_cfg = glo_cfg["Path"]
+        glo_cfg = glo_cfg["Paths"]
         self.glo_cfg = glo_cfg
         current_dir = os.getcwd()
         
@@ -147,12 +147,19 @@ class PathManager:
         check_and_build(path)
         return os.path.join(path, "%s.pdf"%curve_name)
     
-    def get_rt_path(self, method, schema, dataset):
+    def get_rt_time_path(self, method, schema, dataset):
         if self.__runtime_dir == None:
             self.__runtime_dir = build_dir(self.__res_p, self.glo_cfg["Results"]["runtime_dir"])
         path = os.path.join(self.__runtime_dir, method, schema, dataset)
         check_and_build(path)
-        return os.path.join(path, "all.json")
+        return os.path.join(path, "time.json")
+    
+    def get_rt_statistic_path(self, method, schema, dataset):
+        if self.__runtime_dir == None:
+            self.__runtime_dir = build_dir(self.__res_p, self.glo_cfg["Results"]["runtime_dir"])
+        path = os.path.join(self.__runtime_dir, method, schema, dataset)
+        check_and_build(path)
+        return os.path.join(path, "model_statistic.txt")
     
     def get_default_config_path(self, method):
         cur_path = os.path.abspath(__file__)

@@ -1,6 +1,6 @@
 [Paths]
  dataset = "None"
- [Results]
+ [Paths.Results]
   base_dir = "Results"
   score_dir = "Scores"
   y_hat_dir = "YHats"
@@ -19,7 +19,7 @@
  use_margin = true
  # format [margin-before-anomaly, margin-after-anomaly]
  # Valid when use_margin == true
- [margin]
+ [EvalSetting.margin]
   default = [0, 5]
   AIOPS = [0, 5]
   NAB = [0, 0]

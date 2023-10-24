@@ -17,17 +17,18 @@ import os
 from Exptools import EarlyStoppingTorch
 
 from .. import BaseMethod
-from TimesNet.TSDataset import AllInOneDataset, OneByOneDataset
-from TimesNet.Model import Model, adjust_learning_rate
+from .TSDataset import AllInOneDataset, OneByOneDataset
+from .Model import Model, adjust_learning_rate
 
 import argparse
 
 class TimesNet(BaseMethod):
-    def __init__(self, params:dict) -> None:
+    def __init__(self, params:dict, cuda:bool) -> None:
         super().__init__()
         self.__anomaly_score = None
+        self.y_hats = None
         
-        self.cuda = params["cuda"]
+        self.cuda = cuda
         if self.cuda == True and torch.cuda.is_available():
             self.device = torch.device("cuda")
             print("=== Using CUDA ===")
@@ -105,7 +106,7 @@ class TimesNet(BaseMethod):
             loop.set_postfix(loss=loss.item(), valid_loss=valid_loss)
             self.early_stopping(valid_loss, self.model)
             if self.early_stopping.early_stop:
-                print(">>>Early stopping<<<")
+                print("   Early stopping<<<")
                 break
             
             adjust_learning_rate(self.model_optim, epoch + 1, self.args)
@@ -171,7 +172,7 @@ class TimesNet(BaseMethod):
             
             self.early_stopping(valid_loss, self.model)
             if self.early_stopping.early_stop:
-                print(">>>Early stopping<<<")
+                print("   Early stopping<<<")
                 break
             
             adjust_learning_rate(self.model_optim, epoch + 1, self.args)

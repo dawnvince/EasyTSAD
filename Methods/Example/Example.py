@@ -19,10 +19,9 @@ from DataFactory import TSData
 from typing import Dict
 
 class Example(BaseMethod):
-    def __init__(self, tsData, params) -> None:
+    def __init__(self, params, cuda) -> None:
         super().__init__()
         self.__anomaly_score = None
-        self.tsData = tsData
         self.param_1 = params["param_1"]
         self.model = ... # your model
         

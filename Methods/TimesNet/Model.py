@@ -2,8 +2,8 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torch.fft
-from Method.TimesNet.layers import DataEmbedding
-from Method.TimesNet.layers import Inception_Block_V1
+from .layers import DataEmbedding
+from .layers import Inception_Block_V1
 
 def adjust_learning_rate(optimizer, epoch, args):
     # lr = args.learning_rate * (0.2 ** (epoch // 2))

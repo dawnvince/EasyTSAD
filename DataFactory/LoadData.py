@@ -4,7 +4,7 @@ import logging
 
 logger = logging.getLogger("logger")    
 
-def load_all_curve_in_dataset(types, dataset, train_proportion:float=1, valid_proportion:float=0, preprocess="z-score", diff_p=0):
+def __load_all_curve_in_dataset(types, dataset, train_proportion:float=1, valid_proportion:float=0, preprocess="z-score", diff_p=0):
     """
     Retrieves and preprocesses all time series in the specific dataset.
 
@@ -57,7 +57,7 @@ def load_all_curve_in_dataset(types, dataset, train_proportion:float=1, valid_pr
     return tsDatas
 
 
-def load_all_datasets(types, datasets,
+def __load_all_datasets(types, datasets,
                 train_proportion:float=1, 
                 valid_proportion:float=0, 
                 preprocess="min_max", diff_p=0):
@@ -83,14 +83,14 @@ def load_all_datasets(types, datasets,
         dict: Dictionary containing TSData instances for each dataset, with dataset names as keys.
 
     """
-    logger.info("=== [Load Data (All)] DataSets: %s ==="%(','.join(datasets)))
+    logger.info("    [Load Data (All)] DataSets: %s "%(','.join(datasets)))
     tsDatas = {}
     for dataset in datasets:
-        tsDatas[dataset] = load_all_curve_in_dataset(types, dataset, train_proportion, valid_proportion, preprocess, diff_p)
+        tsDatas[dataset] = __load_all_curve_in_dataset(types, dataset, train_proportion, valid_proportion, preprocess, diff_p)
     
     return tsDatas
 
-def load_specific_curves(types, dataset, curve_names, train_proportion:float=1, valid_proportion:float=0, preprocess="z-score", diff_p=0):
+def __load_specific_curves(types, dataset, curve_names, train_proportion:float=1, valid_proportion:float=0, preprocess="z-score", diff_p=0):
     """
     Retrieves and preprocesses specific time series data from a dataset.
 
@@ -118,7 +118,7 @@ def load_specific_curves(types, dataset, curve_names, train_proportion:float=1, 
         ValueError: If an unknown preprocessing method is specified.
 
     """
-    logger.info("=== [Load Data (Specify)] DataSets: %s ==="%(dataset))
+    logger.info("    [Load Data (Specify)] DataSets: %s "%(dataset))
     tsDatas = {dataset: {}}
     for curve in curve_names:
         ## Generate TSData instance from the numpy files
@@ -141,3 +141,38 @@ def load_specific_curves(types, dataset, curve_names, train_proportion:float=1, 
         tsDatas[dataset][curve] = tsData
     
     return tsDatas
+
+
+def load_data(dc, preprocess, diff_p):
+    """
+    Loads the data based on the specified configuration.
+
+    Args:
+        - `use_diff` (bool, optional): Whether to use differential order. Defaults to True.
+
+    Returns:
+        dict: A dictionary containing the loaded time series data.
+    """
+    
+    if dc["specify_curves"]:
+        tsDatas = __load_specific_curves(
+            types=dc["dataset_type"],
+            dataset=dc["datasets"][0],
+            curve_names=dc["specify_curves"],
+            train_proportion=dc["train_proportion"], 
+            valid_proportion=dc["valid_proportion"],
+            preprocess=preprocess,
+            diff_p=diff_p
+        )
+        return tsDatas
+
+    else:
+        tsDatas = __load_all_datasets(
+            types=dc["dataset_type"],
+            datasets=dc["datasets"],
+            train_proportion=dc["train_proportion"], 
+            valid_proportion=dc["valid_proportion"],
+            preprocess=preprocess,
+            diff_p=diff_p
+        )
+        return tsDatas

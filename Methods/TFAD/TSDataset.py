@@ -27,7 +27,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 import sklearn
-from Method.TFAD import utils
+from . import utils
 
 
 class TimeSeries:
@@ -189,7 +189,7 @@ class TimeSeriesDataset(List[TimeSeries]):
             raise NotImplementedError()
 
 
-from Method.TFAD import transforms as tr
+from . import transforms as tr
 
 def kpi_inject_anomalies(
     dataset: TimeSeriesDataset,

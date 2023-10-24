@@ -24,25 +24,25 @@ from pytorch_lightning.loggers import TensorBoardLogger
 from pytorch_lightning import Trainer
 # from torchmetrics import Accuracy, Precision, Recall, ConfusionMatrix
 
-# from tfad.ts import TimeSeriesDataset
-from TFAD import model, utils
-from TFAD.model.distances import CosineDistance, LpDistance, BinaryOnX1
-from TFAD.model.outlier_exposure import coe_batch
-from TFAD.model.mixup import mixup_batch, slow_slope
-from TFAD.model.fft_aug import seasonal_shift, with_noise, other_fftshift, fft_aug
-from TFAD.TSDataset import CroppedTimeSeriesDatasetTorch, TimeSeriesDataset, TimeSeries, TimeSeriesDatasetTorch, kpi_inject_anomalies
-from TFAD.utils.donut_metrics import best_f1_search_grid, k_adjust_predicts
+# from .ts import TimeSeriesDataset
+from . import model, utils
+from .model.distances import CosineDistance, LpDistance, BinaryOnX1
+from .model.outlier_exposure import coe_batch
+from .model.mixup import mixup_batch, slow_slope
+from .model.fft_aug import seasonal_shift, with_noise, other_fftshift, fft_aug
+from .TSDataset import CroppedTimeSeriesDatasetTorch, TimeSeriesDataset, TimeSeries, TimeSeriesDatasetTorch, kpi_inject_anomalies
+from .utils.donut_metrics import best_f1_search_grid, k_adjust_predicts
 
 from DataFactory import TSData
 from .. import BaseMethod
 
 class TFAD(BaseMethod):
-    def __init__(self, params:dict) -> None:
+    def __init__(self, params:dict, cuda:bool) -> None:
         super().__init__()
-        
         self.__anomaly_score = None
+        self.y_hats = None
         
-        self.cuda = params["cuda"]
+        self.cuda = cuda
         if self.cuda == True and torch.cuda.is_available():
             self.device = "gpu"
             print("=== Using CUDA ===")

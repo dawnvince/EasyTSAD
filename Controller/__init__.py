@@ -1,2 +1,2 @@
-from GlobalController import GlobalController
-from PathManager import PathManager
+from .PathManager import PathManager
+from .GlobalController import GlobalController

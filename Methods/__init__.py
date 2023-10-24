@@ -53,6 +53,9 @@ class BaseMethod(metaclass=BaseMethodMeta):
 
         test_phase(self, tsData: TSData):
             Performs the testing phase on the given time series data. Must be implemented by subclasses.
+            
+        param_statistic(self):
+            Counting the params/Flops before training. Torchinfo is recommended if the method is implemented in Pytorch.
     """
     def anomaly_score(self) -> np.ndarray:
         """
@@ -112,3 +115,18 @@ class BaseMethod(metaclass=BaseMethodMeta):
 
         """
         raise NotImplementedError()
+    
+    def param_statistic(self):
+        pass
+    
+from .AE.AE import AE
+from .AnomalyTransformer.AnomalyTransformer import AnomalyTransformer
+from .AR.AR import AR
+from .Donut.Donut import Donut
+from .EncDecAD.EncDecAD import EncDecAD
+from .FCVAE.FCVAE import FCVAE
+from .LSTMADalpha.LSTMADalpha import LSTMADalpha
+from .LSTMADbeta.LSTMADbeta import LSTMADbeta
+from .SRCNN.SRCNN import SRCNN
+from .TFAD.TFAD import TFAD
+from .TimesNet.TimesNet import TimesNet

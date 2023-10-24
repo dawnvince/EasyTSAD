@@ -35,19 +35,21 @@ import os
 from Exptools import EarlyStoppingTorch
 
 from .. import BaseMethod
-from SRCNN.TSDataset import OneByOneTrainDataset, AllInOneTrainDataset
-from SRCNN.Model import *
+from .TSDataset import OneByOneTrainDataset, AllInOneTrainDataset
+from .Model import *
 
 from torch.autograd import Variable
 
 class SRCNN(BaseMethod):
-    def __init__(self, params:dict) -> None:
+    def __init__(self, params:dict, cuda:bool) -> None:
         super().__init__()
         self.__anomaly_score = None
+        self.y_hats = None
+        
+        self.cuda = cuda
         
         self.win_size = params["win_size"]
         self.lr = params["lr"]
-        self.cuda = params["cuda"]
         self.batch_size = params["batch_size"]
         self.epochs = params["epochs"]
         self.step = params["step"]
@@ -122,7 +124,7 @@ class SRCNN(BaseMethod):
             
             self.early_stopping(train_loss/len(train_loader), self.model)
             if self.early_stopping.early_stop:
-                print(">>>Early stopping<<<")
+                print("   Early stopping<<<")
                 break
             
             self.adjust_lr(self.optimizer, epoch)

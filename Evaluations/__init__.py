@@ -1,7 +1,6 @@
 from abc import ABCMeta,abstractmethod
 from typing import Dict, Type
 
-
 class MetricInterface(object):
     '''
     The MetricInterface class is an abstract base class that defines the interface for metrics. It serves as a blueprint for creating subclasses that represent specific metrics. 
@@ -50,3 +49,5 @@ class EvalInterface(object):
     @abstractmethod
     def get_name(self):
         return self.name
+    
+from .Performance import Performance

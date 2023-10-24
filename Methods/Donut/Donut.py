@@ -9,16 +9,16 @@ import os
 from Exptools import EarlyStoppingTorch
 
 from .. import BaseMethod
-from Donut.TSDataset import OneByOneDataset, AllInOneDataset
-from Donut.Model import DonutModel, MaskedVAELoss
+from .TSDataset import OneByOneDataset, AllInOneDataset
+from .Model import DonutModel, MaskedVAELoss
 
 
 class Donut(BaseMethod):
-    def __init__(self, params:dict) -> None:
+    def __init__(self, params:dict, cuda:bool) -> None:
         super().__init__()
         self.__anomaly_score = None
         
-        self.cuda = params["cuda"]
+        self.cuda = cuda
         if self.cuda == True and torch.cuda.is_available():
             self.device = torch.device("cuda")
             print("=== Using CUDA ===")
@@ -104,7 +104,7 @@ class Donut(BaseMethod):
             
             self.early_stopping(valid_loss, self.model)
             if self.early_stopping.early_stop:
-                print(">>>Early stopping<<<")
+                print("   Early stopping<<<")
                 break
             
     def train_valid_phase_all_in_one(self, tsTrains: Dict[str, TSData]):    
@@ -127,7 +127,7 @@ class Donut(BaseMethod):
             
             self.early_stopping(valid_loss, self.model)
             if self.early_stopping.early_stop:
-                print(">>>Early stopping<<<")
+                print("   Early stopping<<<")
                 break
         
         

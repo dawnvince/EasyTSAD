@@ -1,4 +1,4 @@
-from Method.SRCNN.Model import average_filter, spectral_residual
+from .Model import average_filter, spectral_residual
 import torch
 import torch.utils.data
 import numpy as np

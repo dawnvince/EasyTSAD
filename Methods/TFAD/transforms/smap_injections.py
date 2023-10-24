@@ -13,9 +13,9 @@
 
 import numpy as np
 
-from Method.TFAD.TSDataset import TimeSeries
-from Method.TFAD import transforms as tr
-from Method.TFAD.transforms import TimeSeriesTransform
+from ..TSDataset import TimeSeries
+from .. import transforms as tr
+from ..transforms import TimeSeriesTransform
 
 
 def normalise_values(values):

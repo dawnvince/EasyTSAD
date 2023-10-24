@@ -8,7 +8,7 @@ import torch
 from torch import nn, optim
 from torch.utils.data import DataLoader
 
-from LSTMADalpha.TSDataset import UTSAllInOneDataset, UTSOneByOneDataset
+from .TSDataset import UTSAllInOneDataset, UTSOneByOneDataset
 
 SOS_token = 0
 
@@ -45,12 +45,12 @@ class LSTMModel(nn.Module):
         return outputs
     
 class LSTMADalpha(BaseMethod):
-    def __init__(self, params:dict) -> None:
+    def __init__(self, params:dict, cuda:bool) -> None:
         super().__init__()
         self.__anomaly_score = None
         self.y_hats = None
         
-        self.cuda = params["cuda"]
+        self.cuda = cuda
         if self.cuda == True and torch.cuda.is_available():
             self.device = torch.device("cuda")
             print("=== Using CUDA ===")
@@ -153,7 +153,7 @@ class LSTMADalpha(BaseMethod):
                     self.sigma = torch.var(scores)
                     print(self.mu.size(), self.sigma.size())
                 if self.early_stopping.early_stop:
-                    print(">>>Early stopping<<<")
+                    print("   Early stopping<<<")
                 break
 
     def train_valid_phase_all_in_one(self, tsTrains: Dict[str, TSData]):
@@ -226,7 +226,7 @@ class LSTMADalpha(BaseMethod):
                 self.sigma = torch.var(scores, dim=0)
                 print(self.mu.size(), self.sigma.size())
                 if self.early_stopping.early_stop:
-                    print(">>>Early stopping<<<")
+                    print("   Early stopping<<<")
                 break
 
     def test_phase(self, tsData: TSData):
