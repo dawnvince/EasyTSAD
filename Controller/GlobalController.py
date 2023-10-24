@@ -220,7 +220,7 @@ class GlobalController:
         )
         
         for dataset_name, value in tsDatas.items():
-            self.logger.info("    [{}] Plot dataset {} score only <<<".format(method, dataset_name))
+            self.logger.info("    [{}] Plot dataset {} score only ".format(method, dataset_name))
             
             score_files = self.pm.get_score_curves(method, training_schema, dataset_name)
             for score_file in score_files:
@@ -238,7 +238,7 @@ class GlobalController:
                 
         if plot_yhat:
             for dataset_name, value in tsDatas.items():
-                self.logger.info("    [{}] Plot dataset {} with yhat <<<".format(method, dataset_name))
+                self.logger.info("    [{}] Plot dataset {} with yhat ".format(method, dataset_name))
                 
                 score_files = self.pm.get_score_curves(method, training_schema, dataset_name)
                 for score_file in score_files:
