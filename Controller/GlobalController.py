@@ -21,9 +21,9 @@ class GlobalController:
         GlobalController class represents a controller that manages global configuration and logging.
 
         Args:
-            cfg_path (str, optional): Path to the configuration file. If provided, the configuration will be applied from this file. Defaults to None (Not Recommanded).
-            log_path (str, optional): Path to the log file. If not provided, a default log file named "TSADEval.log" will be built in current workspace. Defaults to None.
-            log_level (str, optional): Log level to set for the logger. Options: "debug", "info", "warning", "error". Defaults to "info".
+            - cfg_path (str, optional): Path to the configuration file. If provided, the configuration will be applied from this file. Defaults to None (Not Recommanded).
+            - log_path (str, optional): Path to the log file. If not provided, a default log file named "TSADEval.log" will be built in current workspace. Defaults to None.
+            - log_level (str, optional): Log level to set for the logger. Options: "debug", "info", "warning", "error". Defaults to "info".
         """
         self.logger = setup_logger(log_path, level=log_level)
         
@@ -56,11 +56,11 @@ class GlobalController:
          Otherwise, if you want to specify some time series in a dataset, please specify ONLY ONE dataset and the curves in this dataset. E.g. set_dataset(datasets=\"WSD\", \"curve_names\"=[\"1\", \"2\"])
 
         Args:
-            datasets (Union[str, list[str]]): Name(s) of the dataset(s) to be set. Can be a single string or a list of strings.
-            dirname (str, optional): Path to the dataset directory. If not provided, it will be fetched from the configuration file. Defaults to None.
-            curve_type (str, optional): Type of the datasets. Defaults to "UTS".
-            specify_curves (bool, optional): Flag indicating whether to specify individual curves within the dataset(s). Defaults to False.
-            curve_names (Union[None, str, list[str]], optional): Name(s) of the curve(s) to be used. Can be None, a single string, or a list of strings. Defaults to None.
+            - datasets (Union[str, list[str]]): Name(s) of the dataset(s) to be set. Can be a single string or a list of strings.
+            - dirname (str, optional): Path to the dataset directory. If not provided, it will be fetched from the configuration file. Defaults to None.
+            - curve_type (str, optional): Type of the datasets. Defaults to "UTS".
+            - specify_curves (bool, optional): Flag indicating whether to specify individual curves within the dataset(s). Defaults to False.
+            - curve_names (Union[None, str, list[str]], optional): Name(s) of the curve(s) to be used. Can be None, a single string, or a list of strings. Defaults to None.
 
         Raises:
             ValueError: If the dataset directory path is not specified.

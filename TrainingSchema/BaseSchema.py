@@ -7,10 +7,36 @@ import json
 from Controller import PathManager
 from DataFactory import TSData, LoadData
 
+
 logger = logging.getLogger("logger")
 
 class BaseSchema(object):
+    '''
+    The `BaseSchema` class is a base class that provides common functionality for working with schemas in a specific method. It is used as a blueprint for creating subclasses that implement specific methods and schemas. 
+
+    - `__init__(self, dc, ec, method, schema:str, cfg_path:str=None, diff_order:int=None, preprocess:str=None)`: This is the constructor method that initializes an instance of the class.
+
+    - `load_data(self, use_diff=True)`: This method loads the data based on the specified configuration. It takes an optional parameter `use_diff` that determines whether to use the differential order. It returns a dictionary containing the loaded time series data.
+
+    - `do_exp(self)`: This method performs the experiment. It is meant to be overridden by subclasses.
+
+    - `do_eval(self, tsDatas, evals)`: This method performs evaluation on the time series data. 
+
+    The class also has instance variables `dc`, `ec`, `method`, `schema`, `pm`, and `cfg` that store the respective values passed to the constructor.
+    '''
     def __init__(self, dc, ec, method, schema:str, cfg_path:str=None, diff_order:int=None, preprocess:str=None) -> None:
+        """
+        Initializes an instance of the BaseSchema class.
+
+        Args:
+            dc (dict): Data configuration parameters.
+            ec (dict): Evaluation configuration parameters.
+            method (str): The method being used.
+            schema (str): The schema being used.
+            cfg_path (str, optional): Path to a custom configuration file. Defaults to None.
+            diff_order (int, optional): The differential order. Defaults to None.
+            preprocess (str, optional): The preprocessing method. Options: "raw", "min-max", "z-score". Defaults to None (equals to "raw"). 
+        """
         self.dc = dc
         self.ec = ec
         self.schema = schema
@@ -54,6 +80,16 @@ class BaseSchema(object):
  
         
     def load_data(self, use_diff=True):
+        """
+        Loads the data based on the specified configuration.
+
+        Args:
+            use_diff (bool, optional): Whether to use differential order. Defaults to True.
+
+        Returns:
+            dict: A dictionary containing the loaded time series data.
+        """
+        
         if self.dc["specify_curves"]:
             diff_p = self.cfg["Data_Params"]["diff_order"]
             if not use_diff:
@@ -84,9 +120,23 @@ class BaseSchema(object):
             return tsDatas
         
     def do_exp(self):
+        """
+        Performs the experiment.
+        """
         pass
     
     def do_eval(self, tsDatas, evals):
+        """
+        Performs evaluation on the time series data.
+
+        Args:
+            tsDatas (dict): A dictionary containing the time series data.
+            evals: The evaluation methods to use.
+
+        Returns:
+            dict: A dictionary containing the evaluation results.
+        """
+        
         for dataset_name, value in tsDatas.items():
             logger.info(">>> [{}] Eval dataset {} <<<".format(self.method, dataset_name))
             eval_dict = {}
@@ -115,10 +165,10 @@ class BaseSchema(object):
                 score = np.load(score_path)
                 
                 # calculate performance using multiple evaluation methods
-                eva = Performance(scores=score, labels=value[curve_name].test_label, margins=margins)
+                eva = Evaluations(scores=score, labels=value[curve_name].test_label, margins=margins)
                 if eva.all_label_normal:
                     continue
-                res, res_dict = eva.do_eval(self.evaluations)
+                res, res_dict = eva.do_eval(evals)
                 
                 eval_dict[curve_name] = res_dict
 
