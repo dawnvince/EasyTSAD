@@ -13,6 +13,7 @@ from torch.utils.data import DataLoader
 import torch_optimizer as optim
 
 import pytorch_lightning as pl
+import torchinfo
 
 ## unavailble in pl 2.0
 # from pytorch_lightning.metric import Metric
@@ -80,6 +81,8 @@ class TFAD(BaseMethod):
         max_windows_unfold_batch = params["max_windows_unfold_batch"]
         rnd_seed = params["rnd_seed"]
         self.label_reduction_method=params["label_reduction_method"]
+        
+        self.input_shape = (self.num_crops_per_series, ts_channels, self.window_length)
         
         tcn_kernel_size: int = 7
         
@@ -295,6 +298,11 @@ class TFAD(BaseMethod):
         
     def anomaly_score(self) -> np.ndarray:
         return self.__anomaly_score
+    
+    def param_statistic(self, save_file):
+        model_stats = torchinfo.summary(self.model, self.input_shape, verbose=0)
+        with open(save_file, 'w') as f:
+            f.write(str(model_stats))
 
 
 def D_matrix(N):

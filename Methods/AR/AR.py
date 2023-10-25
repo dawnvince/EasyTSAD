@@ -1,4 +1,5 @@
 from typing import Dict
+import torchinfo
 import tqdm
 from DataFactory import TSData
 from Exptools import EarlyStoppingTorch
@@ -178,3 +179,8 @@ class AR(BaseMethod):
         
     def anomaly_score(self) -> np.ndarray:
         return self.__anomaly_score
+    
+    def param_statistic(self, save_file):
+        model_stats = torchinfo.summary(self.model, (self.batch_size, self.p), verbose=0)
+        with open(save_file, 'w') as f:
+            f.write(str(model_stats))

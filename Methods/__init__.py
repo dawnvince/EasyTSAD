@@ -116,17 +116,19 @@ class BaseMethod(metaclass=BaseMethodMeta):
         """
         raise NotImplementedError()
     
-    def param_statistic(self):
+    def param_statistic(self, save_file):
         pass
-    
-from .AE.AE import AE
-from .AnomalyTransformer.AnomalyTransformer import AnomalyTransformer
-from .AR.AR import AR
-from .Donut.Donut import Donut
-from .EncDecAD.EncDecAD import EncDecAD
-from .FCVAE.FCVAE import FCVAE
-from .LSTMADalpha.LSTMADalpha import LSTMADalpha
-from .LSTMADbeta.LSTMADbeta import LSTMADbeta
-from .SRCNN.SRCNN import SRCNN
-from .TFAD.TFAD import TFAD
-from .TimesNet.TimesNet import TimesNet
+
+# __all__ = ['AE', 'AnomalyTransformer', 'AR', 'Donut', 'EncDecAD', 'FCVAE', 'LSTMADalpha', 'LSTMADbeta', 'SRCNN', 'TFAD', 'TimesNet']
+
+# from .AE.AE import AE
+# from .AnomalyTransformer.AnomalyTransformer import AnomalyTransformer
+# from .AR.AR import AR
+# from .Donut.Donut import Donut
+# from .EncDecAD.EncDecAD import EncDecAD
+# from .FCVAE.FCVAE import FCVAE
+# from .LSTMADalpha.LSTMADalpha import LSTMADalpha
+# from .LSTMADbeta.LSTMADbeta import LSTMADbeta
+# from .SRCNN.SRCNN import SRCNN
+# from .TFAD.TFAD import TFAD
+# from .TimesNet.TimesNet import TimesNet

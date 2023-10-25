@@ -45,13 +45,7 @@ class AllInOne(BaseSchema):
                 raise ModuleNotFoundError("class %s has not been found. Please check the name."%self.method)
             
             statistic_path = self.pm.get_rt_statistic_path(self.method, self.schema, dataset_name)
-            
-            original_stdout = sys.stdout 
-            with open(statistic_path, 'w') as f:
-                sys.stdout = f # set stdout to file handler
-                method.param_statistic()
-            
-            sys.stdout = original_stdout
+            method.param_statistic(statistic_path)
             
             ## training and validation phase
             self.train_valid_timer.tic()

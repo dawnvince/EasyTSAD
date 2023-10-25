@@ -1,4 +1,5 @@
 from typing import Dict
+import torchinfo
 import tqdm
 from DataFactory import TSData
 from Exptools import EarlyStoppingTorch
@@ -257,3 +258,8 @@ class LSTMADbeta(BaseMethod):
     
     def get_y_hat(self) -> np.ndarray:
         return self.y_hats
+    
+    def param_statistic(self, save_file):
+        model_stats = torchinfo.summary(self.model, (self.batch_size, self.window_size), verbose=0)
+        with open(save_file, 'w') as f:
+            f.write(str(model_stats))

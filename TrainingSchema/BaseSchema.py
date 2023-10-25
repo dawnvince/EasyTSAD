@@ -9,6 +9,8 @@ from DataFactory import TSData, LoadData
 from Evaluations import Performance
 from Runtime.Timer import PerformanceTimer
 
+from utils import update_nested_dict
+
 class BaseSchema(object):
     '''
     The `BaseSchema` class is a base class that provides common functionality for working with schemas in a specific method. It is used as a blueprint for creating subclasses that implement specific methods and schemas. 
@@ -53,7 +55,8 @@ class BaseSchema(object):
             cfg_path = self.pm.get_default_config_path(method)
             if os.path.exists(cfg_path):
                 self.logger.info("    Use Default Method Config. Path: %s"%cfg_path)
-                self.cfg = toml.load(cfg_path)
+                new_cfg = toml.load(cfg_path)
+                self.cfg = update_nested_dict(self.cfg, new_cfg)
                 use_cfg = True
             else:
                 self.logger.info("Use Function Parameters.")

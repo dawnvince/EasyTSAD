@@ -622,7 +622,6 @@ class CroppedTimeSeriesDatasetTorch(Dataset):
             suspect_window_length=self.suspect_window_length,
             reduction_method=self.label_reduction_method,
         )
-
         return x, y_suspect
 
 

@@ -7,6 +7,7 @@ Copyright (c) 2021 THUML @ Tsinghua University
 
 from typing import Dict
 import numpy as np
+import torchinfo
 from DataFactory import TSData
 import torch
 from torch import nn, optim
@@ -44,6 +45,8 @@ class TimesNet(BaseMethod):
         self.criterion = nn.MSELoss()
         
         self.early_stopping = EarlyStoppingTorch(None, patience=self.args.patience)
+        
+        self.input_shape = (self.args.batch_size, self.args.seq_len, self.args.enc_in)
         
     
     def train_valid_phase(self, tsTrain: TSData):
@@ -229,3 +232,8 @@ class TimesNet(BaseMethod):
     
     def get_y_hat(self) -> np.ndarray:
         return self.y_hats
+    
+    def param_statistic(self, save_file):
+        model_stats = torchinfo.summary(self.model, self.input_shape, verbose=0)
+        with open(save_file, 'w') as f:
+            f.write(str(model_stats))

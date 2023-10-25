@@ -10,6 +10,8 @@ from math import sqrt
 import os
 
 import tqdm
+
+import torchinfo
 from DataFactory import TSData
 from .. import BaseMethod
 from Methods.AnomalyTransformer.TSDataset import OneByOneDataset, AllInOneDataset
@@ -325,6 +327,9 @@ class AnomalyTransformer(BaseMethod):
         self.batch_size = params["batch_size"]
         
         self.model = AnomalyTransformerModel(win_size=self.win_size, enc_in=input_c, c_out=output_c, e_layers=3)
+        
+        self.input_shape = (self.batch_size, self.win_size, input_c)
+        
         if torch.cuda.is_available():
             self.model.cuda()
         self.optimizer = torch.optim.Adam(self.model.parameters(), lr=self.lr)
@@ -579,3 +584,8 @@ class AnomalyTransformer(BaseMethod):
         
     def anomaly_score(self) -> np.ndarray:
         return self.__anomaly_score
+    
+    def param_statistic(self, save_file):
+        model_stats = torchinfo.summary(self.model, self.input_shape, verbose=0)
+        with open(save_file, 'w') as f:
+            f.write(str(model_stats))

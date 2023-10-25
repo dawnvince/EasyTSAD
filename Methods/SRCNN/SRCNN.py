@@ -26,6 +26,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
 from typing import Dict
 import numpy as np
+import torchinfo
 from DataFactory import TSData
 import torch
 from torch import nn, optim
@@ -181,3 +182,8 @@ class SRCNN(BaseMethod):
     
     def anomaly_score(self) -> np.ndarray:
         return self.__anomaly_score
+    
+    def param_statistic(self, save_file):
+        model_stats = torchinfo.summary(self.model, (self.batch_size, self.win_size), verbose=0)
+        with open(save_file, 'w') as f:
+            f.write(str(model_stats))

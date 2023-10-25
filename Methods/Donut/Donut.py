@@ -1,5 +1,6 @@
 from typing import Dict
 import numpy as np
+import torchinfo
 from DataFactory import TSData
 import torch
 from torch import nn, optim
@@ -165,4 +166,9 @@ class Donut(BaseMethod):
     
     def get_y_hat(self) -> np.ndarray:
         return super().get_y_hat
+    
+    def param_statistic(self, save_file):
+        model_stats = torchinfo.summary(self.model, (self.batch_size, self.window_size), verbose=0)
+        with open(save_file, 'w') as f:
+            f.write(str(model_stats))
     

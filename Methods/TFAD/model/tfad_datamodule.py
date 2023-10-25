@@ -22,10 +22,7 @@ from torch.utils.data import DataLoader
 from torch.utils.data import Dataset
 from torchvision.transforms import Compose, Lambda
 
-import pytorch_lightning as pl
-from pytorch_lightning.utilities.parsing import AttributeDict
-
-from Method.TFAD.TSDataset import TimeSeriesDataset, ts_random_crop
+from ..TSDataset import TimeSeriesDataset, ts_random_crop
 
 class TimeSeriesDatasetTorch(Dataset):
     """Time series dataset

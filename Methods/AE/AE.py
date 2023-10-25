@@ -7,6 +7,7 @@ import numpy as np
 import torch
 from torch import nn, optim
 from torch.utils.data import DataLoader
+from torchinfo import summary
 
 from DataFactory.TorchDataSet import ReconstructWindow
 
@@ -203,3 +204,8 @@ class AE(BaseMethod):
     
     def anomaly_score(self) -> np.ndarray:
         return self.__anomaly_score
+    
+    def param_statistic(self, save_file):
+        model_stats = summary(self.model, (self.batch_size, self.p), verbose=0)
+        with open(save_file, 'w') as f:
+            f.write(str(model_stats))

@@ -4,21 +4,13 @@ import toml
 import json
 from typing import Union
 from Evaluations import Performance
-
+from utils import update_nested_dict
 from Plots.plot import plot_uts_score_only
 
 from .logger import setup_logger
 from .PathManager import PathManager
 from DataFactory.LoadData import load_data
 from TrainingSchema import AllInOne, ZeroShot, OneByOne
-
-def __update_nested_dict(d1, d2):
-    for k, v in d2.items():
-        if isinstance(v, dict):
-            d1[k] = __update_nested_dict(d1.get(k, {}), v)
-        else:
-            d1[k] = v
-    return d1
 
 class GlobalController:
     '''
@@ -277,7 +269,7 @@ class GlobalController:
         
         path = os.path.abspath(path)
         new_cfg = toml.load(path)
-        self.cfg = __update_nested_dict(self.cfg, new_cfg)
+        self.cfg = update_nested_dict(self.cfg, new_cfg)
         
         self.logger.info("Reload Config Successfully.")
         self.logger.debug(json.dumps(self.cfg, indent=4))
