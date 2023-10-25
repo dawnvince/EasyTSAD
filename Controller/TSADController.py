@@ -1,3 +1,4 @@
+import csv
 import numpy as np
 import os
 import toml
@@ -11,14 +12,15 @@ from .logger import setup_logger
 from .PathManager import PathManager
 from DataFactory.LoadData import load_data
 from TrainingSchema import AllInOne, ZeroShot, OneByOne
+from Summary import Summary
 
-class GlobalController:
+class TSADController:
     '''
-    GlobalController class represents a controller that manages global configuration and logging.
+    TSADController class represents a controller that manages global configuration and logging.
     '''
     def __init__(self, cfg_path=None, log_path=None, log_level="info") -> None:
         """
-        GlobalController class represents a controller that manages global configuration and logging.
+        TSADController class represents a controller that manages global configuration and logging.
 
         Args:
             - `cfg_path` (str, optional): Path to the configuration file. If provided, the configuration will be applied from this file. Defaults to None (Not Recommanded).
@@ -36,6 +38,7 @@ class GlobalController:
             
         PathManager.del_instance()
         self.pm = PathManager(self.cfg)
+        self.summary = Summary()
         
         # dataset controller
         self.dc = {
@@ -48,7 +51,7 @@ class GlobalController:
     
     def set_dataset(self, datasets: Union[str, list[str]], dirname=None, dataset_type="UTS", specify_curves=False, curve_names: Union[None, str, list[str]]=None, train_proportion=None, valid_proportion=None):
         """
-        Registers the dataset settings and related parameters for the GlobalController instance. This will check if the paths and the parameters are valid.
+        Registers the dataset settings and related parameters for the TSADController instance. This will check if the paths and the parameters are valid.
         
         NOTE: 
          If you want to run all curves in the dataset, set \"specify_curves\" to False. In this mode, \"curve_names\" should be set to None.\n
@@ -72,7 +75,7 @@ class GlobalController:
         # define dataset directory
         if dirname is None:
             if self.cfg["Path"]["dataset"] == "None":
-                raise ValueError("Missing Dataset Directory Path. \nPlease specify the dataset directory path either using param: dirname or specifying the config path when building GlobalController instance.")
+                raise ValueError("Missing Dataset Directory Path. \nPlease specify the dataset directory path either using param: dirname or specifying the config path when building TSADController instance.")
             dirname = self.cfg["Path"]["dataset"]
             
         dirname = os.path.abspath(dirname)
@@ -273,3 +276,4 @@ class GlobalController:
         
         self.logger.info("Reload Config Successfully.")
         self.logger.debug(json.dumps(self.cfg, indent=4))
+    

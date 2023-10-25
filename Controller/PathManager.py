@@ -47,11 +47,16 @@ class PathManager:
         self.__data_p = None
         self.__res_p = build_dir(current_dir, self.glo_cfg["Results"]["base_dir"])
         
-        self.__score_dir = None
-        self.__y_hat_dir = None
-        self.__plot_dir = None
-        self.__runtime_dir = None
-        self.__eval_dir = None
+        self.__score_dir = os.path.join(self.__res_p, self.glo_cfg["Results"]["score_dir"])
+        self.__y_hat_dir = os.path.join(self.__res_p, self.glo_cfg["Results"]["y_hat_dir"])
+        self.__plot_dir = os.path.join(self.__res_p, self.glo_cfg["Results"]["plot_dir"])
+        self.__runtime_dir = os.path.join(self.__res_p, self.glo_cfg["Results"]["runtime_dir"])
+        self.__eval_dir = os.path.join(self.__res_p, self.glo_cfg["Results"]["eval_dir"])
+        
+        self.__sum_p = "Summary"
+        self.__aggreX = os.path.join(self.__res_p, self.__sum_p, self.glo_cfg["Results"]["Summary"]["aggreX"])
+        self.__aggreY = os.path.join(self.__res_p, self.__sum_p, self.glo_cfg["Results"]["Summary"]["aggreY"])
+        self.__csv_dir = os.path.join(self.__res_p, self.__sum_p, self.glo_cfg["Results"]["Summary"]["csv_dir"])
         
     def load_dataset_path(self, data_dir):
         self.__data_p = data_dir
@@ -86,77 +91,48 @@ class PathManager:
     def get_dataset_info(self, types, dataset, curve):
         return os.path.join(self.__data_p, types, dataset, curve, "info.json")
     
-    def get_eval_json_all(self, method, schema, dataset):
-        if self.__eval_dir == None:
-            self.__eval_dir = build_dir(self.__res_p, self.glo_cfg["Results"]["eval_dir"])
+    def get_eval_json_all(self, method, schema, dataset, build=True):
         path = os.path.join(self.__eval_dir, method, schema, dataset)
-        check_and_build(path)
+        if build is True:
+            check_and_build(path)
         return os.path.join(path, "all.json")
     
-    def get_eval_json_avg(self, method, schema, dataset):
-        if self.__eval_dir == None:
-            self.__eval_dir = build_dir(self.__res_p, self.glo_cfg["Results"]["eval_dir"])
+    def get_eval_json_avg(self, method, schema, dataset, build=True):
         path = os.path.join(self.__eval_dir, method, schema, dataset)
-        check_and_build(path)
+        if build is True:
+            check_and_build(path)
         return os.path.join(path, "avg.json")
     
     def get_score_curves(self, method, schema, dataset):
         return os.listdir(os.path.join(self.__score_dir, method, schema, dataset))
         
-    def get_score_path(self, method, schema, dataset, curve_name):
-        if self.__score_dir == None:
-            self.__score_dir = build_dir(self.__res_p, self.glo_cfg["Results"]["score_dir"])
+    def get_score_path(self, method, schema, dataset, curve_name, build=True):
         path = os.path.join(self.__score_dir, method, schema, dataset)
-        check_and_build(path)
+        if build is True:
+            check_and_build(path)
         return os.path.join(path, "%s.npy"%curve_name)
     
     def get_yhat_path(self, method, schema, dataset, curve_name):
-        if self.__y_hat_dir == None:
-            self.__y_hat_dir = build_dir(self.__res_p, self.glo_cfg["Results"]["y_hat_dir"])
         path = os.path.join(self.__y_hat_dir, method, schema, dataset)
         check_and_build(path)
         return os.path.join(path, "%s.npy"%curve_name)
     
     def get_plot_path_score_only(self, method, schema, dataset, curve_name):
-        if self.__plot_dir == None:
-            self.__plot_dir = build_dir(self.__res_p, self.glo_cfg["Results"]["plot_dir"])
         path = os.path.join(self.__plot_dir, "score_only", method, schema, dataset)
         check_and_build(path)
         return os.path.join(path, "%s.pdf"%curve_name)
     
     def get_plot_path_with_yhat(self, method, schema, dataset, curve_name):
-        if self.__plot_dir == None:
-            self.__plot_dir = build_dir(self.__res_p, self.glo_cfg["Results"]["plot_dir"])
         path = os.path.join(self.__plot_dir, "with_yhat", method, schema, dataset)
         check_and_build(path)
         return os.path.join(path, "%s.pdf"%curve_name)
     
-    ## AggerX plots a figure containing all curves in a dataset for one method
-    def get_plot_path_aggreX(self, method, schema, dataset):
-        if self.__plot_dir == None:
-            self.__plot_dir = build_dir(self.__res_p, self.glo_cfg["Results"]["plot_dir"])
-        path = os.path.join(self.__plot_dir, "AggregationX", method, schema)
-        check_and_build(path)
-        return os.path.join(path, "%s.pdf"%dataset)
-    
-    ## AggerY plots a figure containing all methods for one curve
-    def get_plot_path_aggreY(self, schema, dataset, curve_name):
-        if self.__plot_dir == None:
-            self.__plot_dir = build_dir(self.__res_p, self.glo_cfg["Results"]["plot_dir"])
-        path = os.path.join(self.__plot_dir, "AggregationY", schema, dataset)
-        check_and_build(path)
-        return os.path.join(path, "%s.pdf"%curve_name)
-    
     def get_rt_time_path(self, method, schema, dataset):
-        if self.__runtime_dir == None:
-            self.__runtime_dir = build_dir(self.__res_p, self.glo_cfg["Results"]["runtime_dir"])
         path = os.path.join(self.__runtime_dir, method, schema, dataset)
         check_and_build(path)
         return os.path.join(path, "time.json")
     
     def get_rt_statistic_path(self, method, schema, dataset):
-        if self.__runtime_dir == None:
-            self.__runtime_dir = build_dir(self.__res_p, self.glo_cfg["Results"]["runtime_dir"])
         path = os.path.join(self.__runtime_dir, method, schema, dataset)
         check_and_build(path)
         return os.path.join(path, "model_statistic.txt")
@@ -167,6 +143,23 @@ class PathManager:
         cur_dir = os.path.dirname(cur_dir)
         cur_path = os.path.join(cur_dir, "Methods", method, "config.toml")
         return cur_path
+    
+    ## Summary
+    def get_csv_path(self, schema):
+        check_and_build(self.__csv_dir)
+        return os.path.join(self.__csv_dir, "%s.csv"%schema)
+    
+    ## AggerX plots a figure containing all curves in a dataset for one method
+    def get_plot_path_aggreX(self, method, schema, dataset):
+        path = os.path.join(self.__aggreX, method, schema)
+        check_and_build(path)
+        return os.path.join(path, "%s.pdf"%dataset)
+    
+    ## AggerY plots a figure containing all methods for one curve
+    def get_plot_path_aggreY(self, schema, dataset, curve_name):
+        path = os.path.join(self.__aggreY, schema, dataset)
+        check_and_build(path)
+        return os.path.join(path, "%s.pdf"%curve_name)
     
     def check_valid(self, path, msg):
         if not os.path.exists(path):

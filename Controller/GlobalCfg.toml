@@ -7,6 +7,11 @@
   runtime_dir = "RunTime"
   eval_dir = "Evals"
   plot_dir = "Plots"
+  
+ [Paths.Results.Summary]
+  aggreX = "PlotAggreX"
+  aggreY = "PlotAggreY"
+  csv_dir = "CSVs"
 
 [DatasetSetting]
  train_proportion = 1

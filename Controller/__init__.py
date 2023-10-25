@@ -1,2 +1,2 @@
 from .PathManager import PathManager
-from .GlobalController import GlobalController
+from .TSADController import TSADController
