@@ -4,15 +4,16 @@ import os
 import toml
 import json
 from typing import Union
-from Evaluations import Performance
-from utils import update_nested_dict
-from Plots.plot import plot_uts_score_only
+
+from ..Evaluations import Performance
+from ..utils import update_nested_dict
+from ..Plots.plot import plot_uts_score_only
 
 from .logger import setup_logger
 from .PathManager import PathManager
-from DataFactory.LoadData import load_data
-from TrainingSchema import AllInOne, ZeroShot, OneByOne
-from Summary import Summary
+from ..DataFactory.LoadData import load_data
+from ..TrainingSchema import AllInOne, ZeroShot, OneByOne
+from ..Summary import Summary
 
 class TSADController:
     '''

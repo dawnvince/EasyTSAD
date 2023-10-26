@@ -5,8 +5,8 @@ import logging
 
 import numpy as np
 
-from Controller import PathManager
-from Plots import plot_uts_summary_aggreY, plot_uts_summary_aggreX
+from .Controller import PathManager
+from .Plots import plot_uts_summary_aggreY, plot_uts_summary_aggreX
 
 class Summary:
     def __init__(self) -> None:
