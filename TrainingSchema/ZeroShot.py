@@ -6,8 +6,8 @@ import math
 import random
 
 from .BaseSchema import BaseSchema
-from Methods import BaseMethodMeta
-from Controller.PathManager import PathManager
+from ..Methods import BaseMethodMeta
+from ..Controller.PathManager import PathManager
 
 def dict_split(logger, src:Dict, proportion: float, seed=1):
     keys = list(src.keys())

@@ -5,8 +5,8 @@ import numpy as np
 import sys
 
 from .BaseSchema import BaseSchema
-from Methods import BaseMethodMeta
-from Controller.PathManager import PathManager
+from ..Methods import BaseMethodMeta
+from ..Controller.PathManager import PathManager
 
 class OneByOne(BaseSchema):
     def __init__(self, dc, method, cfg_path:str=None, diff_order:int=None, preprocess:str=None) -> None:

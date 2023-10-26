@@ -1,5 +1,5 @@
-from DataFactory import TSData
-from Controller import PathManager
+from . import TSData
+from ..Controller import PathManager
 import logging
 
 logger = logging.getLogger("logger")    

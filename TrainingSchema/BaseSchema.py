@@ -4,12 +4,12 @@ import numpy as np
 import logging
 import json
 
-from Controller import PathManager
-from DataFactory import TSData, LoadData
-from Evaluations import Performance
-from Runtime.Timer import PerformanceTimer
+from ..Controller import PathManager
+from ..DataFactory import TSData, LoadData
+from ..Evaluations import Performance
+from ..Runtime.Timer import PerformanceTimer
 
-from utils import update_nested_dict
+from ..utils import update_nested_dict
 
 class BaseSchema(object):
     '''

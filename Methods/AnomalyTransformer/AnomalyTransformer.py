@@ -12,9 +12,9 @@ import os
 import tqdm
 
 import torchinfo
-from DataFactory import TSData
+from ...DataFactory import TSData
 from .. import BaseMethod
-from Methods.AnomalyTransformer.TSDataset import OneByOneDataset, AllInOneDataset
+from .TSDataset import OneByOneDataset, AllInOneDataset
 
 class EarlyStopping:
     def __init__(self, patience=7, verbose=False, delta=0):

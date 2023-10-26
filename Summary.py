@@ -38,6 +38,7 @@ class Summary:
             for dataset in datasets:
                 json_path = self.pm.get_eval_json_avg(method, training_schema, dataset, build=False)
                 if not os.path.exists(json_path):
+                    self.logger.error("File Not Founded when creating csv. Fil path: {}".format(json_path))
                     content += ["Not Founded"] * eval_len
                     continue
                 

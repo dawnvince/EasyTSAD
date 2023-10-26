@@ -1,8 +1,8 @@
 from typing import Dict
 import torchinfo
 import tqdm
-from DataFactory import TSData
-from Exptools import EarlyStoppingTorch
+from ...DataFactory import TSData
+from ...Exptools import EarlyStoppingTorch
 from .. import BaseMethod
 import numpy as np
 import torch

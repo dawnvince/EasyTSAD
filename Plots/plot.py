@@ -1,7 +1,6 @@
 
 import numpy as np
 from matplotlib import pyplot as plt
-import math
 
 font_aggreX = {'size':4}
 font1 = {'size':10}

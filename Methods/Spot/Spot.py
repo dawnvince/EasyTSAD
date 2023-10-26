@@ -1,8 +1,8 @@
 from typing import Dict
 import numpy as np
-from DataFactory import TSData
+from ...DataFactory import TSData
 from .. import BaseMethod
-from Spot.spot import SPOT
+from .spot import SPOT
 
 class Spot(BaseMethod):
     def __init__(self, params:dict) -> None:

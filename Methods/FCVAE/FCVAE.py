@@ -10,12 +10,12 @@ import torch.nn.functional as F
 import torchinfo
 import tqdm
 
-from DataFactory import TSData
+from ...DataFactory import TSData
 
 from .Model import CVAE, FCVAEModel
 from .TSDataset import *
 from .. import BaseMethod
-from Exptools import EarlyStoppingTorch
+from ...Exptools import EarlyStoppingTorch
 
 class FCVAE(BaseMethod):
     def __init__(self, params:dict, cuda:bool) -> None:

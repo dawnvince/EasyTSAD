@@ -1,14 +1,14 @@
 from typing import Dict
 import tqdm
-from DataFactory import TSData
-from Exptools import EarlyStoppingTorch
+from ...DataFactory import TSData
+from ...Exptools import EarlyStoppingTorch
 from .. import BaseMethod
 import numpy as np
 import torch
 from torch import nn, optim
 from torch.utils.data import DataLoader
 
-from DataFactory.TorchDataSet import PredictWindow
+from ...DataFactory.TorchDataSet import PredictWindow
 
 
 class Diff(BaseMethod):

@@ -1,7 +1,7 @@
 import torch
 import torch.utils.data
 import numpy as np
-from DataFactory import TSData
+from .. import TSData
 from typing import Tuple, Sequence, Dict
 
 class  UTSOneByOneDataset(torch.utils.data.Dataset):

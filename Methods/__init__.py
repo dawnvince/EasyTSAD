@@ -1,5 +1,5 @@
 import numpy as np
-from DataFactory import TSData
+from ..DataFactory import TSData
 
 class BaseMethodMeta(type):
     """

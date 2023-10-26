@@ -1,1 +1,1 @@
-from DataFactory.TSData import TSData
+from .TSData import TSData

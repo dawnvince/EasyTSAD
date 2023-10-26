@@ -1,7 +1,7 @@
 import numpy as np
 import torch
 from torch.utils.data import Dataset
-from DataFactory import TSData
+from ...DataFactory import TSData
 from typing import Tuple, Sequence, Dict
 
 def missing_data_injection(x, y, z, rate):

@@ -17,7 +17,7 @@ import json
 import sys 
 import os
 
-from Controller import PathManager
+from ..Controller import PathManager
 
 class TSData:
     '''

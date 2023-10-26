@@ -1,13 +1,13 @@
 from typing import Dict
 import numpy as np
 import torchinfo
-from DataFactory import TSData
+from ...DataFactory import TSData
 import torch
 from torch import nn, optim
 import tqdm
 import os
 
-from Exptools import EarlyStoppingTorch
+from ...Exptools import EarlyStoppingTorch
 
 from .. import BaseMethod
 from .TSDataset import OneByOneDataset, AllInOneDataset

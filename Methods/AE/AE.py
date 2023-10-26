@@ -1,7 +1,7 @@
 from typing import Dict
 import tqdm
-from DataFactory import TSData
-from Exptools import EarlyStoppingTorch
+from ...DataFactory import TSData
+from ...Exptools import EarlyStoppingTorch
 from .. import BaseMethod
 import numpy as np
 import torch
@@ -9,7 +9,7 @@ from torch import nn, optim
 from torch.utils.data import DataLoader
 from torchinfo import summary
 
-from DataFactory.TorchDataSet import ReconstructWindow
+from ...DataFactory.TorchDataSet import ReconstructWindow
 
 class AEModel(nn.Module):
     def __init__(self, p, lat_dim_1, lat_dim_2) -> None:

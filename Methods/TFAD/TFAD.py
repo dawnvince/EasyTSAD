@@ -34,7 +34,7 @@ from .model.fft_aug import seasonal_shift, with_noise, other_fftshift, fft_aug
 from .TSDataset import CroppedTimeSeriesDatasetTorch, TimeSeriesDataset, TimeSeries, TimeSeriesDatasetTorch, kpi_inject_anomalies
 from .utils.donut_metrics import best_f1_search_grid, k_adjust_predicts
 
-from DataFactory import TSData
+from ...DataFactory import TSData
 from .. import BaseMethod
 
 class TFAD(BaseMethod):

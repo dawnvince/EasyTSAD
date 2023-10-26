@@ -15,7 +15,7 @@ Example method class. Assuming that the name of your method is A, following the 
 '''
 import numpy as np
 from .. import BaseMethod
-from DataFactory import TSData
+from ...DataFactory import TSData
 from typing import Dict
 
 class Example(BaseMethod):

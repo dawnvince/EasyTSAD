@@ -8,14 +8,14 @@ Copyright (c) 2021 THUML @ Tsinghua University
 from typing import Dict
 import numpy as np
 import torchinfo
-from DataFactory import TSData
+from ...DataFactory import TSData
 import torch
 from torch import nn, optim
 from torch.utils.data import DataLoader
 import tqdm
 import os
 
-from Exptools import EarlyStoppingTorch
+from ...Exptools import EarlyStoppingTorch
 
 from .. import BaseMethod
 from .TSDataset import AllInOneDataset, OneByOneDataset
