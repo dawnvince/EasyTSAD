@@ -1,6 +1,7 @@
 import os
 import json
 import csv
+import logging
 
 import numpy as np
 
@@ -10,8 +11,12 @@ from Plots import plot_uts_summary_aggreY, plot_uts_summary_aggreX
 class Summary:
     def __init__(self) -> None:
         self.pm = PathManager.get_instance()
+        self.logger = logging.getLogger("logger")
         
     def to_csv(self, datasets, methods, training_schema, eval_items):
+        self.logger.info("Generating CSV file for Method[{}], Datasets[{}], Schema[{}].".format(', '.join(methods), ', '.join(datasets), training_schema))
+        self.logger.info("[CSV] Containing Eval items: [{}]".format(', '.join([item[0] for item in eval_items])))
+        
         csv_path = self.pm.get_csv_path(training_schema)
         eval_len = len(eval_items)
         
@@ -24,7 +29,7 @@ class Summary:
             
                 # generate second head
                 for item in eval_items:
-                    second_heads += item[0]
+                    second_heads.append(item[0])
                     
             return first_heads, second_heads
     
@@ -60,8 +65,10 @@ class Summary:
             for method in methods:
                 w.writerow(gen_each_line(method))
     
-    ## AggerX plots a figure containing all curves in a dataset for one method     
-    def plot_aggreX(self, types, datasets, methods, training_schema):
+    ## AggerX plots a figure containing all curves in a dataset for one method 
+    
+    ## Problem: Generated Plots are too big.    
+    def __plot_aggreX(self, types, datasets, methods, training_schema):
         
         def aggreX_scores(dataset, method, curve_names):
             scores = []
@@ -78,6 +85,7 @@ class Summary:
                 if os.path.exists(score_path):
                     scores.append(np.load(score_path))
                 else:
+                    self.logger.warning("   [{}] [{}]-{}: Score File Not Founded".format(method, dataset, curve_name))
                     scores.append(None)
                     
             return raws, scores, labels
@@ -96,7 +104,7 @@ class Summary:
                 
                 
     def plot_aggreY(self, types, datasets, methods, training_schema):
-        
+        self.logger.info("Plotting Aggregated Anomaly scores for Method[{}], Datasets[{}], Schema[{}].".format(', '.join(methods), ', '.join(datasets), training_schema))
         def aggreY_scores(dataset, methods, curve_name):
             scores = []
             
@@ -111,12 +119,14 @@ class Summary:
                 if os.path.exists(score_path):
                     scores.append(np.load(score_path))
                 else:
+                    self.logger.warning("   [{}] [{}]-{}: Score File Not Founded".format(method, dataset, curve_name))
                     scores.append(None)
                     
             return raw, scores, label
         
         for dataset in datasets:
-            curve_names = self.pm.get_dataset_curves(self, types, dataset)
+            curve_names = self.pm.get_dataset_curves(types, dataset)
+            self.logger.info("  Plotting [{}]".format(dataset))
             for curve_name in curve_names:
                 plot_path = self.pm.get_plot_path_aggreY(training_schema, dataset, curve_name)
                 raw, scores, label = aggreY_scores(dataset, methods, curve_name)

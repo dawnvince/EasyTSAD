@@ -3,6 +3,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 import math
 
+font_aggreX = {'size':4}
 font1 = {'size':10}
 font2 = {'size':12}
 label_thres = 0.5  
@@ -118,7 +119,7 @@ def plot_uts_score_and_yhat(curve, y_hat, score, label, save_path):
 
 def plot_uts_summary_aggreX(raws, scores, labels, save_path, curve_names):
     num_curve = len(curve_names)
-    plt.figure(figsize=(96, 6*num_curve))
+    plt.figure(figsize=(16, num_curve))
     
     for i in range(num_curve):
         score = scores[i]
@@ -126,27 +127,30 @@ def plot_uts_summary_aggreX(raws, scores, labels, save_path, curve_names):
         curve_name = curve_names[i]
         label = labels[i]
         
-        assert len(label) >= len(score), "Score length is longer than label length."
-        label = label[len(label) - len(score):]
-        curve = curve[len(curve) - len(score):]
-        curve_len = len(curve)
-        x = [i for i in range(curve_len)]
+        if score is not None:
+            assert len(label) >= len(score), "Score length is longer than label length."
+            label = label[len(label) - len(score):]
+            curve = curve[len(curve) - len(score):]
+            
+            top_y = score[score.argsort()[int(clip_rate * len(score)) - 1]] * 3
+            bottom_y = score.min() - 0.1 * (top_y - score.min())
         
-        top_y = score[score.argsort()[int(clip_rate * len(score)) - 1]] * 3
-        bottom_y = score.min() - 0.1 * (top_y - score.min())
+        curve_len = len(curve)
+            
+        x = [i for i in range(curve_len)]
         
         fig1 = plt.subplot(num_curve * 3, 1, 3*i+2)
         plt.plot(x, curve, label="raw curve", linewidth=linewidth, color="red")
         
-        plt.title(curve_name, fontsize=50)
+        plt.title(curve_name, fontsize=10)
         plt.xticks([])
         
-        plt.legend(loc="upper left",prop=font1, handlelength=1, borderpad=0.1, handletextpad=0.3, ncol=2, columnspacing=0.5, borderaxespad=0.1)
+        plt.legend(loc="upper left",prop=font_aggreX, handlelength=1, borderpad=0.1, handletextpad=0.3, ncol=2, columnspacing=0.5, borderaxespad=0.1)
         
         fig2 = plt.subplot(num_curve*3, 1, 3*i+3)
         plt.plot(x, score, label="anomaly score", linewidth=linewidth, color="steelblue")
         plt.ylim(bottom_y, top_y)
-        plt.legend(loc="upper left",prop=font1, handlelength=1, borderpad=0.1, handletextpad=0.3, ncol=2, columnspacing=0.5, borderaxespad=0.1)
+        plt.legend(loc="upper left",prop=font_aggreX, handlelength=1, borderpad=0.1, handletextpad=0.3, ncol=2, columnspacing=0.5, borderaxespad=0.1)
         
         # count anomaly segment
         ano_seg = []
