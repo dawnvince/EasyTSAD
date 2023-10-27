@@ -1,0 +1,14 @@
+[Data_Params]
+preprocess = "z-score"
+
+# if your want to specify the model params for one Dataset
+[Model_Params.Default]
+ win_size = 100
+ input_c = 1
+ output_c = 1
+ earlystop_patience = 7
+ num_epochs = 10
+ learning_rate = 1e-4
+ batch_size = 256
+ step = 1
+ k = 3

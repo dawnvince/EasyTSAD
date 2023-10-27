@@ -1,0 +1,12 @@
+[Data_Params]
+preprocess = "min-max"
+diff_order = 0
+
+# if your want to specify the model params for one Dataset
+[Model_Params.Default]
+p = 128
+lat_dim_1 = 32
+lat_dim_2 = 8
+batch_size = 128
+epochs = 100
+lr = 0.0001

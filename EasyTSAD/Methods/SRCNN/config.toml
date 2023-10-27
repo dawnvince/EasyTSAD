@@ -1,0 +1,13 @@
+[Data_Params]
+preprocess = "min-max"
+
+[Model_Params.Default]
+ win_size = 128
+ lr = 1e-6
+ epochs = 100
+ batch_size = 64
+ num = 10
+ step = 64
+
+[Model_Params.TODS]
+ win_size = 256

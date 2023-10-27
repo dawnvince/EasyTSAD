@@ -1,0 +1,46 @@
+[Paths]
+ dataset = "None"
+ [Paths.Results]
+  base_dir = "Results"
+  score_dir = "Scores"
+  y_hat_dir = "YHats"
+  runtime_dir = "RunTime"
+  eval_dir = "Evals"
+  plot_dir = "Plots"
+  
+ [Paths.Results.Summary]
+  aggreX = "PlotAggreX"
+  aggreY = "PlotAggreY"
+  csv_dir = "CSVs"
+
+[DatasetSetting]
+ train_proportion = 1
+ valid_proportion = 0.2
+
+[EvalSetting]
+ # Margin can tolerate false positives (FP) to some extent caused by anomalies.
+
+ # whether use margin
+ use_margin = false
+ # format [margin-before-anomaly, margin-after-anomaly]
+ # Valid when use_margin == true
+ [EvalSetting.margin]
+  default = [0, 5]
+  AIOPS = [0, 5]
+  NAB = [0, 0]
+  TODS = [0, 5]
+  UCR = [0, 5]
+  WSD = [0, 3]
+  Yahoo = [0, 5]
+
+# define the settings related to Zero shot learning
+[Transfer]
+ # proportion: The proportion of curves in the training set to the total number of curves.
+ # random_seed: the seed to split training set and test set
+ [Transfer.Default]
+  proportion = 0.5
+  random_seed = 1
+
+ [Transfer.AIOPS]
+  proportion = 0.5
+  random_seed = 1

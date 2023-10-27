@@ -1,0 +1,127 @@
+[Data_Params]
+preprocess = "z-score"
+
+[Model_Params.Default]
+ window = 64
+ latent_dim = 8
+ epochs = 30
+ batch_size = 128
+ learning_rate = 0.0005
+ missing_data_rate = 0.01
+ point_ano_rate = 0.005
+ seg_ano_rate = 0.1
+ condition_emb_dim = 16
+ atten_num = 4
+ d_model = 256
+ d_inner = 512
+ d_k = 16
+ n_head = 8
+ kernel_size = 16
+ stride = 8
+ mcmc_rate = 0.2
+ mcmc_value = -5.0
+ mcmc_mode = 2
+ condition_mode = 2
+ dropout_rate = 0.05
+ use_label = 1
+ patience = 5
+
+[Model_Params.AIOPS]
+ window = 128
+ latent_dim = 8
+ epochs = 100
+ batch_size = 128
+ learning_rate = 0.0005
+ missing_data_rate = 0.01
+ point_ano_rate = 0.005
+ seg_ano_rate = 0.1
+ condition_emb_dim = 16
+ atten_num = 4
+ d_model = 256
+ d_inner = 512
+ d_k = 16
+ n_head = 8
+ kernel_size = 16
+ stride = 16
+ mcmc_rate = 0.2
+ mcmc_value = -5.0
+ mcmc_mode = 2
+ condition_mode = 2
+ dropout_rate = 0.0
+ use_label = 1
+ patience = 5
+
+[Model_Params.NAB]
+ window = 32
+ latent_dim = 8
+ epochs = 100
+ batch_size = 128
+ learning_rate = 0.0005
+ missing_data_rate = 0.01
+ point_ano_rate = 0.005
+ seg_ano_rate = 0.1
+ condition_emb_dim = 8
+ atten_num = 4
+ d_model = 256
+ d_inner = 512
+ d_k = 16
+ n_head = 8
+ kernel_size = 12
+ stride = 4
+ mcmc_rate = 0.2
+ mcmc_value = -5.0
+ mcmc_mode = 2
+ condition_mode = 2
+ dropout_rate = 0
+ use_label = 1
+ patience = 5
+
+[Model_Params.WSD]
+ window = 128
+ latent_dim = 8
+ epochs = 100
+ batch_size = 512
+ learning_rate = 0.0005
+ missing_data_rate = 0.01
+ point_ano_rate = 0.005
+ seg_ano_rate = 0.1
+ condition_emb_dim = 16
+ atten_num = 4
+ d_model = 256
+ d_inner = 512
+ d_k = 16
+ n_head = 8
+ kernel_size = 8
+ stride = 8
+ mcmc_rate = 0.2
+ mcmc_value = -5.0
+ mcmc_mode = 2
+ condition_mode = 2
+ dropout_rate = 0.0
+ use_label = 1
+ patience = 5
+
+[Model_Params.Yahoo]
+ window = 48
+ latent_dim = 8
+ epochs = 100
+ batch_size = 128
+ learning_rate = 0.0005
+ missing_data_rate = 0.01
+ point_ano_rate = 0.005
+ seg_ano_rate = 0.1
+ condition_emb_dim = 64
+ atten_num = 4
+ d_model = 256
+ d_inner = 512
+ d_k = 16
+ n_head = 8
+ kernel_size = 24
+ stride = 8
+ mcmc_rate = 0.2
+ mcmc_value = -5.0
+ mcmc_mode = 2
+ condition_mode = 2
+ dropout_rate = 0.05
+ use_label = 1
+ patience = 5

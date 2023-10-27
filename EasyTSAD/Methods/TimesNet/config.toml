@@ -1,0 +1,25 @@
+[Data_Params]
+preprocess = "z-score"
+
+[Model_Params.Default]
+ seq_len = 96
+ pred_len = 0
+ d_model = 8
+ d_ff = 16
+ e_layers = 1
+ enc_in = 1
+ c_out = 1
+ top_k = 3
+ batch_size = 128
+ epochs = 100
+ num_kernels = 6
+ dropout = 0.1
+ learning_rate = 1e-4
+ embed = 'timeF'
+ freq = "t"
+ lradj = "type1"
+ features = "M"
+ patience = 3
+
+[Model_Params.TODS]
+ seq_len = 200

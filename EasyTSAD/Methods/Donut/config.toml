@@ -1,0 +1,31 @@
+[Data_Params]
+preprocess = "z-score"
+
+[Model_Params.Default]
+ window_size = 120
+ batch_size = 256
+ grad_clip = 10.0
+ num_epochs = 250
+ mc_samples = 1024
+ 
+ hidden_dim = 100
+ z_dim = 8
+ inject_ratio = 0.01
+ learning_rate = 1e-4
+ l2_coff = 1e-3
+ earlystop_patience = 3
+
+# if your want to specify the model params for one Dataset
+[Model_Params.Yahoo]
+ window_size = 120
+ batch_size = 32
+ grad_clip = 10.0
+ num_epochs = 250
+ mc_samples = 1024
+ 
+ hidden_dim = 100
+ z_dim = 8
+ inject_ratio = 0.01
+ learning_rate = 1e-4
+ l2_coff = 1e-3
+ earlystop_patience = 3
