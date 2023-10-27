@@ -16,7 +16,7 @@ if __name__ == "__main__":
     # set datasets path, dirname is the absolute/relative path of dataset.
     gctrl.set_dataset(
         datasets=datasets,
-        dirname="./datasets"
+        dirname="/path/to/datasets",
     )
     
     """============= Impletment your algo. ============="""
@@ -101,7 +101,14 @@ if __name__ == "__main__":
         cuda=True,
         hparams={
             "param_1": 2,
-        }
+        },
+        # use which method to preprocess original data. 
+        # Default: raw
+        # Option: 
+        #   - z-score(Standardlization), 
+        #   - min-max(Normalization), 
+        #   - raw (original curves)
+        preprocess="z-score", 
     )
        
         
