@@ -137,20 +137,19 @@ gctrl.set_dataset(
 ```
 
 ### Implement your algorithm (inherit from class BaseMethod):
-The following class `YourAlgo` just provides a skeleton, where you should implement the functions. 
-- [The Spot instance](https://github.com/dawnvince/EasyTSAD/blob/main/EasyTSAD/Methods/Spot/Spot.py) will help you understand how to implement a statistic model;
-- [The ARLinear instance](https://github.com/dawnvince/EasyTSAD/blob/main/EasyTSAD/Methods/AR/AR.py) will help you understand how to implement a learning-based model (Implemented using PyTorch);
+The following class `YourAlgo` just provides a *skeleton*, where you should implement several functions. 
+- The [Spot](https://github.com/dawnvince/EasyTSAD/blob/main/EasyTSAD/Methods/Spot/Spot.py) instance will help you understand how to implement a statistic model;
+- The [ARLinear](https://github.com/dawnvince/EasyTSAD/blob/main/EasyTSAD/Methods/AR/AR.py) instance will help you understand how to implement a learning-based model (Implemented using PyTorch);
 
 ```python
 from EasyTSAD.Methods import BaseMethod
 from EasyTSAD.DataFactory import TSData
 
 class YourAlgo(BaseMethod):
-    def __init__(self, hparams, cuda:bool) -> None:
+    def __init__(self, hparams) -> None:
         super().__init__()
         self.__anomaly_score = None
         self.param_1 = hparams["param_1"]
-        self.cuda = cuda  # would be helpful for gpu settings
     
     def train_valid_phase(self, tsTrain: TSData):
         ...
@@ -172,9 +171,9 @@ class YourAlgo(BaseMethod):
 ```
 
 ### Do Experiments for your algorithm
-We offer two options for algorithm setting configuration: use config file or specify the parameters in functions. 
-
-After the experiments, the anomaly scores will be saved in Workspace/Scores directory.
+We offer two options for algorithm setting configuration: 
+- use config file;
+- specify the parameters in functions. 
 
 ***Note:*** Parameters defined within a function take **higher** priority than those specified in the configuration file.
 
