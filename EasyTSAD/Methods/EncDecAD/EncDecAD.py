@@ -59,9 +59,11 @@ class LSTMModel(nn.Module):
             return recon_x
     
 class EncDecAD(BaseMethod):
-    def __init__(self, params:dict, cuda:bool) -> None:
+    def __init__(self, params:dict) -> None:
         super().__init__()
         self.__anomaly_score = None
+        
+        cuda = True
         self.y_hats = None
         
         self.cuda = cuda

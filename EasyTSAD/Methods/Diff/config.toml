@@ -1,15 +1,6 @@
 [Data_Params]
-types = "UTS"
-datasets = ["AIOPS", "NAB", "WSD", "Yahoo", "UCR", "TODS"]
-# datasets = ["TODS"]
-train_proportion = 1
-valid_proportion = 0.2
 preprocess = "raw"
 diff_order = 1
-
-[Analysis]
- plot_score = true
- plot_y_hat = false
 
 # if your want to specify the model params for one Dataset
 [Model_Params.Default]

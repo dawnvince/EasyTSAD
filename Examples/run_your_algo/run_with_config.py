@@ -14,9 +14,24 @@ if __name__ == "__main__":
     dataset_types = "UTS"
     
     # set datasets path, dirname is the absolute/relative path of dataset.
+    
+    # Use all curves in datasets:
     gctrl.set_dataset(
+        dataset_type="UTS",
+        dirname="/path/to/datasets",
         datasets=datasets,
-        dirname="./datasets"
+    )
+    
+    # Or specify certain curves in one dataset, 
+    # e.g. AIOPS 0efb375b-b902-3661-ab23-9a0bb799f4e3 and ab216663-dcc2-3a24-b1ee-2c3e550e06c9
+    gctrl.set_dataset(
+        dataset_type="UTS",
+        dirname="/path/to/datasets",
+        datasets="AIOPS",
+        curve_names=[
+            "0efb375b-b902-3661-ab23-9a0bb799f4e3",
+            "ab216663-dcc2-3a24-b1ee-2c3e550e06c9"
+        ]
     )
     
     """============= Impletment your algo. ============="""
@@ -24,10 +39,11 @@ if __name__ == "__main__":
     from EasyTSAD.DataFactory import TSData
 
     class YourAlgo(BaseMethod):
-        def __init__(self, hparams) -> None:
+        def __init__(self, hparams, cuda) -> None:
             super().__init__()
             self.__anomaly_score = None
             self.param_1 = hparams["param_1"]
+            self.cuda = cuda
         
         def train_valid_phase(self, tsTrain: TSData):
             '''
@@ -99,7 +115,7 @@ if __name__ == "__main__":
         method=method,
         training_schema=training_schema,
         cuda=True,
-        cfg_path="YourAlgo.toml"
+        cfg_path="YourAlgo.toml" # path/to/your
     )
        
         

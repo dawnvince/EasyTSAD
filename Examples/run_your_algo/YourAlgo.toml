@@ -4,19 +4,24 @@
 #   - z-score(Standardlization), 
 #   - min-max(Normalization), 
 #   - raw (original curves)
-preprocess = "z-score" 
+ preprocess = "z-score" 
 
-# Use `diff_order` differencing orders. Default: 0
-diff_order = 0
+ # Use `diff_order` differencing orders. Default: 0
+ diff_order = 0
+
 
 # Define your params used in models
-
 # Default Settings
 [Model_Params.Default]
- param_1 = 0
- param_2 = "a"
+ param_1 = 1
+ param_2 = true
+ param_3 = "can be string"
+ # ...
 
 # For specific dataset, e.g. Yahoo. 
 # The following config will overwrite the param_1 when training/testing Yahoo
+
+# if your want to specify the model params for Dataset Yahoo
 [Model_Params.Yahoo]
- param_1 = 1
+ param_2 = false # overwrite the param_2 when do experiments on Yahoo
+# ...

@@ -301,11 +301,11 @@ def my_kl_loss(p, q):
 
 
 class AnomalyTransformer(BaseMethod):
-    def __init__(self, params:dict, cuda:bool) -> None:
+    def __init__(self, params:dict) -> None:
         super().__init__()
         self.__anomaly_score = None
         
-        self.cuda = cuda
+        self.cuda = True
         if self.cuda == True and torch.cuda.is_available():
             self.device = torch.device("cuda")
             print("=== Using CUDA ===")

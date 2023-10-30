@@ -24,7 +24,7 @@ class OneByOne(BaseSchema):
         super().__init__(dc, method, "one_by_one", cfg_path, diff_order, preprocess)
         self.pm = PathManager.get_instance()
         
-    def do_exp(self, tsDatas, hparams=None, cuda=False):
+    def do_exp(self, tsDatas, hparams=None):
         for dataset_name, value in tsDatas.items():
             if "Model_Params" in self.cfg:
                 model_params = self.cfg["Model_Params"]["Default"]
@@ -45,7 +45,7 @@ class OneByOne(BaseSchema):
                 
                 ## training & test step
                 if self.method in BaseMethodMeta.registry:
-                    method = BaseMethodMeta.registry[self.method](model_params, cuda)
+                    method = BaseMethodMeta.registry[self.method](model_params)
                 
                 statistic_path = self.pm.get_rt_statistic_path(self.method, self.schema, dataset_name)
                 method.param_statistic(statistic_path)

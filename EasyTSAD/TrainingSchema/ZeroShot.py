@@ -43,7 +43,7 @@ class ZeroShot(BaseSchema):
         self.pm = PathManager.get_instance()
         self.transfer_config = self.dc["Transfer"]
         
-    def do_exp(self, tsDatas, hparams=None, cuda=False):
+    def do_exp(self, tsDatas, hparams=None):
         for dataset_name, value in tsDatas.items():
             if "Model_Params" in self.cfg:
                 model_params = self.cfg["Model_Params"]["Default"]
@@ -60,7 +60,7 @@ class ZeroShot(BaseSchema):
             
             self.logger.info("    [{}] training dataset {}<<<".format(self.method, dataset_name))
             if self.method in BaseMethodMeta.registry:
-                method = BaseMethodMeta.registry[self.method](model_params, cuda)
+                method = BaseMethodMeta.registry[self.method](model_params)
             
             statistic_path = self.pm.get_rt_statistic_path(self.method, self.schema, dataset_name)
             method.param_statistic(statistic_path)

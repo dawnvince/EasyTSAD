@@ -23,7 +23,7 @@ class AllInOne(BaseSchema):
         super().__init__(dc, method, "all_in_one", cfg_path, diff_order, preprocess)
         self.pm = PathManager.get_instance()
         
-    def do_exp(self, tsDatas, hparams=None, cuda=False):
+    def do_exp(self, tsDatas, hparams=None):
         for dataset_name, value in tsDatas.items():
             if "Model_Params" in self.cfg:
                 model_params = self.cfg["Model_Params"]["Default"]
@@ -40,7 +40,7 @@ class AllInOne(BaseSchema):
             
             self.logger.info("    [{}] training dataset {}<<<".format(self.method, dataset_name))
             if self.method in BaseMethodMeta.registry:
-                method = BaseMethodMeta.registry[self.method](model_params, cuda)
+                method = BaseMethodMeta.registry[self.method](model_params)
             else:
                 raise ModuleNotFoundError("class %s has not been found. Please check the name."%self.method)
             

@@ -24,9 +24,11 @@ from .Model import Model, adjust_learning_rate
 import argparse
 
 class TimesNet(BaseMethod):
-    def __init__(self, params:dict, cuda:bool) -> None:
+    def __init__(self, params:dict) -> None:
         super().__init__()
         self.__anomaly_score = None
+        
+        cuda = True
         self.y_hats = None
         
         self.cuda = cuda

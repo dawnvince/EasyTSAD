@@ -1,15 +1,7 @@
 [Data_Params]
-types = "UTS"
-datasets = ["AIOPS", "NAB", "WSD", "Yahoo", "UCR", "TODS"]
-# datasets = ["TODS"]
-train_proportion = 1
-valid_proportion = 0
+
 preprocess = "min-max"
 diff_p = 1
-
-[Analysis]
- plot_score = true
- plot_y_hat = false
 
 [Model_Params.Default]
 q = 1e-4

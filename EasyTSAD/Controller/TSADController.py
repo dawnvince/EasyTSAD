@@ -130,7 +130,7 @@ class TSADController:
             self.dc["valid_proportion"] = valid_proportion
     
         
-    def run_exps(self, method, training_schema, cfg_path=None, diff_order=None, preprocess=None, hparams=None, cuda=False):
+    def run_exps(self, method, training_schema, cfg_path=None, diff_order=None, preprocess=None, hparams=None):
         self.logger.info("Run Experiments. Method[{}], Schema[{}].".format(method, training_schema))
         
         if training_schema == "one_by_one":
@@ -143,7 +143,7 @@ class TSADController:
             raise ValueError("Unknown \"training_schema\", must be one of one_by_one, all_in_one, zero_shot\n")
         
         tsDatas = run_instance.load_data()
-        run_instance.do_exp(tsDatas=tsDatas, hparams=hparams, cuda=cuda)
+        run_instance.do_exp(tsDatas=tsDatas, hparams=hparams)
         
     def set_evals(self, evals):
         '''

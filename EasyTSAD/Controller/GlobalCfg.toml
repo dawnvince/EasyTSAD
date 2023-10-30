@@ -1,4 +1,5 @@
 [Paths]
+ # Default Results path in workspace
  dataset = "None"
  [Paths.Results]
   base_dir = "Results"
@@ -21,7 +22,7 @@
  # Margin can tolerate false positives (FP) to some extent caused by anomalies.
 
  # whether use margin
- use_margin = false
+ use_margin = true
  # format [margin-before-anomaly, margin-after-anomaly]
  # Valid when use_margin == true
  [EvalSetting.margin]
