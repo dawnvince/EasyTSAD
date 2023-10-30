@@ -39,11 +39,10 @@ if __name__ == "__main__":
     from EasyTSAD.DataFactory import TSData
 
     class YourAlgo(BaseMethod):
-        def __init__(self, hparams, cuda) -> None:
+        def __init__(self, hparams) -> None:
             super().__init__()
             self.__anomaly_score = None
             self.param_1 = hparams["param_1"]
-            self.cuda = cuda
         
         def train_valid_phase(self, tsTrain: TSData):
             '''
@@ -114,7 +113,6 @@ if __name__ == "__main__":
     gctrl.run_exps(
         method=method,
         training_schema=training_schema,
-        cuda=True,
         cfg_path="YourAlgo.toml" # path/to/your
     )
        

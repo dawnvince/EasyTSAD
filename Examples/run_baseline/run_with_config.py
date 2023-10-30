@@ -49,8 +49,7 @@ if __name__ == "__main__":
     gctrl.run_exps(
         method=method,
         training_schema=training_schema,
-        cfg_path="{}_config.toml".format(method),
-        cuda=True
+        cfg_path="{}_config.toml".format(method)
     )
        
         

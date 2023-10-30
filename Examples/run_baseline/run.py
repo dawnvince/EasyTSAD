@@ -44,8 +44,7 @@ if __name__ == "__main__":
         # run models
         gctrl.run_exps(
             method=method,
-            training_schema=training_schema,
-            cuda=True
+            training_schema=training_schema
         )
        
         
