@@ -81,11 +81,11 @@ Preprocess your dataset to satisfy the above structure and format. Files labeled
 
 # Usage
 Examples of how to use the suite can be find [here](https://github.com/dawnvince/EasyTSAD/tree/main/Examples), including:
-- how to run baselines with/without customized config files;
-- how to implement your new algorithm with/without config files;
-- how to implement your new evaluation protocol and evaluate the baselines;
-- how to generate CSV including the overall performance of all trained methods;
-- how to aggregate all methods' anomaly into one plot.
+- run baselines with/without customized config files;
+- implement your new algorithm with/without config files;
+- implement your new evaluation protocol and evaluate the baselines;
+- generate CSV including the overall performance of all trained methods;
+- aggregate all methods' anomaly scores into one plot.
 
 ## A simple example that implements a new method.
 
