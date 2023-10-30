@@ -87,7 +87,7 @@ Examples of how to use the suite can be find [here](https://github.com/dawnvince
 - generate CSV including the overall performance of all trained methods;
 - aggregate all methods' anomaly scores into one plot.
 
-## A simple example that implements a new method.
+## An example that implements a new method.
 
 ### Prepare a global config toml file. If not provided, the [default configuration](https://github.com/dawnvince/EasyTSAD/blob/main/EasyTSAD/Controller/GlobalCfg.toml) will be applied:
 ```toml
