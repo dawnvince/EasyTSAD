@@ -213,6 +213,8 @@ gctrl.run_exps(
 )
 ```
 
+The Score Results can be founded in path `workspace/Results/Scores`, and the runtime information can be founded in path `workspace/Results/RunTime`
+
 ## Perform evaluations (Based on the saved scores)
 ```python
 from EasyTSAD.Evaluations.Protocols import EventF1PA, PointF1PA
@@ -229,7 +231,10 @@ gctrl.do_evals(
     method=method,
     training_schema=training_schema
 )
+
 ```
+
+The Evaluation Results can be founded in path `workspace/Results/Evals`
 
 ## Plot the anomaly scores for each time series
 ```python
@@ -238,6 +243,9 @@ gctrl.plots(
     training_schema=training_schema
 )
 ```
+
+The Plot Results can be founded in path `workspace/Results/Plots/score_only`
+
 
 # Citation
 todo
