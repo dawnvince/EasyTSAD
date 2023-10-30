@@ -176,7 +176,7 @@ We offer two options for algorithm setting configuration: use config file or spe
 
 After the experiments, the anomaly scores will be saved in Workspace/Scores directory.
 
-*** Note: *** Parameters defined within a function take **higher** priority than those specified in the configuration file.
+***Note:*** Parameters defined within a function take **higher** priority than those specified in the configuration file.
 
 #### Option 1: Use config file for methods (Recommended) 
 - Prepare a toml file, which is a subset of [Example.toml](https://github.com/dawnvince/EasyTSAD/blob/main/Examples/run_your_algo/YourAlgo.toml), for example:
