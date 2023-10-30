@@ -42,9 +42,9 @@ Some built-in algorithms are based on Pytorch 2.0 or Pytorch-lightning 2.0. You 
 ## Prepare datasets
 
 ### Use default datasets
-Original datasets can be downloaded from https://wait-to-be-published
-The directory structure of the dataset is as follows:
-```bash
+Original datasets can be downloaded from https://wait-to-be-published. 
+The directory structure of the dataset is shown as follows:
+```
 datasets
 └── UTS
     ├── dataset_1
