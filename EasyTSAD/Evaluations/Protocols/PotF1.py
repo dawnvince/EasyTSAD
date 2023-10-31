@@ -12,7 +12,7 @@ class PotF1(EvalInterface):
         self.level = level
         self.name = "pot f1"
         
-    def calc(self, scores, labels, all_label_normal, margins, train_score=None) -> type[MetricInterface]:
+    def calc(self, scores, labels, margins, train_score=None) -> type[MetricInterface]:
         if not isinstance(train_score, np.ndarray):
             raise TypeError("'train_score' must be type of numpy.ndarray.")
         

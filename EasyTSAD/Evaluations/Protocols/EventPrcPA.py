@@ -14,11 +14,7 @@ class EventPrcPA(EvalInterface):
         self.mode = mode
         self.base = base
         
-    def calc(self, scores, labels, all_label_normal, margins) -> type[MetricInterface]:
-        ## All labels are normal
-        if all_label_normal:
-            return Auprc(value=1, name=self.name)
-        
+    def calc(self, scores, labels, margins) -> type[MetricInterface]:  
         scores, labels = rec_scores_event(scores=scores, labels=labels, mode=self.mode, base=self.base)
         auprc = sklearn.metrics.average_precision_score(y_true=labels, 
                                                         y_score=scores, average=None)

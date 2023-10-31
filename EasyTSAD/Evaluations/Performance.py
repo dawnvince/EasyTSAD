@@ -82,7 +82,7 @@ class Performance:
             return None
         res = []
         for item in callbacks:
-            item_result = item.calc(self.scores.copy(), self.labels.copy(), self.all_label_normal.copy(), self.margins)
+            item_result = item.calc(self.scores.copy(), self.labels.copy(), self.margins)
             if not isinstance(item_result, MetricInterface):
                 raise TypeError(
                     "Return value of func 'calc' must be inherented from MetricInterface."

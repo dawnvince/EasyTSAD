@@ -15,6 +15,26 @@ class Summary:
 
         
     def to_csv(self, datasets, methods, training_schema, eval_items):
+        """
+        Generates a CSV file based on the provided datasets, methods, training schema, and evaluation items.
+
+        Args:
+            - `datasets` (list): List of dataset names.
+            - `methods` (list): List of method names.
+            - `training_schema` (str): Training schema name.
+            - `eval_items` (list): List of evaluation items, where each item is a list containing the path to the final value in Eval JSONs, 
+                e.g. [
+                        ["event-based f1 under pa with mode log", "f1"],
+                        ["best f1 under pa", "f1"]
+                    ]
+
+        Returns:
+            None
+
+        Raises:
+            FileNotFoundError: If the JSON file for a specific method, dataset, and training schema does not exist.
+
+        """
         self.logger.info("Generating CSV file for Method[{}], Datasets[{}], Schema[{}].".format(', '.join(methods), ', '.join(datasets), training_schema))
         self.logger.info("[CSV] Containing Eval items: [{}]".format(', '.join([item[0] for item in eval_items])))
         
@@ -106,6 +126,19 @@ class Summary:
                 
                 
     def plot_aggreY(self, types, datasets, methods, training_schema):
+        """
+        Plots aggregated anomaly scores for the specified types, datasets, methods, and training schema.
+
+        Args:
+            - `types` (str): Types of the data.
+            - `datasets` (list): List of dataset names.
+            - `methods` (list): List of method names.
+            - `training_schema` (str): Training schema name.
+
+        Returns:
+            None
+
+        """
         self.logger.info("Plotting Aggregated Anomaly scores for Method[{}], Datasets[{}], Schema[{}].".format(', '.join(methods), ', '.join(datasets), training_schema))
         def aggreY_scores(dataset, methods, curve_name):
             scores = []

@@ -9,17 +9,7 @@ class PointKthF1PA(EvalInterface):
         self.k = k
         self.name = "best f1 under %d-delay pa"%self.k
         
-    def calc(self, scores, labels, all_label_normal, margins) -> type[MetricInterface]:
-        ## All labels are normal
-        if all_label_normal:
-            return F1class(
-                name=self.name, 
-                p=1, 
-                r=1, 
-                f1=1, 
-                thres=0
-        )
-            
+    def calc(self, scores, labels, margins) -> type[MetricInterface]:
         k = self.k + margins[0]
             
         search_set = []

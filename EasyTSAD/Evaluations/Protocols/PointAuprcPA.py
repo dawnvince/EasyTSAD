@@ -12,11 +12,7 @@ class PointAuprcPA(EvalInterface):
         self.figname = figname
         self.name = "auprc"
         
-    def calc(self, scores, labels, all_label_normal, margins) -> type[MetricInterface]:
-        ## All labels are normal
-        if all_label_normal:
-            return Auprc(value=1)
-        
+    def calc(self, scores, labels, margins) -> type[MetricInterface]:
         scores = rec_scores(scores=scores, labels=labels)
         auprc = sklearn.metrics.average_precision_score(y_true=labels, 
                                                         y_score=scores, average=None)

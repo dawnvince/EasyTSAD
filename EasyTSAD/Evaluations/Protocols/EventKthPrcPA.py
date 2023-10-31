@@ -15,11 +15,7 @@ class EventKthPrcPA(EvalInterface):
         self.base = base
         self.k = k
         
-    def calc(self, scores, labels, all_label_normal, margins) -> type[MetricInterface]:
-        ## All labels are normal
-        if all_label_normal:
-            return Auprc(value=1, name=self.name)
-        
+    def calc(self, scores, labels, margins) -> type[MetricInterface]:
         k = self.k + margins[0]
         
         scores, labels = rec_scores_kth_event(scores=scores, labels=labels, k=k, mode=self.mode, base=self.base)

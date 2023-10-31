@@ -12,11 +12,7 @@ class PointAurocPA(EvalInterface):
         self.figname = figname
         self.name = "auroc"
         
-    def calc(self, scores, labels, all_label_normal, margins) -> type[MetricInterface]:
-        ## All labels are normal
-        if all_label_normal:
-            return Auroc(value=1)
-        
+    def calc(self, scores, labels, margins) -> type[MetricInterface]:
         new_scores = rec_scores(scores=scores, labels=labels)
         fpr, tpr, _ = sklearn.metrics.roc_curve(y_true=labels, y_score=new_scores, 
                                                 drop_intermediate=False)

@@ -9,7 +9,7 @@ class PointF1PA(EvalInterface):
         self.eps = 1e-15
         self.name = "best f1 under pa"
         
-    def calc(self, scores, labels, all_label_normal, margins) -> type[MetricInterface]:
+    def calc(self, scores, labels, margins) -> type[MetricInterface]:
         '''
         Calculating best-f1 under point-adjustment approach.
         
@@ -20,16 +20,6 @@ class PointF1PA(EvalInterface):
             recall - corresponding recall value;\n
             threshold - the value of threshold when getting best f1.
         '''
-        ## All labels are normal
-        if all_label_normal:
-            return F1class(
-                name=self.name, 
-                p=1, 
-                r=1, 
-                f1=1, 
-                thres=0
-        )
-        
         search_set = []
         tot_anomaly = 0
         for i in range(labels.shape[0]):

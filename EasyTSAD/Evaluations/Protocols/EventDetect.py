@@ -31,7 +31,7 @@ class EventDetect(EvalInterface):
         super().__init__()
         self.name = "Event Detected"
         
-    def calc(self, scores, labels, all_label_normal, margins) -> type[MetricInterface]:
+    def calc(self, scores, labels, margins) -> type[MetricInterface]:
         idx = np.argmax(scores)
         detected = 0
         if labels[idx] == 1:

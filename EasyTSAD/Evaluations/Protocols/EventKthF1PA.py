@@ -33,17 +33,7 @@ class EventKthF1PA(EvalInterface):
         else:
             raise ValueError("please select correct mode.")
         
-    def calc(self, scores, labels, all_label_normal, margins) -> type[MetricInterface]:
-        ## All labels are normal
-        if all_label_normal:
-            return F1class(
-                name=self.name, 
-                p=1, 
-                r=1, 
-                f1=1, 
-                thres=0
-        )
-            
+    def calc(self, scores, labels, margins) -> type[MetricInterface]:            
         k = self.k + margins[0]        
     
         search_set = []

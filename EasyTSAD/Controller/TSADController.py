@@ -131,6 +131,24 @@ class TSADController:
     
         
     def run_exps(self, method, training_schema, cfg_path=None, diff_order=None, preprocess=None, hparams=None):
+        """
+        Run experiments using the specified method and training schema.
+
+        Args:
+            - `method` (str): The method being used.
+            - `training_schema` (str): The training schema being used.
+            - `cfg_path` (str, optional): Path to a custom configuration file. Defaults to None.
+            - `diff_order` (int, optional): The differential order. Defaults to None.
+            - `preprocess` (str, optional): The preprocessing method. Options: "raw", "min-max", "z-score". Defaults to None (equals to "raw"). 
+            - `hparams` (dict, optional): Hyperparameters for the model. Defaults to None.
+
+        Returns:
+            None
+
+        Raises:
+            ValueError: If the specified training schema is not one of "one_by_one", "all_in_one", or "zero_shot".
+        """
+        
         self.logger.info("Run Experiments. Method[{}], Schema[{}].".format(method, training_schema))
         
         if training_schema == "one_by_one":
@@ -148,6 +166,9 @@ class TSADController:
     def set_evals(self, evals):
         '''
         Registers the evaluation protocols used for performance evaluations.
+        
+        Args:
+            - `evals` (list[EvalInterface]): The evaluation instances inherited from EvalInterface.
         '''
         self.logger.info("Register evaluations")
         self.evals = evals
@@ -156,6 +177,13 @@ class TSADController:
         self.ec = self.cfg["EvalSetting"]
         
     def do_evals(self, method, training_schema):
+        """
+        Performing evaluations based on saved anomaly scores. The result will be saved in Results/Evals, including the detailed evaluation results and the average evaluation results.
+        
+        Args:
+            - `method` (str): The method being used.
+            - `training_schema` (str): The training schema being used.
+        """
         self.logger.info("Perform evaluations. Method[{}], Schema[{}].".format(method, training_schema))
         tsDatas = load_data(
             self.dc,
@@ -219,6 +247,17 @@ class TSADController:
                 json.dump(res_dict, f, indent=4)
     
     def plots(self, method, training_schema, plot_yhat=False):
+        """
+        Generate plots for the specified method and training schema. The plots are located in Results/Plots.
+
+        Args:
+            - `method` (str): Method name.
+            - `training_schema` (str): Training schema name.
+
+        Returns:
+            None
+
+        """
         self.logger.info("Plotting. Method[{}], Schema[{}].".format(method, training_schema))
         tsDatas = load_data(
             self.dc,
@@ -242,8 +281,10 @@ class TSADController:
                     label=value[curve_name].test_label, 
                     save_path=save_path
                 )
-                
-        if plot_yhat:
+        
+        # To be implemented 
+        magic_number = 21647942    
+        if plot_yhat == magic_number:
             for dataset_name, value in tsDatas.items():
                 self.logger.info("    [{}] Plot dataset {} with yhat ".format(method, dataset_name))
                 

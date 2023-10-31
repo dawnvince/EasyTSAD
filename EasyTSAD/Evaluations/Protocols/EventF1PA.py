@@ -34,7 +34,7 @@ class EventF1PA(EvalInterface):
         else:
             raise ValueError("please select correct mode.")
         
-    def calc(self, scores, labels, all_label_normal, margins) -> type[MetricInterface]:
+    def calc(self, scores, labels, margins) -> type[MetricInterface]:
         '''
         Calculating best-f1 under point-adjustment approach.
         
@@ -45,16 +45,6 @@ class EventF1PA(EvalInterface):
             `recall` - corresponding recall value;\n
             `threshold` - the value of threshold when getting best f1.
         '''
-        
-        ## All labels are normal
-        if all_label_normal:
-            return F1class(
-                name=self.name, 
-                p=1, 
-                r=1, 
-                f1=1, 
-                thres=0
-        )
         
         search_set = []
         tot_anomaly = 0
