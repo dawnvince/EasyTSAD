@@ -9,15 +9,15 @@ class EventF1PA(EvalInterface):
         Using the Event-based point-adjustment method to evaluate the models.
 
         Parameters:
-        - `mode` (str): Defines the scale at which the anomaly segment is processed. 
-        One of:
-            - 'squeeze': View an anomaly event lasting t timestamps as one timepoint.
-            - 'log': View an anomaly event lasting t timestamps as log(t) timepoint.
-            - 'sqrt': View an anomaly event lasting t timestamps as sqrt(t) timepoint.
-            - 'raw': View an anomaly event lasting t timestamps as t timepoint.
-            If using 'log', you can specify the param "base" to return the logarithm of x to the given base, 
-        calculated as log(x) / log(base).
-        - `base` (int): Default is 3.
+            mode (str): Defines the scale at which the anomaly segment is processed. \n
+                One of:\n
+                    - 'squeeze': View an anomaly event lasting t timestamps as one timepoint.
+                    - 'log': View an anomaly event lasting t timestamps as log(t) timepoint.
+                    - 'sqrt': View an anomaly event lasting t timestamps as sqrt(t) timepoint.
+                    - 'raw': View an anomaly event lasting t timestamps as t timepoint.
+                If using 'log', you can specify the param "base" to return the logarithm of x to the given base, 
+                calculated as log(x) / log(base).
+            base (int): Default is 3.
         """
         super().__init__()
         
@@ -40,10 +40,10 @@ class EventF1PA(EvalInterface):
         
         Returns:
          A tuple, including:\n
-            `best_f1` - the value of best f1 score;\n
-            `precision` - corresponding precision value;\n
-            `recall` - corresponding recall value;\n
-            `threshold` - the value of threshold when getting best f1.
+            best_f1 - the value of best f1 score;\n
+            precision - corresponding precision value;\n
+            recall - corresponding recall value;\n
+            threshold - the value of threshold when getting best f1.
         '''
         
         search_set = []

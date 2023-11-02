@@ -18,15 +18,19 @@ from ..Summary import Summary
 class TSADController:
     '''
     TSADController class represents a controller that manages global configuration and logging.
+    
+    Attributes:
+        summary (EasyTSAD.Summary): summary the trained results, including generating CSV and aggregating all methods' anomaly scores on specific curve in one plot.
     '''
+    
     def __init__(self, cfg_path=None, log_path=None, log_level="info") -> None:
         """
         TSADController class represents a controller that manages global configuration and logging.
 
         Args:
-            - `cfg_path` (str, optional): Path to the configuration file. If provided, the configuration will be applied from this file. Defaults to None (Not Recommanded).
-            - `log_path` (str, optional): Path to the log file. If not provided, a default log file named "TSADEval.log" will be built in current workspace. Defaults to None.
-            - `log_level` (str, optional): Log level to set for the logger. Options: "debug", "info", "warning", "error". Defaults to "info".
+            cfg_path (str, optional): Path to the configuration file. If provided, the configuration will be applied from this file. Defaults to None (Not Recommanded).
+            log_path (str, optional): Path to the log file. If not provided, a default log file named "TSADEval.log" will be built in current workspace. Defaults to None.
+            log_level (str, optional): Log level to set for the logger. Options: "debug", "info", "warning", "error". Defaults to "info".
         """
         
         self.logger = setup_logger(log_path, level=log_level)
@@ -70,11 +74,11 @@ class TSADController:
          Otherwise, if you want to specify some time series in a dataset, please specify ONLY ONE dataset and the curves in this dataset. E.g. set_dataset(datasets=\"WSD\", \"curve_names\"=[\"1\", \"2\"])
 
         Args:
-            - `datasets` (Union[str, list[str]]): Name(s) of the dataset(s) to be set. Can be a single string or a list of strings.
-            - `dirname` (str, optional): Path to the dataset directory. If not provided, it will be fetched from the configuration file. Defaults to None.
-            - `curve_type` (str, optional): Type of the datasets. Defaults to "UTS".
-            - `specify_curves` (bool, optional): Flag indicating whether to specify individual curves within the dataset(s). Defaults to False.
-            - `curve_names` (Union[None, str, list[str]], optional): Name(s) of the curve(s) to be used. Can be None, a single string, or a list of strings. Defaults to None.
+            datasets (Union[str, list[str]]): Name(s) of the dataset(s) to be set. Can be a single string or a list of strings.
+            dirname (str, optional): Path to the dataset directory. If not provided, it will be fetched from the configuration file. Defaults to None.
+            curve_type (str, optional): Type of the datasets. Defaults to "UTS".
+            specify_curves (bool, optional): Flag indicating whether to specify individual curves within the dataset(s). Defaults to False.
+            curve_names (Union[None, str, list[str]], optional): Name(s) of the curve(s) to be used. Can be None, a single string, or a list of strings. Defaults to None.
 
         Raises:
             ValueError: If the dataset directory path is not specified.
@@ -135,12 +139,12 @@ class TSADController:
         Run experiments using the specified method and training schema.
 
         Args:
-            - `method` (str): The method being used.
-            - `training_schema` (str): The training schema being used.
-            - `cfg_path` (str, optional): Path to a custom configuration file. Defaults to None.
-            - `diff_order` (int, optional): The differential order. Defaults to None.
-            - `preprocess` (str, optional): The preprocessing method. Options: "raw", "min-max", "z-score". Defaults to None (equals to "raw"). 
-            - `hparams` (dict, optional): Hyperparameters for the model. Defaults to None.
+            method (str): The method being used.
+            training_schema (str): The training schema being used.
+            cfg_path (str, optional): Path to a custom configuration file. Defaults to None.
+            diff_order (int, optional): The differential order. Defaults to None.
+            preprocess (str, optional): The preprocessing method. Options: "raw", "min-max", "z-score". Defaults to None (equals to "raw"). 
+            hparams (dict, optional): Hyperparameters for the model. Defaults to None.
 
         Returns:
             None
@@ -168,7 +172,7 @@ class TSADController:
         Registers the evaluation protocols used for performance evaluations.
         
         Args:
-            - `evals` (list[EvalInterface]): The evaluation instances inherited from EvalInterface.
+            evals (list[EvalInterface]): The evaluation instances inherited from EvalInterface.
         '''
         self.logger.info("Register evaluations")
         self.evals = evals
@@ -181,8 +185,8 @@ class TSADController:
         Performing evaluations based on saved anomaly scores. The result will be saved in Results/Evals, including the detailed evaluation results and the average evaluation results.
         
         Args:
-            - `method` (str): The method being used.
-            - `training_schema` (str): The training schema being used.
+            method (str): The method being used.
+            training_schema (str): The training schema being used.
         """
         self.logger.info("Perform evaluations. Method[{}], Schema[{}].".format(method, training_schema))
         tsDatas = load_data(
@@ -246,13 +250,13 @@ class TSADController:
                     res_dict.update(i.to_dict())
                 json.dump(res_dict, f, indent=4)
     
-    def plots(self, method, training_schema, plot_yhat=False):
+    def plots(self, method, training_schema, plot_yhat=111):
         """
         Generate plots for the specified method and training schema. The plots are located in Results/Plots.
 
         Args:
-            - `method` (str): Method name.
-            - `training_schema` (str): Training schema name.
+            method (str): Method name.
+            training_schema (str): Training schema name.
 
         Returns:
             None
@@ -309,10 +313,12 @@ class TSADController:
         Applies configuration from a file.
 
         This method reads a configuration file from the specified path and overrides the corresponding default values.
-        NOTE: If no path is provided, it uses a default configuration.
+        
+        NOTE: 
+            If no path is provided, it uses a default configuration.
 
         Args:
-            - `path` (str, optional): 
+            path (str, optional): 
                 The path to the configuration file. If None, default configuration is used. Defaults to None.
 
         Returns:

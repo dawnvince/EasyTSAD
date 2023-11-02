@@ -1,0 +1,35 @@
+site_name: EasyTSAD
+# site_url: https://127.0.0.1:8080/
+
+plugins:
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [../EasyTSAD]
+          options:
+            show_source: false
+            show_symbol_type_heading: true
+            docstring_options:
+              ignore_init_summary: true
+            merge_init_into_class: true
+            separate_signature: true
+            line_length: 40
+            # separate_signature: true
+            # show_signature_annotations: true
+            signature_crossrefs: true
+
+  - search
+
+nav:
+  - Introduction: index.md
+  - Get Started: start.md
+  - API References:
+      - EasyTSAD.TSADController: API/TSADController.md
+      - EasyTSAD.DataFactory:
+        - TSData: API/TSData.md
+      - EasyTSAD.Evaluations:
+        - Interfaces: API/Evaluation.md
+        - Protocols: API/Protocols.md
+      - EasyTSAD.Summary: API/Summary.md
+
+theme: readthedocs

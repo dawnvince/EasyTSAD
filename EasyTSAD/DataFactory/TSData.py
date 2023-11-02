@@ -23,7 +23,7 @@ class TSData:
     '''
     TSData contains all information used for training, validation and test, including the dataset values and dataset information. Some typical preprocessing method are provided in class methods.
     
-    @property:
+    Attributes:
         train (np.ndarray):
             The training set in numpy format;
         valid (np.ndarray):

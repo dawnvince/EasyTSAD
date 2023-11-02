@@ -19,10 +19,10 @@ class Summary:
         Generates a CSV file based on the provided datasets, methods, training schema, and evaluation items.
 
         Args:
-            - `datasets` (list): List of dataset names.
-            - `methods` (list): List of method names.
-            - `training_schema` (str): Training schema name.
-            - `eval_items` (list): List of evaluation items, where each item is a list containing the path to the final value in Eval JSONs, 
+            datasets (list): List of dataset names.
+            methods (list): List of method names.
+            training_schema (str): Training schema name.
+            eval_items (list): List of evaluation items, where each item is a list containing the path to the final value in Eval JSONs, 
                 e.g. [
                         ["event-based f1 under pa with mode log", "f1"],
                         ["best f1 under pa", "f1"]
@@ -130,10 +130,10 @@ class Summary:
         Plots aggregated anomaly scores for the specified types, datasets, methods, and training schema.
 
         Args:
-            - `types` (str): Types of the data.
-            - `datasets` (list): List of dataset names.
-            - `methods` (list): List of method names.
-            - `training_schema` (str): Training schema name.
+            types (str): Types of the data.
+            datasets (list): List of dataset names.
+            methods (list): List of method names.
+            training_schema (str): Training schema name.
 
         Returns:
             None
