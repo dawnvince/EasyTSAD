@@ -107,7 +107,7 @@ if __name__ == "__main__":
     # Specifying methods and training schemas
     
     training_schema = "one_by_one"
-    method = "YourAlgo",  # string of your algo class
+    method = "YourAlgo"  # string of your algo class
     
     # run models
     gctrl.run_exps(

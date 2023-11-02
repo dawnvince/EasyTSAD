@@ -190,7 +190,7 @@ We offer two options for algorithm setting configuration:
 - Load YourAlgo and the config file:
 ```python
 training_schema = "one_by_one"
-method = "YourAlgo",  # string of your algo class
+method = "YourAlgo"  # string of your algo class
 
 # run models
 gctrl.run_exps(
