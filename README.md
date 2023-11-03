@@ -35,7 +35,7 @@ We welcome you to send the algorithm code implemented based on this suite to our
 ```
 pip install EasyTSAD
 ```
-The documentation of EasyTSAD is hosted at https://dawnvince.github.io/EasyTSAD/(https://dawnvince.github.io/EasyTSAD/).
+The documentation of EasyTSAD is hosted at https://dawnvince.github.io/EasyTSAD/.
 
 ### Additonal Dependencies
 Some built-in algorithms are based on Pytorch 2.0 or Pytorch-lightning 2.0. You may need to install related packages (including but not limited to pytorch, pytorch-lightning, torchinfo, torch_optimizer) if you want to run the baselines.
@@ -88,7 +88,7 @@ Examples of how to use the suite can be find [here](https://github.com/dawnvince
 - generate CSV including the overall performance of all trained methods;
 - aggregate all methods' anomaly scores into one plot.
 
-Also, you can refer to the documentation hosted at https://dawnvince.github.io/EasyTSAD/(https://dawnvince.github.io/EasyTSAD/).
+Also, you can refer to the documentation hosted at https://dawnvince.github.io/EasyTSAD/.
 
 ## An example that implements a new method.
 

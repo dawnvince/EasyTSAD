@@ -168,4 +168,3 @@ Results/
 ploteval*.py
 *.log
 poetry*
-Mkdocs/site/
