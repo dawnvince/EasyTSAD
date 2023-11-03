@@ -17,8 +17,12 @@ plugins:
             # separate_signature: true
             # show_signature_annotations: true
             signature_crossrefs: true
+            # heading_level: 3
+            summary: true
 
   - search
+  # - social
+  # - tags
 
 nav:
   - Introduction: index.md
@@ -31,5 +35,7 @@ nav:
         - Interfaces: API/Evaluation.md
         - Protocols: API/Protocols.md
       - EasyTSAD.Summary: API/Summary.md
+      - EasyTSAD.Methods: API/Method.md
 
-theme: readthedocs
+theme: 
+  name: material

@@ -6,16 +6,19 @@ import math
 class EventKthF1PA(EvalInterface):
     def __init__(self, k:int, mode="log", base=3) -> None:
         '''
-        Using Event-based point-adjustment method to evaluate the models
+        Using Event-based point-adjustment F1 score to evaluate the models under k-delay strategy.
         
-        Params:
-         mode - str, default "log", define the scale of which the anomaly segment is processed, one of:
-          squeeze: view an anomaly event lasting t timestamps as one timepoint;\n
-          log: view an anomaly event lasting t timestamps as log(t) timepoint;\n
-          sqrt: view an anomaly event lasting t timestamps as sqrt(t) timepoint;\n
-          raw: view an anomaly event lasting t timestamps as t timepoint;\n
-          NOTE: if using log, you can specity the param "base" to return the logarithm of x to the given base, calculated as log(x)/log(base).
-         base - int, default 3.
+        Parameters:
+            k (int): Defines the delay limit.
+            mode (str): Defines the scale at which the anomaly segment is processed.
+                One of:\n
+                    - 'squeeze': View an anomaly event lasting t timestamps as one timepoint.
+                    - 'log': View an anomaly event lasting t timestamps as log(t) timepoint.
+                    - 'sqrt': View an anomaly event lasting t timestamps as sqrt(t) timepoint.
+                    - 'raw': View an anomaly event lasting t timestamps as t timepoint.
+                If using 'log', you can specify the param "base" to return the logarithm of x to the given base, 
+                calculated as log(x) / log(base).
+            base (int): Default is 3.
         
         '''
         super().__init__()
@@ -33,7 +36,15 @@ class EventKthF1PA(EvalInterface):
         else:
             raise ValueError("please select correct mode.")
         
-    def calc(self, scores, labels, margins) -> type[MetricInterface]:            
+    def calc(self, scores, labels, margins) -> type[MetricInterface]:  
+        """
+        Returns:
+         A F1class (Evaluations.Metrics.F1class), including:\n
+            best_f1: the value of best f1 score;\n
+            precision: corresponding precision value;\n
+            recall: corresponding recall value;\n
+            threshold: the value of threshold when getting best f1.
+        """          
         k = self.k + margins[0]        
     
         search_set = []

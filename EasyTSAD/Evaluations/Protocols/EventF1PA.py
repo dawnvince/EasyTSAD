@@ -6,8 +6,8 @@ import math
 class EventF1PA(EvalInterface):
     def __init__(self, mode="log", base=3) -> None:
         """
-        Using the Event-based point-adjustment method to evaluate the models.
-
+        Using the Event-based point-adjustment F1 score to evaluate the models.
+        
         Parameters:
             mode (str): Defines the scale at which the anomaly segment is processed. \n
                 One of:\n
@@ -36,14 +36,12 @@ class EventF1PA(EvalInterface):
         
     def calc(self, scores, labels, margins) -> type[MetricInterface]:
         '''
-        Calculating best-f1 under point-adjustment approach.
-        
         Returns:
-         A tuple, including:\n
-            best_f1 - the value of best f1 score;\n
-            precision - corresponding precision value;\n
-            recall - corresponding recall value;\n
-            threshold - the value of threshold when getting best f1.
+         A F1class (Evaluations.Metrics.F1class), including:\n
+            best_f1: the value of best f1 score;\n
+            precision: corresponding precision value;\n
+            recall: corresponding recall value;\n
+            threshold: the value of threshold when getting best f1.
         '''
         
         search_set = []

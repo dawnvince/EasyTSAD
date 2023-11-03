@@ -3,13 +3,28 @@ from .. import MetricInterface, EvalInterface
 from ..Metrics import F1class
 
 class PointKthF1PA(EvalInterface):
+    """
+    Using Point-based point-adjustment F1 score to evaluate the models under k-delay strategy.
+    """
     def __init__(self, k:int) -> None:
+        """
+        Parameters:
+            k (int): the delay limit.
+        """
         super().__init__()
         self.eps = 1e-15
         self.k = k
         self.name = "best f1 under %d-delay pa"%self.k
         
     def calc(self, scores, labels, margins) -> type[MetricInterface]:
+        '''
+        Returns:
+         A F1class (Evaluations.Metrics.F1class), including:\n
+            best_f1: the value of best f1 score;\n
+            precision: corresponding precision value;\n
+            recall: corresponding recall value;\n
+            threshold: the value of threshold when getting best f1.
+        '''
         k = self.k + margins[0]
             
         search_set = []

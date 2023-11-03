@@ -7,12 +7,20 @@ import math
 from matplotlib import pyplot as plt
 
 class PointAuprcPA(EvalInterface):
-    def __init__(self, figname=None) -> None:
+    """
+    Using Point-based point-adjustment Auprc to evaluate the models.
+    """
+    def __init__(self) -> None:
         super().__init__()
-        self.figname = figname
-        self.name = "auprc"
+        self.figname = None
+        self.name = "point-based auprc pa"
         
     def calc(self, scores, labels, margins) -> type[MetricInterface]:
+        '''
+        Returns:
+         An Auprc instance (Evaluations.Metrics.Auprc), including:\n
+            auprc: auprc value.
+        '''
         scores = rec_scores(scores=scores, labels=labels)
         auprc = sklearn.metrics.average_precision_score(y_true=labels, 
                                                         y_score=scores, average=None)
