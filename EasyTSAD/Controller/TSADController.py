@@ -250,7 +250,7 @@ class TSADController:
                     res_dict.update(i.to_dict())
                 json.dump(res_dict, f, indent=4)
     
-    def plots(self, method, training_schema, plot_yhat=111):
+    def plots(self, method, training_schema):
         """
         Generate plots for the specified method and training schema. The plots are located in Results/Plots.
 
@@ -287,6 +287,7 @@ class TSADController:
                 )
         
         # To be implemented 
+        plot_yhat = None
         magic_number = 21647942    
         if plot_yhat == magic_number:
             for dataset_name, value in tsDatas.items():
