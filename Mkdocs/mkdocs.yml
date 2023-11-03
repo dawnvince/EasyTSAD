@@ -27,7 +27,7 @@ plugins:
 nav:
   - Introduction: index.md
   - Get Started: start.md
-  - API References:
+  - User API References:
       - EasyTSAD.TSADController: API/TSADController.md
       - EasyTSAD.DataFactory:
         - TSData: API/TSData.md
