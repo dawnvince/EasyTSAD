@@ -22,7 +22,7 @@ plugins:
 
   - search
   # - social
-  # - tags
+  - tags
 
 nav:
   - Introduction: index.md
