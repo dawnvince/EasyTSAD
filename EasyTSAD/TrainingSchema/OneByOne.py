@@ -41,7 +41,7 @@ class OneByOne(BaseSchema):
             
             for curve_name, curve in value.items():
                 score_path = self.pm.get_score_path(self.method, self.schema, dataset_name, curve_name)
-                self.logger.info("    [{}] handling dataset {} | curve {} <<<".format(self.method, dataset_name, curve_name))
+                self.logger.info("    [{}] handling dataset {} | curve {} ".format(self.method, dataset_name, curve_name))
                 
                 ## training & test step
                 if self.method in BaseMethodMeta.registry:

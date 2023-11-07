@@ -15,8 +15,8 @@ def dict_split(logger, src:Dict, proportion: float, seed=1):
     random.shuffle(keys)
     split_idx = math.ceil(proportion * len(keys))
     logger.info("    dataset is split ")
-    logger.info("    training set is ", keys[:split_idx])
-    logger.info("    test set is ", keys[split_idx:])
+    logger.info(f"    training set is {keys[:split_idx]}") 
+    logger.info(f"    test set is {keys[split_idx:]}") 
     
     d1, d2 = {}, {}
     for k in keys[:split_idx]:
@@ -58,7 +58,7 @@ class ZeroShot(BaseSchema):
             self.train_valid_timer.reset_total()
             self.test_timer.reset_total()
             
-            self.logger.info("    [{}] training dataset {}<<<".format(self.method, dataset_name))
+            self.logger.info("    [{}] training dataset {}".format(self.method, dataset_name))
             if self.method in BaseMethodMeta.registry:
                 method = BaseMethodMeta.registry[self.method](model_params)
             

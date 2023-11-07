@@ -38,7 +38,7 @@ class AllInOne(BaseSchema):
             self.train_valid_timer.reset_total()
             self.test_timer.reset_total()
             
-            self.logger.info("    [{}] training dataset {}<<<".format(self.method, dataset_name))
+            self.logger.info("    [{}] training dataset {}".format(self.method, dataset_name))
             if self.method in BaseMethodMeta.registry:
                 method = BaseMethodMeta.registry[self.method](model_params)
             else:
