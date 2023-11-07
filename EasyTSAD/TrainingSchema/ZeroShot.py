@@ -61,6 +61,8 @@ class ZeroShot(BaseSchema):
             self.logger.info("    [{}] training dataset {}".format(self.method, dataset_name))
             if self.method in BaseMethodMeta.registry:
                 method = BaseMethodMeta.registry[self.method](model_params)
+            else:
+                raise ValueError("Unknown method class \"{}\". Ensure that the method name matches the class name exactly (including case sensitivity).".format(self.method))
             
             statistic_path = self.pm.get_rt_statistic_path(self.method, self.schema, dataset_name)
             method.param_statistic(statistic_path)
