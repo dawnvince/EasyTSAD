@@ -158,7 +158,7 @@ def load_data(dc, preprocess, diff_p):
         tsDatas = __load_specific_curves(
             types=dc["dataset_type"],
             dataset=dc["datasets"][0],
-            curve_names=dc["specify_curves"],
+            curve_names=dc["curves"],
             train_proportion=dc["train_proportion"], 
             valid_proportion=dc["valid_proportion"],
             preprocess=preprocess,

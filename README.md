@@ -124,6 +124,7 @@ gctrl.set_dataset(
     dataset_type="UTS",
     dirname="/path/to/datasets", # The path to the parent directory of "UTS"
     datasets="AIOPS",
+    specify_curves=True,
     curve_names=[
         "0efb375b-b902-3661-ab23-9a0bb799f4e3",
         "ab216663-dcc2-3a24-b1ee-2c3e550e06c9"
