@@ -168,3 +168,5 @@ Results/
 ploteval*.py
 *.log
 poetry*
+pre_train/
+local_config.toml

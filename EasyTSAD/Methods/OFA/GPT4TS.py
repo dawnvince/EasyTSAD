@@ -10,14 +10,13 @@ from transformers.models.gpt2.modeling_gpt2 import GPT2Model
 from transformers.models.gpt2.configuration_gpt2 import GPT2Config
 from transformers import BertTokenizer, BertModel
 from einops import rearrange
-from layers.Embed import DataEmbedding, DataEmbedding_wo_time
+from .Embed import DataEmbedding, DataEmbedding_wo_time
 
 
 class Model(nn.Module):
     
     def __init__(self, configs):
         super(Model, self).__init__()
-        self.is_ln = configs.ln
         self.pred_len = configs.pred_len
         self.seq_len = configs.seq_len
         self.patch_size = configs.patch_size
@@ -31,7 +30,7 @@ class Model(nn.Module):
         self.enc_embedding = DataEmbedding(configs.enc_in * self.patch_size, configs.d_model, configs.embed, configs.freq,
                                            configs.dropout)
 
-        self.gpt2 = GPT2Model.from_pretrained('gpt2', output_attentions=True, output_hidden_states=True)
+        self.gpt2 = GPT2Model.from_pretrained(configs.model_path, output_attentions=True, output_hidden_states=True)
         self.gpt2.h = self.gpt2.h[:configs.gpt_layers]
         
         for i, (name, param) in enumerate(self.gpt2.named_parameters()):
@@ -52,7 +51,7 @@ class Model(nn.Module):
             configs.c_out, 
             bias=True)
 
-    def forward(self, x_enc, x_mark_enc, x_dec, x_mark_dec, mask=None):
+    def forward(self, x_enc):
         dec_out = self.anomaly_detection(x_enc)
         return dec_out  # [B, L, D]
 

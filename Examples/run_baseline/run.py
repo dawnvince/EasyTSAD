@@ -9,7 +9,6 @@ if __name__ == "__main__":
     # Specifying datasets
     datasets = ["TODS", "UCR", "AIOPS", "NAB", "Yahoo", "WSD"]
     datasets = ["TODS"]
-    dataset_types = "UTS"
     
     # set datasets path, dirname is the absolute/relative path of dataset.
     

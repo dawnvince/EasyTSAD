@@ -265,6 +265,7 @@ class FCVAE(BaseMethod):
         return self.__anomaly_score
     
     def param_statistic(self, save_file):
+        return 
         model_stats = torchinfo.summary(self.model, (self.hp.batch_size, self.hp.window), verbose=0)
         with open(save_file, 'w') as f:
             f.write(str(model_stats))

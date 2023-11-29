@@ -12,7 +12,7 @@ import os
 from ...Exptools import EarlyStoppingTorch
 from .. import BaseMethod
 from .TSDataset import AllInOneDataset, OneByOneDataset
-from GPT4TS import Model
+from .GPT4TS import Model
 
 def adjust_learning_rate(optimizer, epoch, args):
     # lr = args.learning_rate * (0.2 ** (epoch // 2))
@@ -53,6 +53,7 @@ class OFA(BaseMethod):
         self.criterion = nn.MSELoss()
         
         self.early_stopping = EarlyStoppingTorch(None, patience=self.args.patience)
+        self.input_shape = (self.args.batch_size, self.args.seq_len, self.args.enc_in)
         
     def train_valid_phase(self, tsTrain: TSData):
         train_loader = DataLoader(

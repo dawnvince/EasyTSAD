@@ -1,6 +1,5 @@
 [Data_Params]
 preprocess = "min-max"
-diff_p = 0
 
 # if your want to specify the model params for one Dataset
 [Model_Params.Default]
