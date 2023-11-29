@@ -14,8 +14,9 @@
 | AE | AutoEncoder | Sparse autoencoder |
 | EncDecAD | Combine LSTM and AE | LSTM-based encoder-decoder for multi- sensor anomaly detection
 | SRCNN |  | Time-series anomaly detection service at microsoft |
-| Amomaly Transformer | | Anomaly Transformer: Time Series Anomaly Detection with Association Discrepancy
-| TimesNet | | TIMESNET: TEMPORAL 2D-VARIATION MODELING FOR GENERAL TIME SERIES ANALYSIS
+| Amomaly Transformer | | Anomaly Transformer: Time Series Anomaly Detection with Association Discrepancy |
+| TimesNet | | TIMESNET: TEMPORAL 2D-VARIATION MODELING FOR GENERAL TIME SERIES ANALYSIS |
+| OFA | One Fits all, freezing some GPT2 params |  One Fits All: Power General Time Series Analysis by Pretrained LM |
 
 ## VAE-based
 | Class Name | Description | Ref. |
