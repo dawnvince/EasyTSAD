@@ -1,5 +1,5 @@
 # Introduction
-EasyTSAD is a suite to facilitate the quick implementation and iteration of your ***time series anomaly detection algorithms***. You can also easily develop a new set of ***evaluation metrics*** based on this suite and assess them against baseline methods. 
+TSADEval is a suite to facilitate the quick implementation and iteration of your ***time series anomaly detection algorithms***. You can also easily develop a new set of ***evaluation metrics*** based on this suite and assess them against baseline methods. 
 
 We offer several training schemas to provide more practical perspectives for TSAD. The schemas are illustrated as follows:
 ![Three Training Schemas](./imgs/schema.png) 
@@ -24,7 +24,7 @@ We welcome you to send the algorithm code implemented based on this suite to our
 - An Evaluation protocol designed for real-time AD scenarios (EasyTSAD.Evaluations.Protocols.EventF1PA, for details please refer to our paper).
 
 ### Leaderboard Representation
-- We provide a continuous integrated leaderboard (https://adeval.cstcloud.cn/content/home) based on this suite and make it vivid to show state-of-the-art algorithms rankings based on various training schemas and evaluation protocols. 
+- We provide a continuous integrated leaderboard (anonymous) based on this suite and make it vivid to show state-of-the-art algorithms rankings based on various training schemas and evaluation protocols. 
 - ***Welcome to provide us your algorithms or evaluation criterion based on this suite by e-mails.*** We will add it into the leaderboard after checking, running, and obtaining your permission.
  
 # Get Started
@@ -34,11 +34,9 @@ We welcome you to send the algorithm code implemented based on this suite to our
 ### Prerequisites (environment manager like conda, pipenv or poetry is recommended)
 - python >= 3.9, < 3.13
 
-### Using `pip` to install the suite from Pypi
-```
-pip install EasyTSAD
-```
-The documentation of EasyTSAD is hosted at https://dawnvince.github.io/EasyTSAD/.
+anonymous
+
+The documentation of TSADEval is hosted at anonymous.
 
 ### Additonal Dependencies
 Some built-in algorithms are based on Pytorch 2.0 or Pytorch-lightning 2.0. You may need to install related packages (including but not limited to pytorch, pytorch-lightning, torchinfo, torch_optimizer) if you want to run the baselines.
@@ -84,18 +82,18 @@ Preprocess your dataset to satisfy the above structure and format. Files labeled
 
 
 # Usage
-Examples of how to use the suite can be find [here](https://github.com/dawnvince/EasyTSAD/tree/main/Examples), including:
+Examples of how to use the suite can be find anonymous, including:
 - run baselines with/without customized config files;
 - implement your new algorithm with/without config files;
 - implement your new evaluation protocol and evaluate the baselines;
 - generate CSV including the overall performance of all trained methods;
 - aggregate all methods' anomaly scores into one plot.
 
-Also, you can refer to the documentation hosted at https://dawnvince.github.io/EasyTSAD/.
+Also, you can refer to the documentation hosted at anonymous.
 
 ## An example that implements a new method.
 
-### Prepare a global config toml file. If not provided, the [default configuration](https://github.com/dawnvince/EasyTSAD/blob/main/EasyTSAD/Controller/GlobalCfg.toml) will be applied:
+### Prepare a global config toml file. If not provided, the default configuration will be applied:
 ```toml
 # One example of GlobalCfg.toml. 
 # For more details please refer to the default configuration.
@@ -144,8 +142,8 @@ gctrl.set_dataset(
 
 ### Implement your algorithm (inherit from class BaseMethod):
 The following class `YourAlgo` just provides a *skeleton*, where you should implement several functions. 
-- The [Spot](https://github.com/dawnvince/EasyTSAD/blob/main/EasyTSAD/Methods/Spot/Spot.py) instance will help you understand how to implement a statistic model;
-- The [ARLinear](https://github.com/dawnvince/EasyTSAD/blob/main/EasyTSAD/Methods/AR/AR.py) instance will help you understand how to implement a learning-based model (Implemented using PyTorch);
+- The Spot instance will help you understand how to implement a statistic model;
+- The ARLinear instance will help you understand how to implement a learning-based model (Implemented using PyTorch);
 
 ```python
 from EasyTSAD.Methods import BaseMethod
@@ -184,7 +182,7 @@ We offer two options for algorithm setting configuration:
 ***Note:*** Parameters defined within a function take **higher** priority than those specified in the configuration file.
 
 #### Option 1: Use config file for methods (Recommended) 
-- Prepare a toml file, which is a subset of [Example.toml](https://github.com/dawnvince/EasyTSAD/blob/main/Examples/run_your_algo/YourAlgo.toml), for example:
+- Prepare a toml file, which is a subset of Example.toml, for example:
 ```toml
 # YourAlgo.toml
 [Data_Params]
