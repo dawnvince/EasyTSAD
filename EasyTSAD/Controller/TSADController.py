@@ -12,7 +12,7 @@ from ..Plots.plot import plot_uts_score_only
 from .logger import setup_logger
 from .PathManager import PathManager
 from ..DataFactory.LoadData import load_data
-from ..TrainingSchema import AllInOne, ZeroShot, OneByOne
+from ..TrainingSchema import AllInOne, ZeroShot, OneByOne, ZeroShotCrossDS
 from ..Summary import Summary
 
 class TSADController:
@@ -132,6 +132,20 @@ class TSADController:
             self.dc["train_proportion"] = train_proportion
         if valid_proportion is not None:
             self.dc["valid_proportion"] = valid_proportion
+            
+    def spilt_dataset_for_zero_shot_cross(self, src, dst):
+        if not all(item in self.dc["datasets"] for item in src):
+            raise ValueError("The param \"src\" must be the subset of the assigned \"datasets\"")
+        if not all(item in self.dc["datasets"] for item in dst):
+            raise ValueError("The param \"dst\" must be the subset of the assigned \"datasets\"")
+            
+        if type(src) is not list or None:
+            raise TypeError("The param \"src_datasets\" must be None or the list of str.")
+        if type(dst) is not list or None:
+            raise TypeError("The param \"dst_datasets\" must be None or the list of str.")
+            
+        self.dc["src_datasets"] = src
+        self.dc["dst_datasets"] = dst
     
         
     def run_exps(self, method, training_schema, cfg_path=None, diff_order=None, preprocess=None, hparams=None):
@@ -161,6 +175,8 @@ class TSADController:
             run_instance = AllInOne(self.dc, method, cfg_path, diff_order, preprocess)
         elif training_schema == "zero_shot":
             run_instance = ZeroShot(self.dc, method, cfg_path, diff_order, preprocess)
+        elif training_schema == "zero_shot_cross_ds":
+            run_instance = ZeroShotCrossDS(self.dc, method, cfg_path, diff_order, preprocess)
         else:
             raise ValueError("Unknown \"training_schema\", must be one of one_by_one, all_in_one, zero_shot\n")
         
@@ -194,6 +210,14 @@ class TSADController:
             preprocess="raw",
             diff_p=0
         )
+        
+        if self.dc["dst_datasets"] is not None:
+            new_tsDatas = {}
+            for dataset_name, value in tsDatas.items():
+                if dataset_name in self.dc["dst_datasets"]:
+                    new_tsDatas[dataset_name] = value
+            
+            tsDatas = new_tsDatas
         
         for dataset_name, value in tsDatas.items():
             self.logger.info("    [{}] Eval dataset {} <<<".format(method, dataset_name))
@@ -269,6 +293,14 @@ class TSADController:
             diff_p=0
         )
         
+        if self.dc["dst_datasets"] is not None:
+            new_tsDatas = {}
+            for dataset_name, value in tsDatas.items():
+                if dataset_name in self.dc["dst_datasets"]:
+                    new_tsDatas[dataset_name] = value
+            
+            tsDatas = new_tsDatas
+            
         for dataset_name, value in tsDatas.items():
             self.logger.info("    [{}] Plot dataset {} score only ".format(method, dataset_name))
             

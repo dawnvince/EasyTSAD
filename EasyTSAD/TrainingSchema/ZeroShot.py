@@ -3,7 +3,6 @@ from typing import Dict
 import numpy as np
 import sys
 import math
-import random
 
 from .BaseSchema import BaseSchema
 from ..Methods import BaseMethodMeta
@@ -11,8 +10,8 @@ from ..Controller.PathManager import PathManager
 
 def dict_split(logger, src:Dict, proportion: float, seed=1):
     keys = list(src.keys())
-    random.seed(seed)
-    random.shuffle(keys)
+    np.random.seed(seed)
+    np.random.shuffle(keys)
     split_idx = math.ceil(proportion * len(keys))
     logger.info("    dataset is split ")
     logger.info(f"    training set is {keys[:split_idx]}") 
