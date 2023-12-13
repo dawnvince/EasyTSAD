@@ -154,7 +154,7 @@ class TSADController:
 
         Args:
             method (str): The method being used.
-            training_schema (str): The training schema being used.
+            training_schema (str): The training schema being used. One of one_by_one, all_in_one, zero_shot, zero_shot_cross_ds.
             cfg_path (str, optional): Path to a custom configuration file. Defaults to None.
             diff_order (int, optional): The differential order. Defaults to None.
             preprocess (str, optional): The preprocessing method. Options: "raw", "min-max", "z-score". Defaults to None (equals to "raw"). 
