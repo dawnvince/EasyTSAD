@@ -538,11 +538,10 @@ class R_AUC(EvalInterface):
         self.name = "range-based auc"
 
     def calc(self, scores, labels, margins) -> MetricInterface:
-        slidingWindow = 125
         R_AUC, R_AP, *_ = metricor().RangeAUC(
             labels=labels, score=scores, plot_ROC=True
         )
-        *_, VUS_ROC, VUS_PR = generate_curve(labels, scores, 2 * slidingWindow)
+        # *_, VUS_ROC, VUS_PR = generate_curve(labels, scores, 2 * slidingWindow)
 
         return Auroc(value=R_AUC, name=self.name)
 
@@ -553,10 +552,9 @@ class R_AP(EvalInterface):
         self.name = "range-based pr"
 
     def calc(self, scores, labels, margins) -> MetricInterface:
-        slidingWindow = 125
         R_AUC, R_AP, *_ = metricor().RangeAUC(
             labels=labels, score=scores, plot_ROC=True
         )
-        *_, VUS_ROC, VUS_PR = generate_curve(labels, scores, 2 * slidingWindow)
+        # *_, VUS_ROC, VUS_PR = generate_curve(labels, scores, 2 * slidingWindow)
 
         return Auprc(value=R_AP, name=self.name)
