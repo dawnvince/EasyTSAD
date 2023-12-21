@@ -7,4 +7,4 @@ n_neighbors = 20
 algorithm = "auto"
 metric = "minkowski"
 n_jobs = 4
-seq_len = 64
+seq_len = 8
