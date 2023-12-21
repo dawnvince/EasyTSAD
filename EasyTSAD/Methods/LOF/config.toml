@@ -1,0 +1,9 @@
+[Data_Params]
+preprocess = "z-score"
+
+# if your want to specify the model params for one Dataset
+[Model_Params.Default]
+n_neighbors = 20
+algorithm = "auto"
+metric = "minkowski"
+n_jobs = 4

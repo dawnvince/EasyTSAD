@@ -211,7 +211,7 @@ class TSADController:
             diff_p=0
         )
         
-        if self.dc["dst_datasets"] is not None:
+        if "dst_datasets" in self.dc and self.dc["dst_datasets"] is not None:
             new_tsDatas = {}
             for dataset_name, value in tsDatas.items():
                 if dataset_name in self.dc["dst_datasets"]:
@@ -293,7 +293,7 @@ class TSADController:
             diff_p=0
         )
         
-        if self.dc["dst_datasets"] is not None:
+        if "dst_datasets" in self.dc and self.dc["dst_datasets"] is not None:
             new_tsDatas = {}
             for dataset_name, value in tsDatas.items():
                 if dataset_name in self.dc["dst_datasets"]:

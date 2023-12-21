@@ -1,0 +1,15 @@
+[Data_Params]
+preprocess = "z-score"
+
+# if your want to specify the model params for one Dataset
+[Model_Params.Default]
+kernel = "rbf"
+degree = 3
+gamma = "auto"
+coef0 = 0.0
+tol=1e-3
+nu=0.5
+shrinking=true
+cache_size=200
+verbose=false
+max_iter=-1
