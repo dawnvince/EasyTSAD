@@ -4,20 +4,18 @@ preprocess = 'min-max'
 [Model_Params.Default]
 window_size = 10
 batch_size = 128
-epochs = 5
+epochs = 20
 earlystop_patience = 3
 lr = 1e-4
 
 [Model_Params.UCR]
 window_size = 10
 batch_size = 128
-epochs = 5
 earlystop_patience = 3
 lr = 6e-3
 
 [Model_Params.NAB]
 window_size = 10
 batch_size = 128
-epochs = 5
 earlystop_patience = 3
 lr = 9e-3

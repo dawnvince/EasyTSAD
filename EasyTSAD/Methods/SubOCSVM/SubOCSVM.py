@@ -37,7 +37,13 @@ class SubOCSVM(BaseMethod):
         self.ocsvm.fit(cat_data)
             
     def train_valid_phase_all_in_one(self, tsTrains: Dict[str, TSData]):
-        pass
+        all_data = []
+        for _, tsTrain in tsTrains.items():
+            cat_data = np.concatenate([tsTrain.train, tsTrain.valid])
+            all_data.append(self.gen_subseq(cat_data))
+            
+        all_data = np.concatenate(all_data, axis=0)
+        self.ocsvm.fit(all_data)
         
     def test_phase(self, tsData: TSData):
         test_data = self.gen_subseq(tsData.test)
