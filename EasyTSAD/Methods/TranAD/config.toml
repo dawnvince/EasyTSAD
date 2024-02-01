@@ -4,7 +4,7 @@ preprocess = 'min-max'
 [Model_Params.Default]
 window_size = 10
 batch_size = 128
-epochs = 20
+epochs = 5
 earlystop_patience = 3
 lr = 1e-4
 
