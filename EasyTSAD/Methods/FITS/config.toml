@@ -1,10 +1,12 @@
 [Data_Params]
 preprocess = "min-max"
-diff_order = 1
+diff_order = 0
 
 # if your want to specify the model params for one Dataset
 [Model_Params.Default]
-p = 16
+input_len = 25
+out_len = 100
+cut_freq = 12
 batch_size = 128
 epochs = 100
-lr = 0.001
+lr = 1e-3

@@ -162,6 +162,7 @@ cython_debug/
 test*
 tmp/
 datasets/
+basedata/
 pre*
 pl_*
 Results/
