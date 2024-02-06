@@ -1,0 +1,7 @@
+[Data_Params]
+preprocess = "z-score"
+
+# if your want to specify the model params for one Dataset
+[Model_Params.Default]
+window = 100
+n_jobs = 4

@@ -214,7 +214,7 @@ class FITS(BaseMethod):
                 output = self.model(x)
                 # loss = self.loss(output, target)
                 mse = torch.sub(output, target).pow(2)
-                scores.append(mse.cpu())
+                scores.append(mse.cpu()[:,-1])
                 loop.set_description(f'Testing: ')
 
         scores = torch.cat(scores, dim=0)
