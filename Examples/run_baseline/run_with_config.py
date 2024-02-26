@@ -3,7 +3,7 @@ sys.path.append("/home/sht/aiops/TestTSAD")
 
 from EasyTSAD.Controller import TSADController
 '''
-We recommend to use toml file to config the experiments. For baselines' config files' specific configuration, please refer to our Github.
+We recommend to use toml file to config the experiments. For baselines' config files' specific configuration, please refer to our Github. 
 
 '''
 if __name__ == "__main__":
