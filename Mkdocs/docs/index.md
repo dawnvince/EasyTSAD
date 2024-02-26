@@ -5,7 +5,7 @@ We welcome you to send the algorithm code implemented based on this suite to our
 
 # Features
 ### For Algorithm Researches
-- Flexible interface for algorithm implementation, training and testing new algorithms on one-by-one, all-in-one and zero-shot training schemas.
+- Flexible interface for algorithm implementation, training and testing new algorithms on naive, all-in-one and zero-shot training schemas.
 - Full pipeline for load dataset, run experiments, do evaluations and analysis(e.g. plots and compares anomaly scores, or generate CSVs for intuitional comparison) the performance of methods.
 - Diversity evaluation protocols for preformance evaluations.
 

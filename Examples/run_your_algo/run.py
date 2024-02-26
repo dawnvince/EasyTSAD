@@ -47,7 +47,7 @@ if __name__ == "__main__":
         
         def train_valid_phase(self, tsTrain: TSData):
             '''
-            Define train and valid phase for one-by-one mode. All time series needed are saved in tsTrain. 
+            Define train and valid phase for naive mode. All time series needed are saved in tsTrain. 
             
             tsTrain's property :
                 train (np.ndarray):
