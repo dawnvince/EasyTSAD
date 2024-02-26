@@ -21,7 +21,7 @@ class Naive(BaseSchema):
             - `diff_order` (int, optional): The differential order. Defaults to None.
             - `preprocess` (str, optional): The preprocessing method. Options: "raw", "min-max", "z-score". Defaults to None (equals to "raw"). 
         """
-        super().__init__(dc, method, "one_by_one", cfg_path, diff_order, preprocess)
+        super().__init__(dc, method, "naive", cfg_path, diff_order, preprocess)
         self.pm = PathManager.get_instance()
         
     def do_exp(self, tsDatas, hparams=None):

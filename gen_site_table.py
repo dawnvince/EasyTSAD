@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 
-mode = ["one_by_one", "all_in_one", "zero_shot"]
+mode = ["naive", "all_in_one", "zero_shot"]
 dataset_delay = [
     ("AIOPS", 5),
     ("NAB", 8),
@@ -85,7 +85,7 @@ for mod in mode:
     json_res = {}
     
     # {
-    # "one_by_one": {
+    # "naive": {
     #     "point-wise F1": {
     #         "AR": {
     #             "AIOPS": 6,

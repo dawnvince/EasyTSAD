@@ -43,7 +43,7 @@ if __name__ == "__main__":
     from EasyTSAD.Methods import AE, Donut, AR
     
     method = "AR"
-    training_schema = "one_by_one"
+    training_schema = "naive"
 
     # run models
     gctrl.run_exps(

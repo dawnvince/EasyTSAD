@@ -32,7 +32,7 @@ if __name__ == "__main__":
     from EasyTSAD.Methods import AE, Donut, AR
     
     methods = ["AR", "AE", "Donut"]
-    training_schema = "one_by_one"
+    training_schema = "naive"
     
     # If your have run this function and don't change the params, you can skip this step.
     run_only_once(gctrl, methods, training_schema)

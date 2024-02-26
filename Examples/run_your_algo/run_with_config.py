@@ -107,7 +107,7 @@ if __name__ == "__main__":
     """============= Run your algo. ============="""
     # Specifying methods and training schemas
     
-    training_schema = "one_by_one"
+    training_schema = "naive"
     method = "YourAlgo"  # string of your algo class
     
     # run models

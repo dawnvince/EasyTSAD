@@ -154,7 +154,7 @@ class TSADController:
 
         Args:
             method (str): The method being used.
-            training_schema (str): The training schema being used. One of one_by_one, all_in_one, zero_shot, zero_shot_cross_ds.
+            training_schema (str): The training schema being used. One of naive, all_in_one, zero_shot, zero_shot_cross_ds.
             cfg_path (str, optional): Path to a custom configuration file. Defaults to None.
             diff_order (int, optional): The differential order. Defaults to None.
             preprocess (str, optional): The preprocessing method. Options: "raw", "min-max", "z-score". Defaults to None (equals to "raw"). 
@@ -164,12 +164,12 @@ class TSADController:
             None
 
         Raises:
-            ValueError: If the specified training schema is not one of "one_by_one", "all_in_one", or "zero_shot".
+            ValueError: If the specified training schema is not one of "naive", "all_in_one", or "zero_shot".
         """
         
         self.logger.info("Run Experiments. Method[{}], Schema[{}].".format(method, training_schema))
         
-        if training_schema == "one_by_one":
+        if training_schema == "naive":
             run_instance = Naive(self.dc, method, cfg_path, diff_order, preprocess)
         elif training_schema == "all_in_one":
             run_instance = AllInOne(self.dc, method, cfg_path, diff_order, preprocess)
@@ -178,7 +178,7 @@ class TSADController:
         elif training_schema == "zero_shot_cross_ds":
             run_instance = ZeroShotCrossDS(self.dc, method, cfg_path, diff_order, preprocess)
         else:
-            raise ValueError("Unknown \"training_schema\", must be one of one_by_one, all_in_one, zero_shot\n")
+            raise ValueError("Unknown \"training_schema\", must be one of naive, all_in_one, zero_shot\n")
         
         tsDatas = run_instance.load_data()
         run_instance.do_exp(tsDatas=tsDatas, hparams=hparams)

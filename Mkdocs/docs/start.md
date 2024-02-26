@@ -161,7 +161,7 @@ We offer two options for algorithm setting configuration:
 
 - Load YourAlgo and the config file:
 ```python
-training_schema = "one_by_one"
+training_schema = "naive"
 method = "YourAlgo"  # string of your algo class
 
 # run models
