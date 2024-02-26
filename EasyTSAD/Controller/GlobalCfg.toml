@@ -30,7 +30,7 @@
   AIOPS = [0, 5]
   NAB = [0, 0]
   TODS = [0, 5]
-  UCR = [0, 5]
+  UCR = [0, 50]
   WSD = [0, 3]
   Yahoo = [0, 5]
 

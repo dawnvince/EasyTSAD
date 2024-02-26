@@ -93,7 +93,7 @@ class BaseMethod(metaclass=BaseMethodMeta):
         """
         raise NotImplementedError()
     
-    def train_valid_phase_all_in_one(self, tsTrains: dict[str, TSData]):
+    def train_valid_phase_all_in_one(self, tsTrains):
         """
         Performs the training and validation phase, considering multiple training time series datasets.
 

@@ -12,7 +12,7 @@ from ..Plots.plot import plot_uts_score_only
 from .logger import setup_logger
 from .PathManager import PathManager
 from ..DataFactory.LoadData import load_data
-from ..TrainingSchema import AllInOne, ZeroShot, OneByOne, ZeroShotCrossDS
+from ..TrainingSchema import AllInOne, ZeroShot, Naive, ZeroShotCrossDS
 from ..Summary import Summary
 
 class TSADController:
@@ -65,7 +65,7 @@ class TSADController:
         self.dc["Transfer"] = self.cfg["Transfer"]
     
     
-    def set_dataset(self, datasets: Union[str, list[str]], dirname=None, dataset_type="UTS", specify_curves=False, curve_names: Union[None, str, list[str]]=None, train_proportion=None, valid_proportion=None):
+    def set_dataset(self, datasets, dirname=None, dataset_type="UTS", specify_curves=False, curve_names=None, train_proportion=None, valid_proportion=None):
         """
         Registers the dataset settings and related parameters for the TSADController instance. This will check if the paths and the parameters are valid.
         
@@ -170,7 +170,7 @@ class TSADController:
         self.logger.info("Run Experiments. Method[{}], Schema[{}].".format(method, training_schema))
         
         if training_schema == "one_by_one":
-            run_instance = OneByOne(self.dc, method, cfg_path, diff_order, preprocess)
+            run_instance = Naive(self.dc, method, cfg_path, diff_order, preprocess)
         elif training_schema == "all_in_one":
             run_instance = AllInOne(self.dc, method, cfg_path, diff_order, preprocess)
         elif training_schema == "zero_shot":
