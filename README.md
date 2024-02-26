@@ -8,7 +8,7 @@ We welcome you to send the algorithm code implemented based on this suite to our
 
 # Features
 ### For Algorithm Researches
-- Flexible interface for algorithm implementation, training and testing new algorithms on one-by-one, all-in-one and zero-shot training schemas.
+- Flexible interface for algorithm implementation, training and testing new algorithms on naive, all-in-one and zero-shot training schemas.
 - Full pipeline for load dataset, run experiments, do evaluations and analysis(e.g. plots and compares anomaly scores, or generate CSVs for intuitional comparison) the performance of methods.
 - Diversity evaluation protocols for preformance evaluations.
 
@@ -111,7 +111,7 @@ pip install EasyTSAD
 The documentation of EasyTSAD is hosted at https://dawnvince.github.io/EasyTSAD/.
 
 ### Additonal Dependencies
-NOTE: Some built-in algorithms are based on Pytorch 2.0 or Pytorch-lightning 2.0. You may need to install related packages (including but not limited to pytorch, pytorch-lightning, torchinfo, torch_optimizer, sklearn, tslearn) if you want to run the baselines.
+NOTE: Some built-in algorithms are based on Pytorch 2.0 or Pytorch-lightning 2.0. You may need to install related packages (including but not limited to pytorch, pytorch-lightning, torchinfo, torch_optimizer, scikit-learn, tslearn) if you want to run the baselines.
 
 ## Prepare datasets
 
@@ -324,4 +324,13 @@ The Plot Results can be founded in path `workspace/Results/Plots/score_only`
 
 
 # Citation
-todo
+```
+@misc{si2024timeseriesbench,
+      title={TimeSeriesBench: An Industrial-Grade Benchmark for Time Series Anomaly Detection Models}, 
+      author={Haotian Si and Changhua Pei and Hang Cui and Jingwen Yang and Yongqian Sun and Shenglin Zhang and Jingjing Li and Haiming Zhang and Jing Han and Dan Pei and Jianhui Li and Gaogang Xie},
+      year={2024},
+      eprint={2402.10802},
+      archivePrefix={arXiv},
+      primaryClass={cs.LG}
+}
+```
