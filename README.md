@@ -39,8 +39,8 @@ We welcome you to send the algorithm code implemented based on this suite to our
 | SRCNN | pytorch | | Time-series anomaly detection service at microsoft |
 | Amomaly Transformer | pytorch | | Anomaly Transformer: Time Series Anomaly Detection with Association Discrepancy |
 | TFAD | pytorch-lightning | | TFAD: A decomposition time series anomaly detection architecture with time-frequency analysis | 
-| Donut | pytorch | Unsupervised anomaly 1032 detection via variational auto-encoder for seasonal kpis in web applications | 
-| FCVAE | pytorch-lightning | Revisiting VAE for Unsupervised Time Series Anomaly Detection: A Frequency Perspective |
+| Donut | pytorch | |  Unsupervised anomaly 1032 detection via variational auto-encoder for seasonal kpis in web applications | 
+| FCVAE | pytorch-lightning | | Revisiting VAE for Unsupervised Time Series Anomaly Detection: A Frequency Perspective |
 | DCDetector | pytorch | | DCdetector: Dual Attention Contrastive Representation Learning for Time Series Anomaly Detection |
 | MatrixProfile | matrixprofile(pypi) | | Matrix Profile XI: SCRIMP++: Time Series Motif Discovery at Interactive Speeds |
 | SubLOF | sklearn | LOF in sequence manner | LOF: identifying density-based local outliers | 
