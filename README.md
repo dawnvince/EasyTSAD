@@ -27,6 +27,7 @@ We welcome you to send the algorithm code implemented based on this suite to our
 - We provide a continuous integrated leaderboard (https://adeval.cstcloud.cn/content/home) based on this suite and make it vivid to show state-of-the-art algorithms rankings based on various training schemas and evaluation protocols. 
 - ***Welcome to provide us your algorithms or evaluation criterion based on this suite by e-mails.*** We will add it into the leaderboard after checking, running, and obtaining your permission.
 
+# Table of content
 - [Introduction](#introduction)
 - [Features](#features)
 - [Built-in Methods](#built-in-methods)
