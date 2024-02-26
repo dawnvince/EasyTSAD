@@ -14,7 +14,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.14">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.11">
     
     
       
@@ -22,7 +22,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.fad675c6.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.7e359304.min.css">
       
       
 
@@ -55,9 +55,6 @@
   
     <body dir="ltr">
   
-    
-    
-      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
@@ -107,6 +104,9 @@
         </div>
       </div>
     </div>
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
     
     
     
@@ -236,10 +236,8 @@
     
     
     
-    
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
-        
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
@@ -294,10 +292,8 @@
     
     
     
-    
     <li class="md-nav__item md-nav__item--nested">
       
-        
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
@@ -360,10 +356,8 @@
     
     
     
-    
     <li class="md-nav__item md-nav__item--nested">
       
-        
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
@@ -511,6 +505,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#statistical-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      Statistical Methods
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#prediction-based" class="md-nav__link">
     <span class="md-ellipsis">
       Prediction-based
@@ -538,9 +541,18 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#others" class="md-nav__link">
+  <a href="#representation-learning" class="md-nav__link">
     <span class="md-ellipsis">
-      Others
+      Representation Learning
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#general-timeseries-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      General TimeSeries Models
     </span>
   </a>
   
@@ -589,6 +601,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#statistical-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      Statistical Methods
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#prediction-based" class="md-nav__link">
     <span class="md-ellipsis">
       Prediction-based
@@ -616,9 +637,18 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#others" class="md-nav__link">
+  <a href="#representation-learning" class="md-nav__link">
     <span class="md-ellipsis">
-      Others
+      Representation Learning
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#general-timeseries-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      General TimeSeries Models
     </span>
   </a>
   
@@ -640,11 +670,49 @@
 
 
 <h1 id="the-built-in-methods">The built-in methods</h1>
+<h2 id="statistical-methods">Statistical Methods</h2>
+<table>
+<thead>
+<tr>
+<th>Class Name</th>
+<th>Requirements</th>
+<th>Description</th>
+<th>Ref.</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MatrixProfile</td>
+<td>matrixprofile(pypi)</td>
+<td></td>
+<td>Matrix Profile XI: SCRIMP++: Time Series Motif Discovery at Interactive Speeds</td>
+</tr>
+<tr>
+<td>SubLOF</td>
+<td>sklearn</td>
+<td>LOF in sequence manner</td>
+<td>LOF: identifying density-based local outliers</td>
+</tr>
+<tr>
+<td>SAND</td>
+<td>tslearn==0.4.1</td>
+<td></td>
+<td>SAND: streaming subsequence anomaly detection</td>
+</tr>
+<tr>
+<td>SubOCSVM</td>
+<td>sklearn</td>
+<td>OCSVM in sequence manner</td>
+<td>Support Vector Method for Novelty Detection</td>
+</tr>
+</tbody>
+</table>
 <h2 id="prediction-based">Prediction-based</h2>
 <table>
 <thead>
 <tr>
 <th>Class Name</th>
+<th>Requirements</th>
 <th>Description</th>
 <th>Ref.</th>
 </tr>
@@ -652,16 +720,19 @@
 <tbody>
 <tr>
 <td>AR</td>
+<td>pytorch</td>
 <td>AutoRegression implemented by a torch linear (using first order difference)</td>
 <td>Robust regression and outlier detection</td>
 </tr>
 <tr>
 <td>LSTMADalpha</td>
+<td>pytorch</td>
 <td>LSTMAD in a seq2seq manner</td>
 <td>Long Short Term Memory Networks for Anomaly Detection in Time Series</td>
 </tr>
 <tr>
 <td>LSTMADbeta</td>
+<td>pytorch</td>
 <td>LSTMAD in a multi-step prediction manner</td>
 <td>Long Short Term Memory Networks for Anomaly Detection in Time Series</td>
 </tr>
@@ -672,6 +743,7 @@
 <thead>
 <tr>
 <th>Class Name</th>
+<th>Requirements</th>
 <th>Description</th>
 <th>Ref.</th>
 </tr>
@@ -679,33 +751,33 @@
 <tbody>
 <tr>
 <td>AE</td>
+<td>pytorch</td>
 <td>AutoEncoder</td>
 <td>Sparse autoencoder</td>
 </tr>
 <tr>
 <td>EncDecAD</td>
+<td>pytorch</td>
 <td>Combine LSTM and AE</td>
 <td>LSTM-based encoder-decoder for multi- sensor anomaly detection</td>
 </tr>
 <tr>
 <td>SRCNN</td>
+<td>pytorch</td>
 <td></td>
 <td>Time-series anomaly detection service at microsoft</td>
 </tr>
 <tr>
 <td>Amomaly Transformer</td>
+<td>pytorch</td>
 <td></td>
 <td>Anomaly Transformer: Time Series Anomaly Detection with Association Discrepancy</td>
 </tr>
 <tr>
-<td>TimesNet</td>
+<td>TFAD</td>
+<td>pytorch-lightning</td>
 <td></td>
-<td>TIMESNET: TEMPORAL 2D-VARIATION MODELING FOR GENERAL TIME SERIES ANALYSIS</td>
-</tr>
-<tr>
-<td>OFA</td>
-<td>One Fits all, freezing some GPT2 params</td>
-<td>One Fits All: Power General Time Series Analysis by Pretrained LM</td>
+<td>TFAD: A decomposition time series anomaly detection architecture with time-frequency analysis</td>
 </tr>
 </tbody>
 </table>
@@ -714,6 +786,7 @@
 <thead>
 <tr>
 <th>Class Name</th>
+<th>Requirements</th>
 <th>Description</th>
 <th>Ref.</th>
 </tr>
@@ -721,33 +794,75 @@
 <tbody>
 <tr>
 <td>Donut</td>
-<td></td>
+<td>pytorch</td>
 <td>Unsupervised anomaly 1032 detection via variational auto-encoder for seasonal kpis in web applications</td>
+<td></td>
 </tr>
 <tr>
 <td>FCVAE</td>
+<td>pytorch-lightning</td>
+<td>Revisiting VAE for Unsupervised Time Series Anomaly Detection: A Frequency Perspective</td>
 <td></td>
-<td>UnderReview</td>
 </tr>
 </tbody>
 </table>
-<h2 id="others">Others</h2>
+<h2 id="representation-learning">Representation Learning</h2>
 <table>
 <thead>
 <tr>
 <th>Class Name</th>
+<th>Requirements</th>
 <th>Description</th>
 <th>Ref.</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>TFAD</td>
+<td>DCDetector</td>
+<td>pytorch</td>
 <td></td>
-<td>TFAD: A decomposition time series anomaly detection architecture with time-frequency analysis</td>
+<td>DCdetector: Dual Attention Contrastive Representation Learning for Time Series Anomaly Detection</td>
 </tr>
 </tbody>
 </table>
+<h2 id="general-timeseries-models">General TimeSeries Models</h2>
+<table>
+<thead>
+<tr>
+<th>Class Name</th>
+<th>Requirements</th>
+<th>Description</th>
+<th>Ref.</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TimesNet</td>
+<td>pytorch</td>
+<td></td>
+<td>TIMESNET: TEMPORAL 2D-VARIATION MODELING FOR GENERAL TIME SERIES ANALYSIS</td>
+</tr>
+<tr>
+<td>OFA</td>
+<td>pytorch</td>
+<td>One Fits all, freezing some GPT2 params</td>
+<td>One Fits All: Power General Time Series Analysis by Pretrained LM</td>
+</tr>
+<tr>
+<td>FITS</td>
+<td>pytorch</td>
+<td></td>
+<td>FITS: Modeling Time Series with $10K$ Parameters</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
 
 
 
@@ -758,6 +873,7 @@
             </div>
           
           
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
       </main>
@@ -786,10 +902,10 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.cd18aaf1.min.js"></script>
+      <script src="../../assets/javascripts/bundle.8fd75fb4.min.js"></script>
       
     
   </body>

@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.14">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.11">
     
     
       
@@ -24,7 +24,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.fad675c6.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.7e359304.min.css">
       
       
 
@@ -57,9 +57,6 @@
   
     <body dir="ltr">
   
-    
-    
-      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
@@ -109,6 +106,9 @@
         </div>
       </div>
     </div>
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
     
     
     
@@ -238,10 +238,8 @@
     
     
     
-    
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
-        
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
@@ -296,10 +294,8 @@
     
     
     
-    
     <li class="md-nav__item md-nav__item--nested">
       
-        
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
@@ -364,10 +360,8 @@
     
     
     
-    
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
-        
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" checked>
@@ -461,7 +455,7 @@
           <li class="md-nav__item">
   <a href="#Evaluations.EvalInterface.calc" class="md-nav__link">
     <span class="md-ellipsis">
-      calc()
+      calc
     </span>
   </a>
   
@@ -485,7 +479,7 @@
           <li class="md-nav__item">
   <a href="#Evaluations.MetricInterface.add" class="md-nav__link">
     <span class="md-ellipsis">
-      add()
+      add
     </span>
   </a>
   
@@ -494,7 +488,7 @@
           <li class="md-nav__item">
   <a href="#Evaluations.MetricInterface.avg" class="md-nav__link">
     <span class="md-ellipsis">
-      avg()
+      avg
     </span>
   </a>
   
@@ -503,7 +497,7 @@
           <li class="md-nav__item">
   <a href="#Evaluations.MetricInterface.to_dict" class="md-nav__link">
     <span class="md-ellipsis">
-      to_dict()
+      to_dict
     </span>
   </a>
   
@@ -647,7 +641,7 @@
           <li class="md-nav__item">
   <a href="#Evaluations.EvalInterface.calc" class="md-nav__link">
     <span class="md-ellipsis">
-      calc()
+      calc
     </span>
   </a>
   
@@ -671,7 +665,7 @@
           <li class="md-nav__item">
   <a href="#Evaluations.MetricInterface.add" class="md-nav__link">
     <span class="md-ellipsis">
-      add()
+      add
     </span>
   </a>
   
@@ -680,7 +674,7 @@
           <li class="md-nav__item">
   <a href="#Evaluations.MetricInterface.avg" class="md-nav__link">
     <span class="md-ellipsis">
-      avg()
+      avg
     </span>
   </a>
   
@@ -689,7 +683,7 @@
           <li class="md-nav__item">
   <a href="#Evaluations.MetricInterface.to_dict" class="md-nav__link">
     <span class="md-ellipsis">
-      to_dict()
+      to_dict
     </span>
   </a>
   
@@ -739,9 +733,8 @@
 
 
 
-
 <h2 id="Evaluations.EvalInterface" class="doc doc-heading">
-          <span class="doc doc-object-name doc-class-name">EvalInterface</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>          <span class="doc doc-object-name doc-class-name">EvalInterface</span>
 
 
 </h2>
@@ -766,7 +759,7 @@
     </thead>
     <tbody>
           <tr>
-            <td><code>- calc</code></td>
+            <td><code><span title="Evaluations.EvalInterface.- calc">- calc</span></code></td>
             <td>
               <div class="doc-md-description">
                 <p>Abstract method that calculates the evaluation metric based on the provided scores, labels, and margins parameters. It returns an instance of a class that inherits from MetricInterface.</p>
@@ -774,7 +767,7 @@
             </td>
           </tr>
           <tr>
-            <td><code>- get_name</code></td>
+            <td><code><span title="Evaluations.EvalInterface.- get_name">- get_name</span></code></td>
             <td>
               <div class="doc-md-description">
                 <p>Abstract method that returns the name of the evaluation metric. Concrete classes implementing this interface should provide their own implementation of this method.</p>
@@ -802,9 +795,8 @@
 
 
 
-
 <h3 id="Evaluations.EvalInterface.calc" class="doc doc-heading">
-          <span class="doc doc-object-name doc-function-name">calc</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>          <span class="doc doc-object-name doc-function-name">calc</span>
 
   
   <span class="doc doc-labels">
@@ -911,15 +903,15 @@
 
   </div>
 
+
 </div>
 
 <div class="doc doc-object doc-class">
 
 
 
-
 <h2 id="Evaluations.MetricInterface" class="doc doc-heading">
-          <span class="doc doc-object-name doc-class-name">MetricInterface</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>          <span class="doc doc-object-name doc-class-name">MetricInterface</span>
 
 
 </h2>
@@ -958,9 +950,8 @@
 
 
 
-
 <h3 id="Evaluations.MetricInterface.add" class="doc doc-heading">
-          <span class="doc doc-object-name doc-function-name">add</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>          <span class="doc doc-object-name doc-function-name">add</span>
 
   
   <span class="doc doc-labels">
@@ -984,9 +975,8 @@
 
 
 
-
 <h3 id="Evaluations.MetricInterface.avg" class="doc doc-heading">
-          <span class="doc doc-object-name doc-function-name">avg</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>          <span class="doc doc-object-name doc-function-name">avg</span>
 
   
   <span class="doc doc-labels">
@@ -1010,9 +1000,8 @@
 
 
 
-
 <h3 id="Evaluations.MetricInterface.to_dict" class="doc doc-heading">
-          <span class="doc doc-object-name doc-function-name">to_dict</span>
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>          <span class="doc doc-object-name doc-function-name">to_dict</span>
 
   
   <span class="doc doc-labels">
@@ -1037,6 +1026,7 @@
 
   </div>
 
+
 </div>
 
 
@@ -1047,6 +1037,13 @@
   </div>
 
 </div>
+
+
+
+
+
+
+
 
 
 
@@ -1057,6 +1054,7 @@
             </div>
           
           
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
       </main>
@@ -1085,10 +1083,10 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.cd18aaf1.min.js"></script>
+      <script src="../../assets/javascripts/bundle.8fd75fb4.min.js"></script>
       
     
   </body>

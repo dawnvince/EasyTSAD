@@ -27,6 +27,83 @@ We welcome you to send the algorithm code implemented based on this suite to our
 - We provide a continuous integrated leaderboard (https://adeval.cstcloud.cn/content/home) based on this suite and make it vivid to show state-of-the-art algorithms rankings based on various training schemas and evaluation protocols. 
 - ***Welcome to provide us your algorithms or evaluation criterion based on this suite by e-mails.*** We will add it into the leaderboard after checking, running, and obtaining your permission.
  
+# Built-in Methods
+
+## Statistical Methods
+| Class Name | Requirements | Description | Ref. |
+| ------------ | ------------- | ------------- | ------------- |
+| MatrixProfile | matrixprofile(pypi) | | Matrix Profile XI: SCRIMP++: Time Series Motif Discovery at Interactive Speeds |
+| SubLOF | sklearn | LOF in sequence manner | LOF: identifying density-based local outliers | 
+| SAND | tslearn==0.4.1 | | SAND: streaming subsequence anomaly detection |
+| SubOCSVM | sklearn | OCSVM in sequence manner | Support Vector Method for Novelty Detection |
+
+
+## Prediction-based
+| Class Name | Requirements | Description | Ref. |
+| ------------ | ------------- | ------------- | ------------- |
+| AR | pytorch | AutoRegression implemented by a torch linear (using first order difference)| Robust regression and outlier detection |
+| LSTMADalpha | pytorch | LSTMAD in a seq2seq manner | Long Short Term Memory Networks for Anomaly Detection in Time Series |
+| LSTMADbeta | pytorch | LSTMAD in a multi-step prediction manner | Long Short Term Memory Networks for Anomaly Detection in Time Series
+
+## Reconstruction-based
+| Class Name | Requirements | Description | Ref. |
+| ------------ | ------------- | ------------- | ------------- |
+| AE | pytorch | AutoEncoder | Sparse autoencoder |
+| EncDecAD | pytorch | Combine LSTM and AE | LSTM-based encoder-decoder for multi- sensor anomaly detection
+| SRCNN | pytorch | | Time-series anomaly detection service at microsoft |
+| Amomaly Transformer | pytorch | | Anomaly Transformer: Time Series Anomaly Detection with Association Discrepancy |
+| TFAD | pytorch-lightning | | TFAD: A decomposition time series anomaly detection architecture with time-frequency analysis | 
+
+## VAE-based
+| Class Name | Requirements | Description | Ref. |
+| ------------ | ------------- | ------------- | ------------- |
+| Donut | pytorch | Unsupervised anomaly 1032 detection via variational auto-encoder for seasonal kpis in web applications | 
+| FCVAE | pytorch-lightning | Revisiting VAE for Unsupervised Time Series Anomaly Detection: A Frequency Perspective |
+
+## Representation Learning
+| Class Name | Requirements | Description | Ref. |
+| ------------ | ------------- | ------------- | ------------- |
+| DCDetector | pytorch | | DCdetector: Dual Attention Contrastive Representation Learning for Time Series Anomaly Detection |
+
+## General TimeSeries Models
+| Class Name | Requirements | Description | Ref. |
+| ------------ | ------------- | ------------- | ------------- |
+| TimesNet | pytorch | | TIMESNET: TEMPORAL 2D-VARIATION MODELING FOR GENERAL TIME SERIES ANALYSIS |
+| OFA | pytorch | One Fits all, freezing some GPT2 params |  One Fits All: Power General Time Series Analysis by Pretrained LM |
+| FITS | pytorch | | FITS: Modeling Time Series with $10K$ Parameters |
+
+# Built-in Evaluation Protocols
+> For EVENT-BASED methods, there are two parameters when initializing the class:
+> mode (str): Defines the scale at which the anomaly segment is processed. \n
+>     One of:\n
+>         - 'squeeze': View an anomaly event lasting t timestamps as one timepoint.
+>         - 'log': View an anomaly event lasting t timestamps as log(t) timepoint.
+>         - 'sqrt': View an anomaly event lasting t timestamps as sqrt(t) timepoint.
+>         - 'raw': View an anomaly event lasting t timestamps as t timepoint.
+>     If using 'log', you can specify the param "base" to return the logarithm of x to the given base, 
+>     calculated as log(x) / log(base).
+> base (int): Default is 3.
+
+> For more details, please refer to the [document](https://dawnvince.github.io/EasyTSAD/API/Protocols/)
+
+| Class Name | Type | Description | Ref. |
+| ------------ | ------------- | ------------- | ------------- |
+| PointF1 | point-based | traditional F1 | |
+| PointPrc | point-based | traditional AUPRC | |
+| PointRoc | point-based | traditional AUROC | |
+| PointF1PA | point-based | F1 using point-adjustment | Robust Anomaly Detection for Multivariate Time Series through Stochastic Recurrent Neural Network |
+| PointKthF1PA | point-based | add k-delay constraint on F1PA | |
+| PointAuprcPA | point-based | | |
+| PointAurocPA | point-based | | |
+| VUS | range-based | | Volume Under the Surface: A New Accuracy Evaluation Measure for Time-Series Anomaly Detection | 
+| EventDetect | event-based | Only suitable for dataset UCR | | Scaling Time Series Anomaly Detection to Trillions of Datapoints and Ultra-fast Arriving Data Streams |
+| EventF1PA | event-based | view an anomaly segment as an event | |
+| EventPrcPA | event-based | event-based AUPRC | |
+| EventRocPA | event-based | event-based AUROC | |
+| EventKthPrcPA | event-based | event-base AUPRC under k-delay | | 
+| EventKthRocPA | event-based | event-base AUROC under k-delay | | 
+
+
 # Get Started
 
 ## Installation
@@ -46,7 +123,7 @@ Some built-in algorithms are based on Pytorch 2.0 or Pytorch-lightning 2.0. You 
 ## Prepare datasets
 
 ### Use default datasets
-Original datasets can be downloaded from https://wait-to-be-published. 
+Original datasets can be downloaded from https://github.com/CSTCloudOps/datasets. 
 The directory structure of the dataset is shown as follows:
 ```
 datasets
