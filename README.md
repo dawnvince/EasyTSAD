@@ -53,15 +53,17 @@ We welcome you to send the algorithm code implemented based on this suite to our
 
 # Built-in Evaluation Protocols
 > For EVENT-BASED methods, there are two parameters when initializing the class:
-> mode (str): Defines the scale at which the anomaly segment is processed. \n
->     One of:\n
->         - 'squeeze': View an anomaly event lasting t timestamps as one timepoint.
->         - 'log': View an anomaly event lasting t timestamps as log(t) timepoint.
->         - 'sqrt': View an anomaly event lasting t timestamps as sqrt(t) timepoint.
->         - 'raw': View an anomaly event lasting t timestamps as t timepoint.
->     If using 'log', you can specify the param "base" to return the logarithm of x to the given base, 
->     calculated as log(x) / log(base).
-> base (int): Default is 3.
+```python
+mode (str): Defines the scale at which the anomaly segment is processed. \n
+    One of:\n
+        - 'squeeze': View an anomaly event lasting t timestamps as one timepoint.
+        - 'log': View an anomaly event lasting t timestamps as log(t) timepoint.
+        - 'sqrt': View an anomaly event lasting t timestamps as sqrt(t) timepoint.
+        - 'raw': View an anomaly event lasting t timestamps as t timepoint.
+    If using 'log', you can specify the param "base" to return the logarithm of x to the given base, 
+    calculated as log(x) / log(base).
+base (int): Default is 3.
+```
 
 > For more details, please refer to the [document](https://dawnvince.github.io/EasyTSAD/API/Protocols/)
 
