@@ -131,7 +131,7 @@ datasets
     │   │   ├── test_label.npy (labels of test set, 1-D ndarray)
     │   │   ├── train_timestamp.npy (timestamps of training set, 1-D ndarray)
     │   │   ├── test_timestamp.npy (timestamps of test set, 1-D ndarray)
-    │   │   └── info.json (some additonal information, json, including )
+    │   │   └── info.json (some additonal information, json)
     │   │
     │   ├── time_series_2
     │   └── ...
