@@ -123,26 +123,25 @@ datasets
 └── UTS
     ├── dataset_1
     │   ├── time_series_1
-    │   │   ├── train.npy (training set, 1-D ndarray, necessary)
-    │   │   ├── test.npy (test set, 1-D ndarray, necessary)
-    │   │   ├── train_label.npy (labels of training set, 1-D ndarray, neccessary)
-    │   │   ├── test_label.npy (labels of test set, 1-D ndarray, necessary)
-    │   │   ├── train_timestamp.npy (timestamps of training set, 1-D ndarray, optional)
-    │   │   ├── test_timestamp.npy (timestamps of test set, 1-D ndarray, optional)
-    │   │   └── info.json (some additonal information, json, optional)
+    │   │   ├── train.npy (training set, 1-D ndarray)
+    │   │   ├── test.npy (test set, 1-D ndarray)
+    │   │   ├── train_label.npy (labels of training set, 1-D ndarray)
+    │   │   ├── test_label.npy (labels of test set, 1-D ndarray)
+    │   │   ├── train_timestamp.npy (timestamps of training set, 1-D ndarray)
+    │   │   ├── test_timestamp.npy (timestamps of test set, 1-D ndarray)
+    │   │   └── info.json (some additonal information, json, including )
     │   │
     │   ├── time_series_2
     │   └── ...
     │
     ├── dataset_2
-    └── ...
-        
+    └── ...    
 
 ```
 The file `info.json` contains the information like:
 ```json
 {
-    "intervals": 300,
+    "intervals": 300, # Minimum time interval
     "training set anomaly ratio": 0.00148,
     "testset anomaly ratio": 0.00808,
     "total anomaly ratio": 0.00478

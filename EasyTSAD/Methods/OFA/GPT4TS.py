@@ -29,8 +29,12 @@ class Model(nn.Module):
         self.patch_num += 1
         self.enc_embedding = DataEmbedding(configs.enc_in * self.patch_size, configs.d_model, configs.embed, configs.freq,
                                            configs.dropout)
-
-        self.gpt2 = GPT2Model.from_pretrained(configs.model_path, output_attentions=True, output_hidden_states=True)
+        try:
+            self.gpt2 = GPT2Model.from_pretrained(configs.model_path, output_attentions=True, output_hidden_states=True)
+        except Exception as e:
+            print("Missing Model. To load the model, create a folder name 'pre_train' first. Then download GPT2 model from huggingface and copy the model to the 'pre_train' folder.")
+            print(e)
+            
         self.gpt2.h = self.gpt2.h[:configs.gpt_layers]
         
         for i, (name, param) in enumerate(self.gpt2.named_parameters()):
