@@ -111,7 +111,9 @@ pip install EasyTSAD
 The documentation of EasyTSAD is hosted at https://dawnvince.github.io/EasyTSAD/.
 
 ### Additonal Dependencies
-NOTE: Some built-in algorithms are based on Pytorch 2.0 or Pytorch-lightning 2.0. You may need to install related packages (including but not limited to pytorch, pytorch-lightning, torchinfo, torch_optimizer, scikit-learn, tslearn) if you want to run the baselines.
+NOTE: Some built-in algorithms are based on Pytorch 2.0 or Pytorch-lightning 2.0. You may need to install related packages (including but not limited to pytorch, pytorch-lightning, torchinfo, torch_optimizer, scikit-learn, tslearn) if you want to run the baselines. 
+
+There may be some version conflicts when using tslearn==0.4.1 (SAND). We recommend you to build and activate an independent conda environment using python 3.7 for these methods.
 
 ## Prepare datasets
 
