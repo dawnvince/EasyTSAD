@@ -12,6 +12,30 @@ from .. import MetricInterface, EvalInterface
 from ..Metrics import Auprc, Auroc
 
 
+def hashable_cache(func):
+    """A cache for functions whose arguments are unhashable."""
+
+    cache_dict = {}
+
+    def wrapper(*args, **kwargs):
+        hashed_args = tuple(
+            (arg.tobytes() if isinstance(arg, np.ndarray) else arg)
+            for arg in (
+                arg[:1000]
+                if isinstance(arg, np.ndarray) and arg.ndim == 1 and len(arg) > 1000
+                else arg
+                for arg in args
+            )
+        )
+        if hashed_args in cache_dict:
+            return cache_dict[hashed_args]
+        result = func(*args, **kwargs)
+        cache_dict[hashed_args] = result
+        return result
+
+    return wrapper
+
+
 # determine sliding window (period) based on ACF
 def find_length(data):
     if len(data.shape) > 1:
@@ -355,7 +379,7 @@ class metricor:
 
         return TPR_RangeAUC, FPR_RangeAUC, Precision_RangeAUC
 
-    @cache
+    @hashable_cache
     def RangeAUC(
         self, labels, score, window=0, percentage=0, plot_ROC=False, AUC_type="window"
     ):
@@ -406,7 +430,6 @@ class metricor:
         return AUC_range
 
     # TPR_FPR_window
-    @cache
     def RangeAUC_volume(self, labels_original, score, windowSize):
         score_sorted = -np.sort(-score)
 
@@ -470,6 +493,7 @@ class metricor:
         )
 
 
+@hashable_cache()
 def generate_curve(label, score, slidingWindow):
     (
         tpr_3d,
@@ -504,9 +528,9 @@ class VUS_ROC(EvalInterface):
             auroc: auroc value.
         """
         slidingWindow = 125
-        R_AUC, R_AP, *_ = metricor().RangeAUC(
-            labels=labels, score=scores, plot_ROC=True
-        )
+        # R_AUC, R_AP, *_ = metricor().RangeAUC(
+        #     labels=labels, score=scores, plot_ROC=True
+        # )
         *_, VUS_ROC, VUS_PR = generate_curve(labels, scores, 2 * slidingWindow)
 
         return Auroc(value=VUS_ROC, name=self.name)
@@ -524,9 +548,9 @@ class VUS_PR(EvalInterface):
             auroc: auroc value.
         """
         slidingWindow = 125
-        R_AUC, R_AP, *_ = metricor().RangeAUC(
-            labels=labels, score=scores, plot_ROC=True
-        )
+        # R_AUC, R_AP, *_ = metricor().RangeAUC(
+        #     labels=labels, score=scores, plot_ROC=True
+        # )
         *_, VUS_ROC, VUS_PR = generate_curve(labels, scores, 2 * slidingWindow)
 
         return Auprc(value=VUS_PR, name=self.name)
