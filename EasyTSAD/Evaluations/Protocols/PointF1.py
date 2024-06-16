@@ -1,8 +1,9 @@
 from typing import Type
+import numpy as np
 from EasyTSAD.Evaluations import MetricInterface
 from .. import MetricInterface, EvalInterface
 from ..Metrics import F1class
-from sklearn.metrics import f1_score, precision_score, recall_score
+import sklearn.metrics
 
 class PointF1(EvalInterface):
     """
@@ -20,13 +21,15 @@ class PointF1(EvalInterface):
             precision: corresponding precision value;\n
             recall: corresponding recall value;
         '''
-        prec = precision_score(labels, scores)
-        rec = recall_score(labels, scores)
-        f1 = f1_score(labels, scores)
+        prec, recall, _ = sklearn.metrics.precision_recall_curve(y_true=labels,
+                                                                     probas_pred=scores)
+        
+        f1_all = (2 * prec * recall) / (prec + recall)
+        max_idx = np.argmax(f1_all)
         
         return F1class(
             name=self.name,
-            p=prec,
-            r=rec,
-            f1=f1
+            p=prec[max_idx],
+            r=recall[max_idx],
+            f1=f1_all[max_idx]
         )
