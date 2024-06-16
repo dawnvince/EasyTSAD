@@ -493,7 +493,7 @@ class metricor:
         )
 
 
-@hashable_cache()
+@hashable_cache
 def generate_curve(label, score, slidingWindow):
     (
         tpr_3d,
