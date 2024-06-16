@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "EasyTSAD"
-version = "0.2.0.1"
+version = "0.2.0.2"
 description = "A Suite for TimeSeries Anomaly Detection Benchmark"
 authors = ["HT Si <htsi@cnic.cn>"]
 license = "GPL-3.0"
