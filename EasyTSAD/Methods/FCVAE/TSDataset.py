@@ -43,9 +43,7 @@ def seg_ano(x, y, z, rate, method):
     for i in range(len(idx_2)):
         if method == "swap":
             x_aug[i, :, time_start[i] :] = x[idx_2[i], :, time_start[i] :]
-            y_aug[:, time_start[i] :] = torch.logical_or(
-                y_aug[:, time_start[i] :], torch.ones_like(y_aug[:, time_start[i] :])
-            )
+            y_aug[i, time_start[i] :] = torch.ones_like(y_aug[i, time_start[i] :]
     return x_aug, y_aug, z_aug
 
 class  OneByOneDataset(torch.utils.data.Dataset):
