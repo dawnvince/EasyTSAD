@@ -1,3 +1,6 @@
+# News
+2025.04: Add an additional Multivariate Time Series Anomaly Detection Schema. MTS datasets including SMD, SWaT, WADI, PSM, MSL, SMAP are supported. Examples for MTS AD algorithm implementation are provided in [Example: implement a MTS Anomaly Detection Method](#example-implement-a-mts-anomaly-detection-method)
+
 # Introduction
 
 EasyTSAD is a suite to facilitate the quick implementation and iteration of your ***time series anomaly detection algorithms***. You can also easily develop a new set of ***evaluation metrics*** based on this suite and assess them against baseline methods.
@@ -373,7 +376,7 @@ gctrl.plots(
 
 The Plot Results can be founded in path `workspace/Results/Plots/score_only`
 
-## An example that implements a MTS Anomaly Detection
+## Example: implement a MTS Anomaly Detection Method
 
 ### Load Dataset configurations
 
