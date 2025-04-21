@@ -1,4 +1,5 @@
 from . import TSData
+from . import MTSData
 from ..Controller import PathManager
 import logging
 
@@ -36,23 +37,42 @@ def __load_all_curve_in_dataset(types, dataset, train_proportion:float=1, valid_
     tsDatas = {}
     for curve in curves:
         ## Generate TSData instance from the numpy files
-        tsData = TSData.buildfrom(types=types, dataset=dataset, data_name=curve, train_proportion=train_proportion, valid_proportion=valid_proportion)
-        
-        if diff_p > 0 and isinstance(diff_p, int):
-            tsData.differential(diff_p)
-        
-        if preprocess == "min-max":
-            tsData.min_max_norm()
-        elif preprocess == "z-score":
-            tsData.z_score_norm()
-        elif preprocess == "raw":
-            pass
-        elif preprocess is None:
-            pass
+        if types == "MTS":
+            tsData = MTSData.buildfrom(types=types, dataset=dataset, data_name=curve, train_proportion=train_proportion, valid_proportion=valid_proportion)
+            
+            if diff_p > 0 and isinstance(diff_p, int):
+                tsData.differential(diff_p)
+            
+            if preprocess == "min-max":
+                tsData.min_max_norm()
+            elif preprocess == "z-score":
+                tsData.z_score_norm()
+            elif preprocess == "raw":
+                pass
+            elif preprocess is None:
+                pass
+            else:
+                raise ValueError("Unknown preprocess, must be one of min-max, z-score, raw")
+            
+            tsDatas[curve] = tsData
         else:
-            raise ValueError("Unknown preprocess, must be one of min-max, z-score, raw")
-        
-        tsDatas[curve] = tsData
+            tsData = TSData.buildfrom(types=types, dataset=dataset, data_name=curve, train_proportion=train_proportion, valid_proportion=valid_proportion)
+            
+            if diff_p > 0 and isinstance(diff_p, int):
+                tsData.differential(diff_p)
+            
+            if preprocess == "min-max":
+                tsData.min_max_norm()
+            elif preprocess == "z-score":
+                tsData.z_score_norm()
+            elif preprocess == "raw":
+                pass
+            elif preprocess is None:
+                pass
+            else:
+                raise ValueError("Unknown preprocess, must be one of min-max, z-score, raw")
+            
+            tsDatas[curve] = tsData
     
     return tsDatas
 

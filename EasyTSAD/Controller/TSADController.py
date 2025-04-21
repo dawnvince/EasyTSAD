@@ -12,7 +12,7 @@ from ..Plots.plot import plot_uts_score_only
 from .logger import setup_logger
 from .PathManager import PathManager
 from ..DataFactory.LoadData import load_data
-from ..TrainingSchema import AllInOne, ZeroShot, Naive, ZeroShotCrossDS
+from ..TrainingSchema import AllInOne, ZeroShot, Naive, ZeroShotCrossDS, MTS
 from ..Summary import Summary
 
 class TSADController:
@@ -169,7 +169,9 @@ class TSADController:
         
         self.logger.info("Run Experiments. Method[{}], Schema[{}].".format(method, training_schema))
         
-        if training_schema == "naive":
+        if training_schema == "mts":
+            run_instance = MTS(self.dc, method, None, diff_order, preprocess)
+        elif training_schema == "naive":
             run_instance = Naive(self.dc, method, cfg_path, diff_order, preprocess)
         elif training_schema == "all_in_one":
             run_instance = AllInOne(self.dc, method, cfg_path, diff_order, preprocess)
