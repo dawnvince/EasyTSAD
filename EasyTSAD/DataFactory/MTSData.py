@@ -3,13 +3,7 @@ MTSDataSet read data and provides various method for preprocessing data in datas
 
 There may be some missing values and inconsecutive timestamps in some datasets. We complement the missing timestamps to make it continuous at the possible minimum intervals, meanwhile filling the n/a values  using the linear interpolation method.
  
- MTS:
-    SMD
-    SWaT
-    WADIA
-    SMAP
-    MSL
-    PSM
+ MTS
 '''
 
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
@@ -79,18 +73,8 @@ class MTSData:
         test_label_path = pm.get_dataset_test_label(types, dataset, data_name)
         test_label = np.load(test_label_path)
         
-        if train_proportion > 0 and train_proportion < 1:
-            split_idx = int(len(train) * train_proportion)
-            train = train[-split_idx:]
-            train_label = train_label[-split_idx:]
-        
         valid = train
         valid_label = train_label
-        
-        if valid_proportion > 0 and valid_proportion < 1:
-            split_idx = int(len(train) * valid_proportion)
-            train, valid = train[:-split_idx], train[-split_idx:]
-            train_label, valid_label = train_label[:-split_idx], train_label[-split_idx:]
         
         info_path = pm.get_dataset_info(types, dataset, data_name)
         with open(info_path, 'r') as f:
@@ -114,10 +98,10 @@ class MTSData:
             self.train[:, i] = scaler.transform(self.train[:, i].reshape(-1, 1)).flatten()
             
             self.valid[:, i] = scaler.transform(self.valid[:, i].reshape(-1, 1)).flatten()
-            self.valid[:, i] = np.clip(self.valid[:, i], a_min=feature_range[0]-2, a_max=feature_range[1]+2)
+            self.valid[:, i] = np.clip(self.valid[:, i], a_min=feature_range[0]-1, a_max=feature_range[1]+2)
                 
             self.test[:, i] = scaler.transform(self.test[:, i].reshape(-1, 1)).flatten()
-            self.test[:, i] = np.clip(self.test[:, i], a_min=feature_range[0]-2, a_max=feature_range[1]+2)
+            self.test[:, i] = np.clip(self.test[:, i], a_min=feature_range[0]-1, a_max=feature_range[1]+2)
 
     def z_score_norm(self):
         '''
@@ -135,6 +119,13 @@ class MTSData:
             self.test[:, i] = scaler.transform(self.test[:, i].reshape(-1, 1)).flatten()
         
     def differential(self, p):
+        '''
+        Apply differencing to multivariate time series data.
+        
+        Params:
+         p - int
+          Order of differencing.
+        '''
         for i in range(p):
             n_features = self.train.shape[1]
             
